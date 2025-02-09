@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"finworker/internal/app"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	app.NewApp().Run()
 }
