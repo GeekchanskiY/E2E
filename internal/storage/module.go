@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/GeekchanskiY/migratigo"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
 
-func NewConn(lc fx.Lifecycle, config Config) *sqlx.DB {
+func NewConn(lc fx.Lifecycle, config Config, logger *zap.Logger) *sqlx.DB {
 	dsn := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		config.User, config.Password, config.Host, config.Port, config.Name,
@@ -19,6 +20,15 @@ func NewConn(lc fx.Lifecycle, config Config) *sqlx.DB {
 	if err != nil {
 		panic(err)
 	}
+	connector, err := migratigo.New(db.DB, Migrations, "migrations", logger)
+	if err != nil {
+		panic(err)
+	}
+	err = connector.RunMigrations()
+	if err != nil {
+		panic(err)
+	}
+
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			if err := db.Ping(); err != nil {
