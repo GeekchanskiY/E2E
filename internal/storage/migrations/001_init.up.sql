@@ -53,8 +53,7 @@ create table operation_groups(
 create table operations(
     id serial primary key,
     operation_group int references operation_groups(id),
-    is_consumption bool,
-    amount int,
+    amount float,
     time timestamp default current_timestamp, -- may be in future
     is_confirmed bool default true,
     initiator int references users(id)
