@@ -5,10 +5,10 @@ import (
 )
 
 type Handler struct {
-	controller controllers.Controller
+	controller *controllers.Controller
 }
 
-func NewHandler(controller controllers.Controller) *Handler {
+func NewHandler(controller *controllers.Controller) *Handler {
 	return &Handler{
 		controller: controller,
 	}

@@ -5,10 +5,10 @@ import (
 )
 
 type Controller struct {
-	repo repository.Repositories
+	repo *repository.Repositories
 }
 
-func NewController(repo repository.Repositories) *Controller {
+func NewController(repo *repository.Repositories) *Controller {
 	return &Controller{
 		repo: repo,
 	}
