@@ -3,19 +3,20 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-
-	"finworker/internal/models/requests/users"
 )
 
 func (c *Controller) GetUser(w http.ResponseWriter, r *http.Request) {
-	var req users.GetUserRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
+	user, err := c.repo.Users.GetById(r.Context(), 1)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
-	if req.Username == nil && req.Id == nil {
-		http.Error(w, "Required fields missing", http.StatusBadRequest)
+
+	err = json.NewEncoder(w).Encode(user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 }
