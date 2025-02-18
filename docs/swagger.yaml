@@ -7,7 +7,24 @@ info:
   description: Описание взаимодействия и работы внутренних моделей
   title: E2E
   version: "0.0"
-paths: {}
+paths:
+  /users/{userId}:
+    get:
+      consumes:
+      - application/json
+      description: get user
+      parameters:
+      - description: user id
+        in: path
+        name: userId
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: Get user
+      tags:
+      - users
 produces:
 - application/json
 schemes:
