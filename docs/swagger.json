@@ -1,0 +1,22 @@
+{
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Описание взаимодействия и работы внутренних моделей",
+        "title": "E2E",
+        "contact": {
+            "name": "Repo",
+            "url": "https://github.com/GeekchanskiY/E2E"
+        },
+        "version": "0.0"
+    },
+    "paths": {}
+}

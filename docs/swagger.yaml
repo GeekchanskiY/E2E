@@ -1,0 +1,15 @@
+consumes:
+- application/json
+info:
+  contact:
+    name: Repo
+    url: https://github.com/GeekchanskiY/E2E
+  description: Описание взаимодействия и работы внутренних моделей
+  title: E2E
+  version: "0.0"
+paths: {}
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
