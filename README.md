@@ -1,4 +1,4 @@
-# Finworker
+# E2E - eye to eye relationship management system
 
 Service for my own usage, monolith app with lots of features. Probably I'll split it to
 microservices in the future, but definitely not now.
