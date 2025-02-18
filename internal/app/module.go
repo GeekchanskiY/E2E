@@ -1,6 +1,7 @@
 package app
 
 import (
+	"finworker/internal/repository"
 	"go.uber.org/fx"
 
 	"finworker/internal/storage"
@@ -14,6 +15,7 @@ func NewApp() *fx.App {
 			GetDb,
 			GetLogger,
 		),
+		repository.NewModule(),
 
 		storage.NewModule(),
 	)
