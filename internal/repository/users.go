@@ -3,8 +3,9 @@ package repository
 import (
 	"context"
 
-	"finworker/internal/models"
 	"github.com/jmoiron/sqlx"
+
+	"finworker/internal/models"
 )
 
 type UserRepository struct {
@@ -21,4 +22,16 @@ func (repo *UserRepository) Create(ctx context.Context, user *models.User) error
 		`INSERT INTO users (username, password_hash, name, gender, age, birthday) VALUES (:username, :password_hash, :name, :gender, :age, :birthday)`,
 		user)
 	return err
+}
+
+func (repo *UserRepository) Get(ctx context.Context, username string) (*models.User, error) {
+	var user *models.User
+	err := repo.db.SelectContext(ctx, user, `SELECT * FROM users WHERE username = ?`, username)
+	return user, err
+}
+
+func (repo *UserRepository) GetById(ctx context.Context, id int) (*models.User, error) {
+	var user *models.User
+	err := repo.db.SelectContext(ctx, user, `SELECT * FROM users WHERE id = ?`, id)
+	return user, err
 }
