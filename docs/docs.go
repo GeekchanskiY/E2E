@@ -88,21 +88,23 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "birthday": {
+                    "description": "Birthday. Age must be \u003e 18.",
                     "type": "string"
                 },
                 "gender": {
+                    "description": "Gender. ` + "`" + `male` + "`" + `, ` + "`" + `female` + "`" + ` or ` + "`" + `battle helicopter` + "`" + `.",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Name. just to be displayed",
                     "type": "string"
                 },
                 "password": {
-                    "type": "string"
-                },
-                "secret": {
+                    "description": "Password, which will be used with secret",
                     "type": "string"
                 },
                 "username": {
+                    "description": "Username, which will be displayed and unique.",
                     "type": "string"
                 }
             }

@@ -5,16 +5,19 @@ definitions:
   finworker_internal_models_requests_users.RegisterRequest:
     properties:
       birthday:
+        description: Birthday. Age must be > 18.
         type: string
       gender:
+        description: Gender. `male`, `female` or `battle helicopter`.
         type: string
       name:
+        description: Name. just to be displayed
         type: string
       password:
-        type: string
-      secret:
+        description: Password, which will be used with secret
         type: string
       username:
+        description: Username, which will be displayed and unique.
         type: string
     type: object
 host: localhost:8080

@@ -5,10 +5,18 @@ import (
 )
 
 type RegisterRequest struct {
-	Username string    `json:"username"`
-	Password string    `json:"password"`
-	Name     string    `json:"name"`
-	Gender   string    `json:"gender"`
+	// Username, which will be displayed and unique.
+	Username string `json:"username"`
+
+	// Password, which will be used with secret
+	Password string `json:"password"`
+
+	// Name. just to be displayed
+	Name string `json:"name"`
+
+	// Gender. `male`/`female`.
+	Gender string `json:"gender"`
+
+	// Birthday. Age must be > 18.
 	Birthday time.Time `json:"birthday"`
-	Secret   string    `json:"secret"`
 }
