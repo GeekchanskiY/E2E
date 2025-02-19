@@ -2,11 +2,14 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
-	"finworker/internal/models/requests/users"
 	"github.com/go-chi/chi/v5"
+
+	"finworker/internal/models/requests/users"
+	"finworker/internal/utils"
 )
 
 // GetUser godoc
@@ -64,4 +67,32 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	if err = req.Validate(); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	password, err := utils.HashPassword(req.Password)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Println(password)
+
+	text := "test"
+	rr, err := utils.Encrypt(text, req.Password)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	text2, err := utils.Decrypt(rr, req.Password)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Println(text2)
+
 }
