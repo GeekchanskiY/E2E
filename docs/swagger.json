@@ -10,14 +10,20 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "Описание взаимодействия и работы внутренних моделей",
+        "description": "Описание взаимодействия и работы внутренних моделей E2E CRM",
         "title": "E2E",
         "contact": {
             "name": "Repo",
             "url": "https://github.com/GeekchanskiY/E2E"
         },
+        "license": {
+            "name": "MIT License",
+            "url": "https://github.com/GeekchanskiY/E2E/blob/main/LICENSE"
+        },
         "version": "0.0"
     },
+    "host": "localhost:8080",
+    "basePath": "/",
     "paths": {
         "/users/{userId}": {
             "get": {

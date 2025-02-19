@@ -19,6 +19,10 @@ const docTemplate = `{
             "name": "Repo",
             "url": "https://github.com/GeekchanskiY/E2E"
         },
+        "license": {
+            "name": "MIT License",
+            "url": "https://github.com/GeekchanskiY/E2E/blob/main/LICENSE"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -56,11 +60,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "0.0",
-	Host:             "",
-	BasePath:         "",
+	Host:             "localhost:8080",
+	BasePath:         "/",
 	Schemes:          []string{"http"},
 	Title:            "E2E",
-	Description:      "Описание взаимодействия и работы внутренних моделей",
+	Description:      "Описание взаимодействия и работы внутренних моделей E2E CRM",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

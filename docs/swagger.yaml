@@ -1,10 +1,15 @@
+basePath: /
 consumes:
 - application/json
+host: localhost:8080
 info:
   contact:
     name: Repo
     url: https://github.com/GeekchanskiY/E2E
-  description: Описание взаимодействия и работы внутренних моделей
+  description: Описание взаимодействия и работы внутренних моделей E2E CRM
+  license:
+    name: MIT License
+    url: https://github.com/GeekchanskiY/E2E/blob/main/LICENSE
   title: E2E
   version: "0.0"
 paths:
