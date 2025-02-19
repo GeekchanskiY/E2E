@@ -1,6 +1,22 @@
 basePath: /
 consumes:
 - application/json
+definitions:
+  finworker_internal_models_requests_users.RegisterRequest:
+    properties:
+      birthday:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      secret:
+        type: string
+      username:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -17,7 +33,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: get user
+      description: get user by user id
       parameters:
       - description: user id
         in: path
@@ -28,6 +44,24 @@ paths:
         "200":
           description: OK
       summary: Get user
+      tags:
+      - users
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: register user
+      parameters:
+      - description: user id
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/finworker_internal_models_requests_users.RegisterRequest'
+      responses:
+        "200":
+          description: OK
+      summary: Register user
       tags:
       - users
 produces:

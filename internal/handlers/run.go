@@ -28,6 +28,7 @@ func Run(h *Handler) error {
 	})
 
 	r.Route("/users", func(r chi.Router) {
+		r.Post("/register", h.controller.RegisterUser)
 
 		r.Route("/{userId}", func(r chi.Router) {
 			r.Get("/", h.controller.GetUser)
