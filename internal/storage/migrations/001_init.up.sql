@@ -13,9 +13,8 @@ create table users(
     password_hash text not null,
     name varchar(255) not null,
     gender gender,
-    age int,
-    birthday timestamp,
-    check ( age between 18 and 100 )
+    birthday date,
+    CONSTRAINT age_check CHECK (AGE(birthday) >= INTERVAL '18 years')
 );
 
 create table permission_groups(

@@ -3,11 +3,10 @@ package models
 import "time"
 
 type User struct {
-	Id       int       `db:"id"`
-	Username string    `db:"username"`
-	Password string    `db:"password_hash"`
-	Name     string    `db:"name"`
-	Gender   string    `db:"gender"`
-	Age      int       `db:"age"`
-	Birthday time.Time `db:"birthday"`
+	Id       int       `db:"id" json:"id"`
+	Username string    `db:"username" json:"username"`
+	Password string    `db:"password_hash" json:"password"`
+	Name     string    `db:"name" json:"name"`
+	Gender   string    `db:"gender" json:"gender"`
+	Birthday time.Time `db:"birthday" json:"birthday"`
 }
