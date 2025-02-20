@@ -50,8 +50,17 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "201": {
+                        "description": "user registered",
+                        "schema": {
+                            "$ref": "#/definitions/finworker_internal_models_responses_users.RegisterResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "test",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -92,7 +101,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "gender": {
-                    "description": "Gender. ` + "`" + `male` + "`" + `, ` + "`" + `female` + "`" + ` or ` + "`" + `battle helicopter` + "`" + `.",
+                    "description": "Gender. ` + "`" + `male` + "`" + `/` + "`" + `female` + "`" + `.",
                     "type": "string"
                 },
                 "name": {
@@ -105,6 +114,37 @@ const docTemplate = `{
                 },
                 "username": {
                     "description": "Username, which will be displayed and unique.",
+                    "type": "string"
+                }
+            }
+        },
+        "finworker_internal_models_responses_users.RegisterResponse": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/models.User"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "birthday": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

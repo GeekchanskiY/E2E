@@ -8,7 +8,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"finworker/internal/models/requests/users"
+	requests "finworker/internal/models/requests/users"
+	responses "finworker/internal/models/responses/users"
 	"finworker/internal/utils"
 )
 
@@ -18,7 +19,7 @@ import (
 //	@Description	get user by user id
 //	@Tags			users
 //	@Accept			json
-//	@Param			userId	path int	true	"user id"
+//	@Param			userId	path	int	true	"user id"
 //	@Success		200
 //	@Router			/users/{userId} [get]
 func (c *Controller) GetUser(w http.ResponseWriter, r *http.Request) {
@@ -57,11 +58,12 @@ func (c *Controller) GetUser(w http.ResponseWriter, r *http.Request) {
 //	@Description	register user
 //	@Tags			users
 //	@Accept			json
-//	@Param			user	body users.RegisterRequest	true	"user id"
-//	@Success		200
+//	@Param			user	body		requests.RegisterRequest	true	"user id"
+//	@Success		201		{object}	responses.RegisterResponse	"user registered"
+//	@Failure		400		{string}	string						"test"
 //	@Router			/users/register [post]
 func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	var req users.RegisterRequest
+	var req requests.RegisterRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -81,18 +83,12 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(password)
 
-	text := "test"
-	rr, err := utils.Encrypt(text, req.Password)
+	var resp responses.RegisterResponse
+	err = json.NewEncoder(w).Encode(&resp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	text2, err := utils.Decrypt(rr, req.Password)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	fmt.Println(text2)
+	w.WriteHeader(http.StatusCreated)
 
 }

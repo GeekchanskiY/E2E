@@ -8,7 +8,7 @@ definitions:
         description: Birthday. Age must be > 18.
         type: string
       gender:
-        description: Gender. `male`, `female` or `battle helicopter`.
+        description: Gender. `male`/`female`.
         type: string
       name:
         description: Name. just to be displayed
@@ -18,6 +18,26 @@ definitions:
         type: string
       username:
         description: Username, which will be displayed and unique.
+        type: string
+    type: object
+  finworker_internal_models_responses_users.RegisterResponse:
+    properties:
+      user:
+        $ref: '#/definitions/models.User'
+    type: object
+  models.User:
+    properties:
+      birthday:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      username:
         type: string
     type: object
 host: localhost:8080
@@ -62,8 +82,14 @@ paths:
         schema:
           $ref: '#/definitions/finworker_internal_models_requests_users.RegisterRequest'
       responses:
-        "200":
-          description: OK
+        "201":
+          description: user registered
+          schema:
+            $ref: '#/definitions/finworker_internal_models_responses_users.RegisterResponse'
+        "400":
+          description: test
+          schema:
+            type: string
       summary: Register user
       tags:
       - users
