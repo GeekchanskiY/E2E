@@ -2,7 +2,7 @@ begin;
 
 -- scoped access grants availability to see non-private operations
 -- zero access grants only see current wallet amount
-create type access_level as enum('owner', 'full', 'scoped', 'zero');
+create type access_level as enum('owner', 'full', 'read');
 
 create type gender as enum('male', 'female');
 
@@ -21,13 +21,15 @@ create table permission_groups(
     id serial primary key,
     name varchar(255),
     created_at timestamp default current_timestamp,
-    level access_level
+    updated_at timestamp default current_timestamp
 );
 
 create table user_permission(
     id serial primary key,
     permission_group int references permission_groups(id),
     user_id int references users(id),
+    level access_level,
+    created_at timestamp default current_timestamp,
     unique (permission_group, user_id)
 );
 

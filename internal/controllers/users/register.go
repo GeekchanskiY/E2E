@@ -13,7 +13,7 @@ import (
 // RegisterUser godoc
 //
 //	@Summary		Register user
-//	@Description	register user
+//	@Description	Registers user and creates permission group for him.
 //	@Tags			users
 //	@Accept			json
 //	@Param			user	body		requests.RegisterRequest	true	"user id"
@@ -53,10 +53,28 @@ func (c *UserController) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// sets password to empty to avoid sending password hash
 	newUser.Password = ""
 
+	// creating permission group for user
+	permissionGroup, err := c.permissionGroupRepo.Create(r.Context(), &models.PermissionGroup{
+		Name: req.Username,
+	})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	userPermission, err := c.userPermissionRepo.Create(r.Context(), &models.UserPermission{
+		PermissionGroupId: permissionGroup.Id,
+		UserId:            newUser.Id,
+		Level:             models.AccessLevelOwner,
+	})
+
 	resp := responses.RegisterResponse{
-		User: newUser,
+		User:            newUser,
+		PermissionGroup: permissionGroup,
+		UserPermission:  userPermission,
 	}
 
 	w.WriteHeader(http.StatusCreated)
