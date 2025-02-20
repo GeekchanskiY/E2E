@@ -3,9 +3,10 @@ package handlers
 import (
 	"net/http"
 
-	"finworker/docs"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+
+	"finworker/docs"
 )
 
 func Run(h *Handler) error {
@@ -28,10 +29,10 @@ func Run(h *Handler) error {
 	})
 
 	r.Route("/users", func(r chi.Router) {
-		r.Post("/register", h.controller.RegisterUser)
+		r.Post("/register", h.controllers.GetUsers().RegisterUser)
 
 		r.Route("/{userId}", func(r chi.Router) {
-			r.Get("/", h.controller.GetUser)
+			r.Get("/", h.controllers.GetUsers().GetUser)
 		})
 	})
 

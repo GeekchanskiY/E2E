@@ -6,6 +6,6 @@ import (
 
 func NewModule() fx.Option {
 	return fx.Options(
-		fx.Provide(NewController),
+		fx.Provide(NewControllers),
 	)
 }

@@ -1,15 +1,23 @@
 package controllers
 
 import (
+	"go.uber.org/zap"
+
+	"finworker/internal/controllers/users"
 	"finworker/internal/repository"
 )
 
-type Controller struct {
-	repo *repository.Repositories
+type Controllers struct {
+	users *users.UserController
 }
 
-func NewController(repo *repository.Repositories) *Controller {
-	return &Controller{
-		repo: repo,
+func NewControllers(logger *zap.Logger, repo *repository.Repositories) *Controllers {
+	userController := users.New(logger, repo.Users, repo.PermissionGroups)
+	return &Controllers{
+		users: userController,
 	}
+}
+
+func (c *Controllers) GetUsers() *users.UserController {
+	return c.users
 }
