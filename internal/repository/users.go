@@ -16,12 +16,17 @@ func NewUserRepository(db *sqlx.DB) *UserRepository {
 	return &UserRepository{db: db}
 }
 
-func (repo *UserRepository) Create(ctx context.Context, user models.User) error {
-	_, err := repo.db.NamedExecContext(
-		ctx,
-		`INSERT INTO users (username, password_hash, name, gender, birthday) VALUES (:username, :password_hash, :name, :gender, :birthday)`,
-		user)
-	return err
+func (repo *UserRepository) Create(ctx context.Context, user models.User) (int, error) {
+	q := `INSERT INTO users (username, password_hash, name, gender, birthday) VALUES (:username, :password_hash, :name, :gender, :birthday) returning id`
+	namedStmt, err := repo.db.PrepareNamed(q)
+	if err != nil {
+		return 0, err
+	}
+
+	var newId int
+	err = namedStmt.GetContext(ctx, &newId, user)
+
+	return newId, err
 }
 
 func (repo *UserRepository) Get(ctx context.Context, username string) (models.User, error) {

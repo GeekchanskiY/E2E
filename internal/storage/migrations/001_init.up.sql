@@ -12,14 +12,14 @@ create table users(
     username varchar(255) not null unique,
     password_hash text not null,
     name varchar(255) not null,
-    gender gender,
-    birthday date,
+    gender gender not null default 'male',
+    birthday date not null,
     CONSTRAINT age_check CHECK (AGE(birthday) >= INTERVAL '18 years')
 );
 
 create table permission_groups(
     id serial primary key,
-    name varchar(255) unique,
+    name varchar(255),
     created_at timestamp default current_timestamp,
     level access_level
 );

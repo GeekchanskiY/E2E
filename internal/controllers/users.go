@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
 
+	"finworker/internal/models"
 	requests "finworker/internal/models/requests/users"
 	responses "finworker/internal/models/responses/users"
 	"finworker/internal/utils"
@@ -81,14 +81,32 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(password)
+	newUser := models.User{
+		Username: req.Username,
+		Password: password,
+		Name:     req.Name,
+		Gender:   req.Gender,
+		Birthday: req.Birthday,
+	}
 
-	var resp responses.RegisterResponse
+	newId, err := c.repo.Users.Create(r.Context(), newUser)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	newUser.Id = newId
+	newUser.Password = ""
+
+	resp := responses.RegisterResponse{
+		User: &newUser,
+	}
 	err = json.NewEncoder(w).Encode(&resp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	w.WriteHeader(http.StatusCreated)
 
 }
