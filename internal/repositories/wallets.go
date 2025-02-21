@@ -1,4 +1,4 @@
-package repository
+package repositories
 
 import (
 	"context"
@@ -18,8 +18,8 @@ func NewWalletRepository(db *sqlx.DB) *WalletRepository {
 func (r *WalletRepository) Create(ctx context.Context, wallet *models.Wallet) (*models.Wallet, error) {
 	q := `
 		INSERT INTO 
-    	wallets (name, description, permission_group_id, currency, is_salary) 
-		VALUES (:name, :description, :permission_group_id, :currency, :is_salary) 
+    	wallets (name, description, permission_group_id, currency, is_salary, bank_id) 
+		VALUES (:name, :description, :permission_group_id, :currency, :is_salary, :bank_id) 
 		returning id, created_at`
 
 	namedStmt, err := r.db.PrepareNamed(q)

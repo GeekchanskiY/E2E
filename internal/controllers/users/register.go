@@ -35,6 +35,12 @@ func (c *UserController) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	bank, err := c.bankRepo.GetByName(req.PreferredBankName)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	password, err := utils.HashPassword(req.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -82,6 +88,7 @@ func (c *UserController) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		Description:       "Salary wallet",
 		PermissionGroupId: permissionGroup.Id,
 		Currency:          models.CurrencyBYN,
+		BankId:            bank.Id,
 		IsSalary:          true,
 	})
 	if err != nil {

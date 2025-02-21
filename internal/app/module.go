@@ -3,7 +3,7 @@ package app
 import (
 	"finworker/internal/controllers"
 	"finworker/internal/handlers"
-	"finworker/internal/repository"
+	"finworker/internal/repositories"
 	"finworker/internal/scrapers"
 	"finworker/internal/storage"
 
@@ -21,7 +21,7 @@ func NewApp() *fx.App {
 
 		// main logic modules & http server
 		storage.NewModule(),
-		repository.NewModule(),
+		repositories.NewModule(),
 		controllers.NewModule(),
 		handlers.NewModule(),
 

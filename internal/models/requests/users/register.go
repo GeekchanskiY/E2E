@@ -21,6 +21,9 @@ type RegisterRequest struct {
 
 	// Birthday. Age must be > 18.
 	Birthday time.Time `json:"birthday"`
+
+	// PreferredBankName is used to created initial salary wallet
+	PreferredBankName string `json:"preferred_bank_name"`
 }
 
 func (req *RegisterRequest) Validate() error {

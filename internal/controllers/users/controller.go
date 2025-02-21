@@ -1,25 +1,28 @@
 package users
 
 import (
+	"finworker/internal/repositories/banks"
 	"go.uber.org/zap"
 
-	"finworker/internal/repository"
+	"finworker/internal/repositories"
 )
 
 type UserController struct {
 	logger              *zap.Logger
-	userRepo            *repository.UserRepository
-	permissionGroupRepo *repository.PermissionGroupRepository
-	userPermissionRepo  *repository.UserPermissionRepository
-	walletRepo          *repository.WalletRepository
+	userRepo            *repositories.UserRepository
+	permissionGroupRepo *repositories.PermissionGroupRepository
+	userPermissionRepo  *repositories.UserPermissionRepository
+	walletRepo          *repositories.WalletRepository
+	bankRepo            *banks.Repository
 }
 
 func New(
 	logger *zap.Logger,
-	userRepo *repository.UserRepository,
-	permissionGroupRepo *repository.PermissionGroupRepository,
-	userPermissionRepo *repository.UserPermissionRepository,
-	walletRepo *repository.WalletRepository,
+	userRepo *repositories.UserRepository,
+	permissionGroupRepo *repositories.PermissionGroupRepository,
+	userPermissionRepo *repositories.UserPermissionRepository,
+	walletRepo *repositories.WalletRepository,
+	bankRepo *banks.Repository,
 ) *UserController {
 	return &UserController{
 		logger:              logger,
@@ -27,5 +30,6 @@ func New(
 		permissionGroupRepo: permissionGroupRepo,
 		userPermissionRepo:  userPermissionRepo,
 		walletRepo:          walletRepo,
+		bankRepo:            bankRepo,
 	}
 }

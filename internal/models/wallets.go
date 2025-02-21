@@ -19,4 +19,7 @@ type Wallet struct {
 	CreatedAt         time.Time `db:"created_at"`
 	Currency          Currency  `db:"currency"`
 	IsSalary          bool      `db:"is_salary"`
+
+	// BankId refers to internal bank id
+	BankId int `db:"bank_id" json:"bank_id"`
 }
