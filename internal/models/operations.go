@@ -4,9 +4,9 @@ import "time"
 
 type Operation struct {
 	Id               int       `db:"id"`
-	OperationGroupId int       `db:"operation_group"`
+	OperationGroupId int       `db:"operation_group_id"`
 	IsConsumption    bool      `db:"is_consumption"`
 	Time             time.Time `db:"time"`
 	Amount           float64   `db:"amount"`
-	Initiator        int       `db:"initiator"`
+	InitiatorId      int       `db:"initiator_id"`
 }

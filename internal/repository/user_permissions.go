@@ -24,7 +24,7 @@ func (r *UserPermissionRepository) Create(ctx context.Context, permission *model
 		return nil, err
 	}
 
-	q := `INSERT INTO user_permission (permission_group, user_id, level) VALUES (:permission_group, :user_id, :level) RETURNING id, created_at`
+	q := `INSERT INTO user_permission (permission_group_id, user_id, level) VALUES (:permission_group_id, :user_id, :level) RETURNING id, created_at`
 	namedStmt, err := tx.PrepareNamed(q)
 	if err != nil {
 		rollbackErr := tx.Rollback()
