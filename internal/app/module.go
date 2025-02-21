@@ -4,6 +4,7 @@ import (
 	"finworker/internal/controllers"
 	"finworker/internal/handlers"
 	"finworker/internal/repository"
+	"finworker/internal/scrapers"
 	"finworker/internal/storage"
 
 	"go.uber.org/fx"
@@ -18,9 +19,13 @@ func NewApp() *fx.App {
 			GetLogger, // gets logger from main config instance
 		),
 
+		// main logic modules & http server
 		storage.NewModule(),
 		repository.NewModule(),
 		controllers.NewModule(),
 		handlers.NewModule(),
+
+		// scrapers & periodic tasks
+		scrapers.NewModule(),
 	)
 }

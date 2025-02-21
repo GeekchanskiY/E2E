@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"go.uber.org/zap"
 
 	"finworker/docs"
 )
@@ -36,5 +37,13 @@ func Run(h *Handler) error {
 		})
 	})
 
-	return http.ListenAndServe(":8080", r)
+	// used to avoid fx lock
+	go func() {
+		err := http.ListenAndServe(":8080", r)
+		if err != nil {
+			h.logger.Fatal("failed to start http server", zap.Error(err))
+		}
+	}()
+
+	return nil
 }
