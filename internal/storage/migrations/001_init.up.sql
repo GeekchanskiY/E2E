@@ -20,8 +20,8 @@ create table users(
 create table permission_groups(
     id serial primary key,
     name varchar(255),
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp
+    created_at timestamp not null default current_timestamp,
+    updated_at timestamp not null default current_timestamp
 );
 
 create table user_permission(
@@ -29,7 +29,7 @@ create table user_permission(
     permission_group_id int references permission_groups(id),
     user_id int references users(id),
     level access_level,
-    created_at timestamp default current_timestamp,
+    created_at timestamp not null default current_timestamp,
     unique (permission_group_id, user_id)
 );
 
@@ -39,7 +39,7 @@ create table wallets(
     name varchar(255) not null,
     description text,
     permission_group_id int references permission_groups(id),
-    created_at timestamp,
+    created_at timestamp not null default current_timestamp,
     currency varchar(3), -- ISO 4217
     is_salary bool
 );
@@ -55,7 +55,7 @@ create table operations(
     id serial primary key,
     operation_group_id int references operation_groups(id),
     amount float,
-    time timestamp default current_timestamp, -- may be in future
+    time timestamp not null default current_timestamp, -- may be in future
     is_confirmed bool default true,
     initiator_id int references users(id)
 );
@@ -66,7 +66,6 @@ create table distributors(
     source_wallet_id int references wallets(id),
     target_wallet_id int references wallets(id),
     percent float default 5
-
 );
 
 end;

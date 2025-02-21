@@ -13,4 +13,7 @@ type RegisterResponse struct {
 
 	// UserPermission confirms that user is owner of the permission group
 	UserPermission *models.UserPermission `json:"user_permission,omitempty"`
+
+	// Wallet created initial wallet for salary
+	Wallet *models.Wallet `json:"wallet,omitempty"`
 }

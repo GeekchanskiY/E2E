@@ -12,7 +12,7 @@ type Controllers struct {
 }
 
 func NewControllers(logger *zap.Logger, repo *repository.Repositories) *Controllers {
-	userController := users.New(logger, repo.Users, repo.PermissionGroups, repo.UserPermissions)
+	userController := users.New(logger, repo.Users, repo.PermissionGroups, repo.UserPermissions, repo.Wallets)
 	return &Controllers{
 		users: userController,
 	}

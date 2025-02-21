@@ -21,6 +21,8 @@ import (
 //	@Failure		400		{string}	string						"test"
 //	@Router			/users/register [post]
 func (c *UserController) RegisterUser(w http.ResponseWriter, r *http.Request) {
+	c.logger.Info("UserController.RegisterUser")
+
 	var req requests.RegisterRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
@@ -70,11 +72,28 @@ func (c *UserController) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		UserId:            newUser.Id,
 		Level:             models.AccessLevelOwner,
 	})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	wallet, err := c.walletRepo.Create(r.Context(), &models.Wallet{
+		Name:              req.Username + "_salary",
+		Description:       "Salary wallet",
+		PermissionGroupId: permissionGroup.Id,
+		Currency:          models.CurrencyBYN,
+		IsSalary:          true,
+	})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	resp := responses.RegisterResponse{
 		User:            newUser,
 		PermissionGroup: permissionGroup,
 		UserPermission:  userPermission,
+		Wallet:          wallet,
 	}
 
 	w.WriteHeader(http.StatusCreated)

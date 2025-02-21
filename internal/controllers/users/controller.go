@@ -11,6 +11,7 @@ type UserController struct {
 	userRepo            *repository.UserRepository
 	permissionGroupRepo *repository.PermissionGroupRepository
 	userPermissionRepo  *repository.UserPermissionRepository
+	walletRepo          *repository.WalletRepository
 }
 
 func New(
@@ -18,11 +19,13 @@ func New(
 	userRepo *repository.UserRepository,
 	permissionGroupRepo *repository.PermissionGroupRepository,
 	userPermissionRepo *repository.UserPermissionRepository,
+	walletRepo *repository.WalletRepository,
 ) *UserController {
 	return &UserController{
 		logger:              logger,
 		userRepo:            userRepo,
 		permissionGroupRepo: permissionGroupRepo,
 		userPermissionRepo:  userPermissionRepo,
+		walletRepo:          walletRepo,
 	}
 }
