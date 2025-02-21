@@ -32,7 +32,7 @@ func (c *UserController) GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := c.userRepo.GetById(r.Context(), userIdInt)
+	user, err := c.userRepo.Get(r.Context(), userIdInt)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 

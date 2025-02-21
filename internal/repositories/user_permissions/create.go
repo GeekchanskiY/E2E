@@ -1,24 +1,14 @@
-package repositories
+package user_permissions
 
 import (
 	"context"
 	"errors"
 	"time"
 
-	"github.com/jmoiron/sqlx"
-
 	"finworker/internal/models"
 )
 
-type UserPermissionRepository struct {
-	db *sqlx.DB
-}
-
-func NewUserPermissionRepository(db *sqlx.DB) *UserPermissionRepository {
-	return &UserPermissionRepository{db: db}
-}
-
-func (r *UserPermissionRepository) Create(ctx context.Context, permission *models.UserPermission) (*models.UserPermission, error) {
+func (r *Repository) Create(ctx context.Context, permission *models.UserPermission) (*models.UserPermission, error) {
 	tx, err := r.db.BeginTxx(context.Background(), nil)
 	if err != nil {
 		return nil, err
