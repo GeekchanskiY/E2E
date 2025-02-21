@@ -22,8 +22,40 @@ definitions:
     type: object
   finworker_internal_models_responses_users.RegisterResponse:
     properties:
+      permission_group:
+        allOf:
+        - $ref: '#/definitions/models.PermissionGroup'
+        description: PermissionGroup that contains user as owner
       user:
-        $ref: '#/definitions/models.User'
+        allOf:
+        - $ref: '#/definitions/models.User'
+        description: User new user data
+      user_permission:
+        allOf:
+        - $ref: '#/definitions/models.UserPermission'
+        description: UserPermission confirms that user is owner of the permission
+          group
+    type: object
+  models.AccessLevel:
+    enum:
+    - owner
+    - full
+    - read
+    type: string
+    x-enum-varnames:
+    - AccessLevelOwner
+    - AccessLevelFull
+    - AccessLevelRead
+  models.PermissionGroup:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
     type: object
   models.User:
     properties:
@@ -39,6 +71,19 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  models.UserPermission:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      level:
+        $ref: '#/definitions/models.AccessLevel'
+      permission_group_id:
+        type: integer
+      userId:
+        type: integer
     type: object
 host: localhost:8080
 info:
@@ -73,7 +118,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: register user
+      description: Registers user and creates permission group for him.
       parameters:
       - description: user id
         in: body

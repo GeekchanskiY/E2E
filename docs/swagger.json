@@ -27,7 +27,7 @@
     "paths": {
         "/users/register": {
             "post": {
-                "description": "register user",
+                "description": "Registers user and creates permission group for him.",
                 "consumes": [
                     "application/json"
                 ],
@@ -118,8 +118,59 @@
         "finworker_internal_models_responses_users.RegisterResponse": {
             "type": "object",
             "properties": {
+                "permission_group": {
+                    "description": "PermissionGroup that contains user as owner",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.PermissionGroup"
+                        }
+                    ]
+                },
                 "user": {
-                    "$ref": "#/definitions/models.User"
+                    "description": "User new user data",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    ]
+                },
+                "user_permission": {
+                    "description": "UserPermission confirms that user is owner of the permission group",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.UserPermission"
+                        }
+                    ]
+                }
+            }
+        },
+        "models.AccessLevel": {
+            "type": "string",
+            "enum": [
+                "owner",
+                "full",
+                "read"
+            ],
+            "x-enum-varnames": [
+                "AccessLevelOwner",
+                "AccessLevelFull",
+                "AccessLevelRead"
+            ]
+        },
+        "models.PermissionGroup": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
@@ -143,6 +194,26 @@
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "models.UserPermission": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "level": {
+                    "$ref": "#/definitions/models.AccessLevel"
+                },
+                "permission_group_id": {
+                    "type": "integer"
+                },
+                "userId": {
+                    "type": "integer"
                 }
             }
         }
