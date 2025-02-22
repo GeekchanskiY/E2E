@@ -1,13 +1,14 @@
 package scrapers
 
 import (
-	"finworker/internal/scrapers/myfin"
 	"go.uber.org/fx"
+
+	"finworker/internal/scrapers/myfin"
 )
 
 func NewModule() fx.Option {
 	return fx.Options(
 		fx.Provide(myfin.New),
-		fx.Invoke(myfin.GetCurrencies),
+		fx.Invoke(myfin.RunPeriodicInspection),
 	)
 }

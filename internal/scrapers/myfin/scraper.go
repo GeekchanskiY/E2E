@@ -7,6 +7,9 @@ import (
 
 	"github.com/gocolly/colly"
 	"go.uber.org/zap"
+
+	"finworker/internal/repositories/banks"
+	"finworker/internal/repositories/currency_states"
 )
 
 const currencyURL = "https://myfin.by/currency/usd"
@@ -14,6 +17,9 @@ const currencyURL = "https://myfin.by/currency/usd"
 type Scraper struct {
 	ctx    context.Context
 	logger *zap.Logger
+
+	banksRepo          *banks.Repository
+	currencyStatesRepo *currency_states.Repository
 }
 
 func New(log *zap.Logger) *Scraper {
