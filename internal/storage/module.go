@@ -24,7 +24,7 @@ func NewConn(lc fx.Lifecycle, config Config, logger *zap.Logger) *sqlx.DB {
 	if err != nil {
 		panic(err)
 	}
-	err = connector.RunMigrations()
+	err = connector.RunMigrations(false)
 	if err != nil {
 		panic(err)
 	}

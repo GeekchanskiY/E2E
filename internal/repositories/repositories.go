@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"github.com/jmoiron/sqlx"
+
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 	"finworker/internal/repositories/distributors"
@@ -10,7 +12,6 @@ import (
 	"finworker/internal/repositories/user_permissions"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
-	"github.com/jmoiron/sqlx"
 )
 
 type Repositories struct {

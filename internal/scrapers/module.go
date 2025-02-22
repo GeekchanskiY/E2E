@@ -9,6 +9,6 @@ import (
 func NewModule() fx.Option {
 	return fx.Options(
 		fx.Provide(myfin.New),
-		fx.Invoke(myfin.RunPeriodicInspection),
+		fx.Invoke(myfin.RunPeriodicScraping),
 	)
 }

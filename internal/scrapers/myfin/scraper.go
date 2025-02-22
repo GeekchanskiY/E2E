@@ -3,11 +3,13 @@ package myfin
 import (
 	"context"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gocolly/colly"
 	"go.uber.org/zap"
 
+	"finworker/internal/repositories"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 )
@@ -22,15 +24,18 @@ type Scraper struct {
 	currencyStatesRepo *currency_states.Repository
 }
 
-func New(log *zap.Logger) *Scraper {
+func New(log *zap.Logger, repositories *repositories.Repositories) *Scraper {
 
 	return &Scraper{
 		ctx:    context.Background(),
 		logger: log,
+
+		banksRepo:          repositories.GetBanks(),
+		currencyStatesRepo: repositories.GetCurrencyStates(),
 	}
 }
 
-func GetCurrencies(s *Scraper) ([]*Currency, error) {
+func (s *Scraper) GetCurrencies() ([]*Currency, error) {
 	var currencies []*Currency
 
 	c := colly.NewCollector(
@@ -49,9 +54,9 @@ func GetCurrencies(s *Scraper) ([]*Currency, error) {
 				// 5/6 - sell/buy usd/rub
 				switch col {
 				case 0:
-					newCurrencyByn.BankName = el.Text
-					newCurrencyEur.BankName = el.Text
-					newCurrencyRub.BankName = el.Text
+					newCurrencyByn.BankName = strings.TrimSpace(el.Text)
+					newCurrencyEur.BankName = strings.TrimSpace(el.Text)
+					newCurrencyRub.BankName = strings.TrimSpace(el.Text)
 				case 1:
 					if el.Text == "" || newCurrencyByn == nil {
 						newCurrencyByn = nil
