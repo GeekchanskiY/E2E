@@ -65,6 +65,7 @@ create table operations(
     operation_group_id int references operation_groups(id),
     amount float,
     time timestamp not null default current_timestamp, -- may be in future
+    is_monthly bool default false,
     is_confirmed bool default true,
     initiator_id int references users(id)
 );

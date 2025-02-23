@@ -7,6 +7,7 @@ type Operation struct {
 	OperationGroupId int       `db:"operation_group_id"`
 	IsConsumption    bool      `db:"is_consumption"`
 	Time             time.Time `db:"time"`
+	IsMonthly        bool      `db:"is_monthly"`
 	Amount           float64   `db:"amount"`
 	InitiatorId      int       `db:"initiator_id"`
 }
