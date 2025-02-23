@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type UserController struct {
+type Controller struct {
 	logger              *zap.Logger
 	userRepo            *users.Repository
 	permissionGroupRepo *permission_groups.Repository
@@ -26,8 +26,8 @@ func New(
 	userPermissionRepo *user_permissions.Repository,
 	walletRepo *wallets.Repository,
 	bankRepo *banks.Repository,
-) *UserController {
-	return &UserController{
+) *Controller {
+	return &Controller{
 		logger:              logger,
 		userRepo:            userRepo,
 		permissionGroupRepo: permissionGroupRepo,

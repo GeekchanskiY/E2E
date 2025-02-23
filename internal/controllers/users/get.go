@@ -17,7 +17,7 @@ import (
 //	@Param			userId	path	int	true	"user id"
 //	@Success		200
 //	@Router			/users/{userId} [get]
-func (c *UserController) GetUser(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) GetUser(w http.ResponseWriter, r *http.Request) {
 	userId := chi.URLParam(r, "userId")
 	if userId == "" {
 		http.Error(w, "User Id is required", http.StatusBadRequest)

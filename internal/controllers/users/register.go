@@ -20,7 +20,7 @@ import (
 //	@Success		201		{object}	responses.RegisterResponse	"user registered"
 //	@Failure		400		{string}	string						"test"
 //	@Router			/users/register [post]
-func (c *UserController) RegisterUser(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	c.logger.Info("UserController.RegisterUser")
 
 	var req requests.RegisterRequest

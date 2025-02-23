@@ -8,7 +8,7 @@ import (
 )
 
 type Controllers struct {
-	users *users.UserController
+	users *users.Controller
 }
 
 func NewControllers(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
@@ -25,6 +25,6 @@ func NewControllers(logger *zap.Logger, repo *repositories.Repositories) *Contro
 	}
 }
 
-func (c *Controllers) GetUsers() *users.UserController {
+func (c *Controllers) GetUsers() *users.Controller {
 	return c.users
 }
