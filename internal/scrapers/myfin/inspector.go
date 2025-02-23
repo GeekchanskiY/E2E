@@ -10,6 +10,7 @@ import (
 )
 
 const (
+	timeZoneDifference  = 3 * time.Hour // bad practice, but I dont see other way to resolve this now
 	inspectionFrequency = 12 * time.Hour
 )
 
@@ -22,12 +23,16 @@ func RunPeriodicScraping(scraper *Scraper) error {
 		return err
 	}
 
-	if lastUpdateTime.IsZero() || lastUpdateTime.After(time.Now().Add(inspectionFrequency)) {
-		go runScraping(ctx, errChan, scraper)
-	}
-
+	// running periodic scraping
 	ticker := time.NewTicker(inspectionFrequency)
 	defer ticker.Stop()
+
+	// running initial scraping if required
+	if lastUpdateTime.IsZero() || lastUpdateTime.After(time.Now().Add(inspectionFrequency)) {
+		go runScraping(ctx, errChan, scraper)
+	} else {
+		ticker.Reset(inspectionFrequency - time.Now().Add(timeZoneDifference).Sub(lastUpdateTime))
+	}
 
 	select {
 	case <-ctx.Done():
@@ -35,6 +40,7 @@ func RunPeriodicScraping(scraper *Scraper) error {
 		return nil
 	case <-ticker.C:
 		go runScraping(ctx, errChan, scraper)
+		ticker.Reset(inspectionFrequency)
 	case err := <-errChan:
 		scraper.logger.Warn("scraping failed", zap.Error(err))
 		return err
