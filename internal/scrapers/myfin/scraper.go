@@ -44,9 +44,15 @@ func (s *Scraper) GetCurrencies() ([]*Currency, error) {
 
 	c.OnHTML("table.currencies-courses", func(e *colly.HTMLElement) {
 		e.ForEach("tr.currencies-courses__row-main", func(_ int, el *colly.HTMLElement) {
-			newCurrencyByn := &Currency{}
-			newCurrencyEur := &Currency{}
-			newCurrencyRub := &Currency{}
+			newCurrencyByn := &Currency{
+				Name: "BYN",
+			}
+			newCurrencyEur := &Currency{
+				Name: "EUR",
+			}
+			newCurrencyRub := &Currency{
+				Name: "RUB",
+			}
 			el.ForEach("td", func(col int, el *colly.HTMLElement) {
 				// 0 - bank name
 				// 1/2 - sell/buy usd
