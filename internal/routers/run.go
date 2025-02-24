@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -50,7 +51,7 @@ func Run(h *Router) error {
 
 	// used to avoid fx lock
 	go func() {
-		err := http.ListenAndServe(":8080", r)
+		err := http.ListenAndServe(fmt.Sprintf("%s:%d", h.config.Host, h.config.Port), r)
 		if err != nil {
 			h.logger.Fatal("failed to start http server", zap.Error(err))
 		}

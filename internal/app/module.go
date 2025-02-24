@@ -17,6 +17,7 @@ func NewApp() *fx.App {
 			NewConfig,
 			GetDb,     // gets database config from main config instance
 			GetLogger, // gets logger from main config instance
+			GetRouter,
 		),
 
 		// main logic modules & http server

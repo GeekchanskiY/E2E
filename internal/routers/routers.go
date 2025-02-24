@@ -9,11 +9,13 @@ import (
 type Router struct {
 	logger      *zap.Logger
 	controllers *controllers.Controllers
+	config      Config
 }
 
-func NewHandler(logger *zap.Logger, controllers *controllers.Controllers) *Router {
+func NewHandler(logger *zap.Logger, controllers *controllers.Controllers, config Config) *Router {
 	return &Router{
 		logger:      logger,
 		controllers: controllers,
+		config:      config,
 	}
 }
