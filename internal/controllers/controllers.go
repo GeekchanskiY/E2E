@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"finworker/internal/controllers/frontend"
 	"go.uber.org/zap"
 
 	"finworker/internal/controllers/users"
@@ -8,7 +9,8 @@ import (
 )
 
 type Controllers struct {
-	users *users.Controller
+	users    *users.Controller
+	frontend *frontend.Controller
 }
 
 func NewControllers(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
@@ -20,11 +22,19 @@ func NewControllers(logger *zap.Logger, repo *repositories.Repositories) *Contro
 		repo.GetWallets(),
 		repo.GetBanks(),
 	)
+
+	frontendController := frontend.New(logger)
+
 	return &Controllers{
-		users: userController,
+		users:    userController,
+		frontend: frontendController,
 	}
 }
 
 func (c *Controllers) GetUsers() *users.Controller {
 	return c.users
+}
+
+func (c *Controllers) GetFrontend() *frontend.Controller {
+	return c.frontend
 }

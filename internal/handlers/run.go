@@ -35,11 +35,15 @@ func Run(h *Handler) error {
 		}
 	})
 
-	r.Route("/users", func(r chi.Router) {
-		r.Post("/register", h.controllers.GetUsers().RegisterUser)
+	r.Get("/", h.controllers.GetFrontend().Index)
 
-		r.Route("/{userId}", func(r chi.Router) {
-			r.Get("/", h.controllers.GetUsers().GetUser)
+	r.Route("/api", func(r chi.Router) {
+		r.Route("/users", func(r chi.Router) {
+			r.Post("/register", h.controllers.GetUsers().RegisterUser)
+
+			r.Route("/{userId}", func(r chi.Router) {
+				r.Get("/", h.controllers.GetUsers().GetUser)
+			})
 		})
 	})
 
