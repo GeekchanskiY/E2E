@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"io/fs"
 	"net/http"
 
 	"finworker/internal/static"
@@ -19,8 +18,7 @@ func Run(h *Handler) error {
 	r.Use(middleware.RequestID)
 
 	// static handling
-	staticFilesFs, _ := fs.Sub(static.Fs, "files")
-	fileserver := http.FileServer(http.FS(staticFilesFs))
+	fileserver := http.FileServer(http.FS(static.Fs))
 
 	r.Handle("/static/*", http.StripPrefix("/static", fileserver))
 
