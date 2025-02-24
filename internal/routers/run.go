@@ -1,26 +1,27 @@
-package handlers
+package routers
 
 import (
 	"net/http"
 
-	"finworker/internal/static"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
 
+	"finworker/internal/static"
+
 	"finworker/docs"
 )
 
-func Run(h *Handler) error {
+func Run(h *Router) error {
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.RequestID)
 
 	// static handling
-	fileserver := http.FileServer(http.FS(static.Fs))
+	fileServer := http.FileServer(http.FS(static.Fs))
 
-	r.Handle("/static/*", http.StripPrefix("/static", fileserver))
+	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
