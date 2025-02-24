@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"io/fs"
 	"net/http"
 
+	"finworker/internal/static"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
@@ -15,6 +17,12 @@ func Run(h *Handler) error {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.RequestID)
+
+	// static handling
+	staticFilesFs, _ := fs.Sub(static.Fs, "files")
+	fileserver := http.FileServer(http.FS(staticFilesFs))
+
+	r.Handle("/static/*", http.StripPrefix("/static", fileserver))
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
