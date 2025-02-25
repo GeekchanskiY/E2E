@@ -38,6 +38,7 @@ func Run(h *Router) error {
 	})
 
 	r.Get("/", h.controllers.GetFrontend().Index)
+	r.Get("/finance", h.controllers.GetFrontend().Finance)
 
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/users", func(r chi.Router) {
