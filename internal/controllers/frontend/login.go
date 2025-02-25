@@ -5,9 +5,9 @@ import (
 	"net/http"
 )
 
-func (c *Controller) Finance(w http.ResponseWriter, _ *http.Request) {
-	c.logger.Info("frontend.finance")
-	html, err := template.ParseFS(c.fs, "base.gohtml", "finance.gohtml")
+func (c *Controller) Login(w http.ResponseWriter, _ *http.Request) {
+	c.logger.Info("frontend.login")
+	html, err := template.ParseFS(c.fs, "base.gohtml", "login.gohtml")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
