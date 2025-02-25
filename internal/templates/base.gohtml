@@ -19,12 +19,16 @@
 </head>
 <body>
 <header>
-    <img src="/static/icons/logo.png" alt="logo">
+    <div class="container header-container">
+
+        <a href="/" class="header-link">
+            <img src="/static/icons/coffee.png" alt="logo">
+            <span>E2E</span>
+        </a>
+    </div>
+
 </header>
 {{ template "main" .}}
-<footer>
-    footer
-</footer>
 </body>
 </html>
 {{ end }}
