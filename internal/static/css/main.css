@@ -17,6 +17,44 @@
     color: var(--accent);
 }
 
+.container {
+    width: 100%;
+}
+
+.container-xl{
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+    .container-xl{
+        max-width: 1140px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1320px;
+    }
+    .container-xl{
+        max-width: 1320px;
+    }
+}
+
 body {
     background-color: var(--background);
 }
@@ -27,8 +65,4 @@ header {
     display: flex;
     justify-content: space-between;
     padding: 1em;
-}
-
-@media screen {
-    
 }
