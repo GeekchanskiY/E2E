@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"finworker/internal/routers/middlewares"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
@@ -18,6 +19,7 @@ func Run(h *Router) error {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.RequestID)
+	r.Use(middlewares.Auth)
 
 	// static handling
 	fileServer := http.FileServer(http.FS(static.Fs))
@@ -40,6 +42,7 @@ func Run(h *Router) error {
 	r.Get("/", h.controllers.GetFrontend().Index)
 	r.Get("/finance", h.controllers.GetFrontend().Finance)
 	r.Get("/login", h.controllers.GetFrontend().Login)
+	r.Post("/login", h.controllers.GetFrontend().LoginForm)
 	r.Get("/register", h.controllers.GetFrontend().Login)
 
 	r.Route("/api", func(r chi.Router) {
