@@ -5,7 +5,13 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <span>{{ .Text }}</span>
+            <h2>CRM-система по управлению отношениями</h2>
+            <span>автор: <a href="https://github.com/GeekchanskiY">GeekchanskiY</a></span> <br>
+            <span>Сегодняшнее супер-сообщение от сервера: {{ .Text }}</span>
+            <h3>Сервисы</h3>
+            <ul>
+                <li class="icon-list-link"><a href="/finance"><img src="/static/icons/increase.png" alt="finance"><span>Финансы</span></a> </li>
+            </ul>
         </div>
     </main>
 {{ end }}

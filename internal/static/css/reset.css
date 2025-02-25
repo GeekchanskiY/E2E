@@ -71,3 +71,7 @@ select {
         scroll-behavior: auto !important;
     }
 }
+
+ul {
+    list-style-type: none
+}
