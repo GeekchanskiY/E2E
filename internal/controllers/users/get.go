@@ -1,48 +1,16 @@
 package users
 
 import (
-	"encoding/json"
-	"net/http"
-	"strconv"
+	"context"
 
-	"github.com/go-chi/chi/v5"
+	"finworker/internal/models"
 )
 
-// GetUser godoc
-//
-//	@Summary		Get user
-//	@Description	get user by user id
-//	@Tags			users
-//	@Accept			json
-//	@Param			userId	path	int	true	"user id"
-//	@Success		200
-//	@Router			/users/{userId} [get]
-func (c *Controller) GetUser(w http.ResponseWriter, r *http.Request) {
-	userId := chi.URLParam(r, "userId")
-	if userId == "" {
-		http.Error(w, "User Id is required", http.StatusBadRequest)
-
-		return
-	}
-
-	userIdInt, err := strconv.Atoi(userId)
+func (c *Controller) GetUser(ctx context.Context, userId int) (*models.User, error) {
+	user, err := c.userRepo.Get(ctx, userId)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-
-		return
+		return nil, err
 	}
 
-	user, err := c.userRepo.Get(r.Context(), userIdInt)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-
-		return
-	}
-
-	err = json.NewEncoder(w).Encode(user)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-
-		return
-	}
+	return &user, nil
 }

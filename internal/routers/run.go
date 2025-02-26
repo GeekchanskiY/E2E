@@ -4,14 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"finworker/internal/routers/middlewares"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
 
-	"finworker/internal/static"
-
 	"finworker/docs"
+	"finworker/internal/routers/middlewares"
+	"finworker/internal/static"
 )
 
 func Run(h *Router) error {
@@ -39,18 +38,18 @@ func Run(h *Router) error {
 		}
 	})
 
-	r.Get("/", h.controllers.GetFrontend().Index)
-	r.Get("/finance", h.controllers.GetFrontend().Finance)
-	r.Get("/login", h.controllers.GetFrontend().Login)
-	r.Post("/login", h.controllers.GetFrontend().LoginForm)
-	r.Get("/register", h.controllers.GetFrontend().Login)
+	r.Get("/", h.handlers.GetFrontend().Index)
+	r.Get("/finance", h.handlers.GetFrontend().Finance)
+	r.Get("/login", h.handlers.GetFrontend().Login)
+	r.Post("/login", h.handlers.GetFrontend().Login)
+	r.Get("/register", h.handlers.GetFrontend().Register)
 
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/users", func(r chi.Router) {
-			r.Post("/register", h.controllers.GetUsers().RegisterUser)
+			r.Post("/register", h.handlers.GetUsers().Register)
 
 			r.Route("/{userId}", func(r chi.Router) {
-				r.Get("/", h.controllers.GetUsers().GetUser)
+				r.Get("/", h.handlers.GetUsers().Get)
 			})
 		})
 	})

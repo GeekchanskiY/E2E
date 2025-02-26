@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"finworker/internal/controllers/frontend"
 	"go.uber.org/zap"
+
+	"finworker/internal/controllers/frontend"
 
 	"finworker/internal/controllers/users"
 	"finworker/internal/repositories"
@@ -13,7 +14,7 @@ type Controllers struct {
 	frontend *frontend.Controller
 }
 
-func NewControllers(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
+func New(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
 	userController := users.New(
 		logger,
 		repo.GetUsers(),

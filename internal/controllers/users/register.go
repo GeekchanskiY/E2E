@@ -1,8 +1,7 @@
 package users
 
 import (
-	"encoding/json"
-	"net/http"
+	"context"
 
 	"finworker/internal/models"
 	requests "finworker/internal/models/requests/users"
@@ -10,41 +9,17 @@ import (
 	"finworker/internal/utils"
 )
 
-// RegisterUser godoc
-//
-//	@Summary		Register user
-//	@Description	Registers user and creates permission group for him.
-//	@Tags			users
-//	@Accept			json
-//	@Param			user	body		requests.RegisterRequest	true	"user id"
-//	@Success		201		{object}	responses.RegisterResponse	"user registered"
-//	@Failure		400		{string}	string						"test"
-//	@Router			/users/register [post]
-func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequest) (resp *responses.RegisterResponse, err error) {
 	c.logger.Info("UserController.RegisterUser")
-
-	var req requests.RegisterRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	if err = req.Validate(); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
 
 	bank, err := c.bankRepo.GetByName(req.PreferredBankName)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
 
 	password, err := utils.HashPassword(req.Password)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
 
 	newUser := &models.User{
@@ -55,35 +30,32 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		Birthday: req.Birthday,
 	}
 
-	newUser, err = c.userRepo.Create(r.Context(), newUser)
+	newUser, err = c.userRepo.Create(ctx, newUser)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return nil, err
 	}
 
 	// sets password to empty to avoid sending password hash
 	newUser.Password = ""
 
 	// creating permission group for user
-	permissionGroup, err := c.permissionGroupRepo.Create(r.Context(), &models.PermissionGroup{
+	permissionGroup, err := c.permissionGroupRepo.Create(ctx, &models.PermissionGroup{
 		Name: req.Username,
 	})
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return nil, err
 	}
 
-	userPermission, err := c.userPermissionRepo.Create(r.Context(), &models.UserPermission{
+	userPermission, err := c.userPermissionRepo.Create(ctx, &models.UserPermission{
 		PermissionGroupId: permissionGroup.Id,
 		UserId:            newUser.Id,
 		Level:             models.AccessLevelOwner,
 	})
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return nil, err
 	}
 
-	wallet, err := c.walletRepo.Create(r.Context(), &models.Wallet{
+	wallet, err := c.walletRepo.Create(ctx, &models.Wallet{
 		Name:              req.Username + "_salary",
 		Description:       "Salary wallet",
 		PermissionGroupId: permissionGroup.Id,
@@ -92,21 +64,13 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		IsSalary:          true,
 	})
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return nil, err
 	}
 
-	resp := responses.RegisterResponse{
+	return &responses.RegisterResponse{
 		User:            newUser,
 		PermissionGroup: permissionGroup,
 		UserPermission:  userPermission,
 		Wallet:          wallet,
-	}
-
-	w.WriteHeader(http.StatusCreated)
-	err = json.NewEncoder(w).Encode(&resp)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	}, nil
 }

@@ -1,21 +1,16 @@
 package frontend
 
 import (
+	"context"
 	"html/template"
-	"net/http"
 )
 
-func (c *Controller) Finance(w http.ResponseWriter, _ *http.Request) {
+func (c *Controller) Finance(_ context.Context) (*template.Template, error) {
 	c.logger.Info("frontend.finance")
 	html, err := template.ParseFS(c.fs, "base.gohtml", "finance.gohtml")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
 
-	err = html.ExecuteTemplate(w, "base", nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	return html, nil
 }

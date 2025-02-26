@@ -1,43 +1,27 @@
 package frontend
 
 import (
-	"fmt"
+	"context"
 	"html/template"
-	"net/http"
 )
 
-func (c *Controller) Login(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) Login(_ context.Context) (*template.Template, error) {
 	c.logger.Info("frontend.login")
-	user, ok := r.Context().Value("user").(string)
-	if ok {
-		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
-		return
-	}
-	fmt.Println(user)
+
 	html, err := template.ParseFS(c.fs, "base.gohtml", "login.gohtml")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
 
-	err = html.ExecuteTemplate(w, "base", nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	return html, nil
 }
 
-func (c *Controller) LoginForm(w http.ResponseWriter, r *http.Request) {
+func (c *Controller) LoginForm(_ context.Context) (*template.Template, error) {
 	c.logger.Info("frontend.login.form")
 	html, err := template.ParseFS(c.fs, "base.gohtml", "login.gohtml")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
 
-	err = html.ExecuteTemplate(w, "base", nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	return html, nil
 }
