@@ -39,12 +39,16 @@ func Run(h *Router) error {
 	})
 
 	r.Get("/", h.handlers.GetFrontend().Index)
-	r.Get("/finance", h.handlers.GetFrontend().Finance)
 	r.Get("/login", h.handlers.GetFrontend().Login)
 	r.Post("/login", h.handlers.GetFrontend().Login)
 	r.Get("/register", h.handlers.GetFrontend().Register)
 
-	r.Route("/api", func(r chi.Router) {
+	r.Group(func(r chi.Router) {
+		r.Use(middlewares.Protected(true))
+		r.Get("/finance", h.handlers.GetFrontend().Finance)
+	})
+
+	r.Route("/api/v1", func(r chi.Router) {
 		r.Route("/users", func(r chi.Router) {
 			r.Post("/register", h.handlers.GetUsers().Register)
 
