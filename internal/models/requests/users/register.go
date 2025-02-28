@@ -24,6 +24,15 @@ type RegisterRequest struct {
 
 	// PreferredBankName is used to created initial salary wallet
 	PreferredBankName string `json:"preferred_bank_name"`
+
+	// Salary may be 0, then you'll need to manually set your salary every month
+	Salary int `json:"salary"`
+
+	// SalaryCurrency
+	SalaryCurrency string `json:"salary_currency"`
+
+	// SalaryDate may be zero, then you'll need to confirm achieving your salary
+	SalaryDate time.Time `json:"salary_date"`
 }
 
 func (req *RegisterRequest) Validate() error {

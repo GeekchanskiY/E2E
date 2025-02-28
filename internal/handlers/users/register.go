@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	requests "finworker/internal/models/requests/users"
+	_ "finworker/internal/models/responses/users"
 )
 
 // Register godoc
@@ -14,7 +15,7 @@ import (
 //	@Tags			users
 //	@Accept			json
 //	@Param			user	body		requests.RegisterRequest	true	"user id"
-//	@Success		201		{object}	responses.RegisterResponse	"user registered"
+//	@Success		201		{object}	users.RegisterResponse		"user registered"
 //	@Failure		400		{string}	string						"test"
 //	@Router			/users/register [post]
 func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {

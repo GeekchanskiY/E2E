@@ -16,6 +16,20 @@ definitions:
       password:
         description: Password, which will be used with secret
         type: string
+      preferred_bank_name:
+        description: PreferredBankName is used to created initial salary wallet
+        type: string
+      salary:
+        description: Salary may be 0, then you'll need to manually set your salary
+          every month
+        type: integer
+      salary_currency:
+        description: SalaryCurrency
+        type: string
+      salary_date:
+        description: SalaryDate may be zero, then you'll need to confirm achieving
+          your salary
+        type: string
       username:
         description: Username, which will be displayed and unique.
         type: string
@@ -35,6 +49,10 @@ definitions:
         - $ref: '#/definitions/models.UserPermission'
         description: UserPermission confirms that user is owner of the permission
           group
+      wallet:
+        allOf:
+        - $ref: '#/definitions/models.Wallet'
+        description: Wallet created initial wallet for salary
     type: object
   models.AccessLevel:
     enum:
@@ -46,6 +64,18 @@ definitions:
     - AccessLevelOwner
     - AccessLevelFull
     - AccessLevelRead
+  models.Currency:
+    enum:
+    - USD
+    - EUR
+    - BYN
+    - RUB
+    type: string
+    x-enum-varnames:
+    - CurrencyUSD
+    - CurrencyEUR
+    - CurrencyBYN
+    - CurrencyRUB
   models.PermissionGroup:
     properties:
       created_at:
@@ -82,7 +112,27 @@ definitions:
         $ref: '#/definitions/models.AccessLevel'
       permission_group_id:
         type: integer
-      userId:
+      user_id:
+        type: integer
+    type: object
+  models.Wallet:
+    properties:
+      bank_id:
+        description: BankId refers to internal bank id
+        type: integer
+      createdAt:
+        type: string
+      currency:
+        $ref: '#/definitions/models.Currency'
+      description:
+        type: string
+      id:
+        type: integer
+      isSalary:
+        type: boolean
+      name:
+        type: string
+      permissionGroupId:
         type: integer
     type: object
 host: localhost:8080

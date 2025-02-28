@@ -112,6 +112,22 @@ const docTemplate = `{
                     "description": "Password, which will be used with secret",
                     "type": "string"
                 },
+                "preferred_bank_name": {
+                    "description": "PreferredBankName is used to created initial salary wallet",
+                    "type": "string"
+                },
+                "salary": {
+                    "description": "Salary may be 0, then you'll need to manually set your salary every month",
+                    "type": "integer"
+                },
+                "salary_currency": {
+                    "description": "SalaryCurrency",
+                    "type": "string"
+                },
+                "salary_date": {
+                    "description": "SalaryDate may be zero, then you'll need to confirm achieving your salary",
+                    "type": "string"
+                },
                 "username": {
                     "description": "Username, which will be displayed and unique.",
                     "type": "string"
@@ -144,6 +160,14 @@ const docTemplate = `{
                             "$ref": "#/definitions/models.UserPermission"
                         }
                     ]
+                },
+                "wallet": {
+                    "description": "Wallet created initial wallet for salary",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Wallet"
+                        }
+                    ]
                 }
             }
         },
@@ -158,6 +182,21 @@ const docTemplate = `{
                 "AccessLevelOwner",
                 "AccessLevelFull",
                 "AccessLevelRead"
+            ]
+        },
+        "models.Currency": {
+            "type": "string",
+            "enum": [
+                "USD",
+                "EUR",
+                "BYN",
+                "RUB"
+            ],
+            "x-enum-varnames": [
+                "CurrencyUSD",
+                "CurrencyEUR",
+                "CurrencyBYN",
+                "CurrencyRUB"
             ]
         },
         "models.PermissionGroup": {
@@ -215,7 +254,37 @@ const docTemplate = `{
                 "permission_group_id": {
                     "type": "integer"
                 },
-                "userId": {
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Wallet": {
+            "type": "object",
+            "properties": {
+                "bank_id": {
+                    "description": "BankId refers to internal bank id",
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "currency": {
+                    "$ref": "#/definitions/models.Currency"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isSalary": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "permissionGroupId": {
                     "type": "integer"
                 }
             }
