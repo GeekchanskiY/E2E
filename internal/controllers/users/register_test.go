@@ -2,14 +2,17 @@ package users
 
 import (
 	"context"
+	"errors"
 	"testing"
 	"time"
 
+	"finworker/internal/models"
 	"finworker/internal/models/requests/users"
 	"finworker/internal/repositories"
 	"finworker/internal/storage"
 	"github.com/GeekchanskiY/migratigo"
 	"github.com/jmoiron/sqlx"
+	"github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
@@ -62,9 +65,12 @@ func TestController_RegisterUser(t *testing.T) {
 		repos.GetBanks(),
 	)
 
+	const newUserName = "newUser"
+
 	t.Run("success", func(t *testing.T) {
+
 		reps, err := controller.RegisterUser(ctx, users.RegisterRequest{
-			Username:          "test",
+			Username:          newUserName,
 			Password:          "testPassword1234!",
 			Name:              "test",
 			Gender:            "male",
@@ -74,11 +80,43 @@ func TestController_RegisterUser(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, reps)
+
+		// Check new user creation
+		var newId int64
+		q := `select id from  users where username = $1`
+		err = db.QueryRow(q, newUserName).Scan(&newId)
+		assert.NoError(t, err)
+		assert.Equal(t, int64(1), newId)
+
+		// Check new permission group creation
+		q = `select id from permission_groups where name = $1`
+		err = db.QueryRow(q, newUserName).Scan(&newId)
+		assert.NoError(t, err)
+		assert.Equal(t, int64(1), newId)
+
+		// Check new user permission creation
+		var newLevel string
+		q = `select id, level from user_permission where user_id = 1 and permission_group_id = 1`
+		err = db.QueryRow(q).Scan(&newId, &newLevel)
+		assert.NoError(t, err)
+		assert.Equal(t, int64(1), newId)
+		assert.Equal(t, newLevel, string(models.AccessLevelOwner))
+
+		// Check new wallet creation
+		var newWalletName string
+		var newWalletIsSalary bool
+		q = `select id, name, is_salary from wallets where permission_group_id = 1`
+		err = db.QueryRow(q).Scan(&newId, &newWalletName, &newWalletIsSalary)
+		assert.NoError(t, err)
+		assert.Equal(t, true, newWalletIsSalary)
+		assert.Equal(t, int64(1), newId)
+		assert.Equal(t, newUserName+"_salary", newWalletName)
+
 	})
 
 	t.Run("invalid user", func(t *testing.T) {
 		reps, err := controller.RegisterUser(ctx, users.RegisterRequest{
-			Username:          "test",
+			Username:          newUserName,
 			Password:          "testPassword1234!",
 			Name:              "test",
 			Gender:            "male",
@@ -86,6 +124,13 @@ func TestController_RegisterUser(t *testing.T) {
 			PreferredBankName: "priorbank",
 		})
 		assert.Error(t, err)
+
+		// Check that error is user already exists
+		var pgErr *pq.Error
+		if errors.As(err, &pgErr) {
+			assert.Equal(t, "23505", string(pgErr.Code))
+		}
+
 		assert.Nil(t, reps)
 	})
 }
