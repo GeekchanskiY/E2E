@@ -42,6 +42,17 @@ create table banks(
 -- I use only these 2 banks, but it may be expanded, obviously
 insert into banks(name) values ('priorbank'), ('alfabank');
 
+create table currency_states(
+    id serial primary key,
+    bank_id int references banks(id),
+    source_name varchar(255), -- for example, different in app and ATM
+    currency_name varchar(3),
+    sell_usd float default 1,
+    buy_usd float default 1,
+    time timestamp default current_timestamp
+);
+
+
 create table wallets(
     id serial primary key,
     name varchar(255) not null,
@@ -76,16 +87,6 @@ create table distributors(
     source_wallet_id int references wallets(id),
     target_wallet_id int references wallets(id),
     percent float default 5
-);
-
-create table currency_states(
-    id serial primary key,
-    bank_id int references banks(id),
-    source_name varchar(255), -- for example, different in app and ATM
-    currency_name varchar(3),
-    sell_usd float default 1,
-    buy_usd float default 1,
-    time timestamp default current_timestamp
 );
 
 end;

@@ -67,10 +67,37 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 		return nil, err
 	}
 
+	var operationGroup *models.OperationGroup
+	var operation *models.Operation
+	if req.Salary != 0 {
+		operationGroup, err = c.operationGroupRepo.Create(ctx, &models.OperationGroup{
+			Name:     req.Username + "_salary",
+			WalletId: wallet.Id,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		operation, err = c.operationsRepo.Create(ctx, &models.Operation{
+			OperationGroupId: operationGroup.Id,
+			IsConsumption:    false,
+			Time:             req.SalaryDate,
+			IsMonthly:        true,
+			Amount:           req.Salary,
+			InitiatorId:      newUser.Id,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+	}
+
 	return &responses.RegisterResponse{
 		User:            newUser,
 		PermissionGroup: permissionGroup,
 		UserPermission:  userPermission,
 		Wallet:          wallet,
+		OperationGroup:  operationGroup,
+		Operation:       operation,
 	}, nil
 }

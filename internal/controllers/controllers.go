@@ -22,6 +22,8 @@ func New(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
 		repo.GetUserPermissions(),
 		repo.GetWallets(),
 		repo.GetBanks(),
+		repo.GetOperationGroups(),
+		repo.GetOperations(),
 	)
 
 	frontendController := frontend.New(logger)

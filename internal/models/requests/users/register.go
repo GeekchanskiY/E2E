@@ -26,7 +26,7 @@ type RegisterRequest struct {
 	PreferredBankName string `json:"preferred_bank_name"`
 
 	// Salary may be 0, then you'll need to manually set your salary every month
-	Salary int `json:"salary"`
+	Salary float64 `json:"salary"`
 
 	// SalaryCurrency
 	SalaryCurrency string `json:"salary_currency"`
@@ -66,6 +66,10 @@ func (req *RegisterRequest) Validate() error {
 		if unicode.IsUpper(s) {
 			uppercaseFound = true
 		}
+	}
+
+	if req.Salary < 0 {
+		errs = append(errs, errors.New("salary must be positive"))
 	}
 
 	if !uppercaseFound {

@@ -63,6 +63,8 @@ func TestController_RegisterUser(t *testing.T) {
 		repos.GetUserPermissions(),
 		repos.GetWallets(),
 		repos.GetBanks(),
+		repos.GetOperationGroups(),
+		repos.GetOperations(),
 	)
 
 	const newUserName = "newUser"
@@ -76,6 +78,9 @@ func TestController_RegisterUser(t *testing.T) {
 			Gender:            "male",
 			Birthday:          time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC),
 			PreferredBankName: "priorbank",
+			Salary:            2000,
+			SalaryCurrency:    "USD",
+			SalaryDate:        time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC),
 		})
 
 		assert.NoError(t, err)
@@ -111,6 +116,21 @@ func TestController_RegisterUser(t *testing.T) {
 		assert.Equal(t, true, newWalletIsSalary)
 		assert.Equal(t, int64(1), newId)
 		assert.Equal(t, newUserName+"_salary", newWalletName)
+
+		q = `select id, name from operation_groups where wallet_id = 1`
+		err = db.QueryRow(q).Scan(&newId, &newWalletName)
+		assert.NoError(t, err)
+		assert.Equal(t, int64(1), newId)
+		assert.Equal(t, newUserName+"_salary", newWalletName)
+
+		var operation models.Operation
+		q = `select id, amount, time, is_monthly from operations where operation_group_id = 1`
+		err = db.QueryRow(q).Scan(&operation.Id, &operation.Amount, &operation.Time, &operation.IsMonthly)
+		assert.NoError(t, err)
+		assert.Equal(t, 1, operation.Id)
+		assert.Equal(t, float64(2000), operation.Amount)
+		assert.Equal(t, true, operation.IsMonthly)
+		assert.Equal(t, time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC), operation.Time.UTC())
 
 	})
 

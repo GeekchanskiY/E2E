@@ -16,4 +16,10 @@ type RegisterResponse struct {
 
 	// Wallet created initial wallet for salary
 	Wallet *models.Wallet `json:"wallet,omitempty"`
+
+	// OperationGroup created initial operation group for salary if salary data provided
+	OperationGroup *models.OperationGroup `json:"operation_group,omitempty"`
+
+	// Operation is a salary operation, which is monthly if specified
+	Operation *models.Operation `json:"operation,omitempty"`
 }
