@@ -31,7 +31,8 @@ func RunPeriodicScraping(scraper *Scraper) error {
 	if lastUpdateTime.IsZero() || lastUpdateTime.After(time.Now().Add(inspectionFrequency)) {
 		go runScraping(ctx, errChan, scraper)
 	} else {
-		ticker.Reset(-(inspectionFrequency - time.Now().Add(timeZoneDifference).Sub(lastUpdateTime)))
+		// TODO: wtf (what a terrible failure)
+		// ticker.Reset(-(inspectionFrequency - time.Now().Add(timeZoneDifference).Sub(lastUpdateTime)))
 	}
 
 	select {
