@@ -26,7 +26,10 @@ func New(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
 		repo.GetOperations(),
 	)
 
-	frontendController := frontend.New(logger)
+	frontendController := frontend.New(
+		logger,
+		repo.GetUsers(),
+	)
 
 	return &Controllers{
 		users:    userController,
