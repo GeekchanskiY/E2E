@@ -23,3 +23,16 @@ type Wallet struct {
 	// BankId refers to internal bank id
 	BankId int `db:"bank_id" json:"bank_id"`
 }
+
+type WalletExtended struct {
+	Id          int
+	Name        string
+	Description string
+	Permission  string
+	CreatedAt   time.Time
+	Currency    Currency
+	IsSalary    bool
+
+	// BankId refers to internal bank id
+	BankName string
+}

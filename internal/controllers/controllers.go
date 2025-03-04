@@ -29,6 +29,14 @@ func New(logger *zap.Logger, cfg Config, repo *repositories.Repositories) *Contr
 	frontendController := frontend.New(
 		logger,
 		repo.GetUsers(),
+		repo.GetBanks(),
+		repo.GetDistributors(),
+		repo.GetPermissionGroups(),
+		repo.GetCurrencyStates(),
+		repo.GetUserPermissions(),
+		repo.GetWallets(),
+		repo.GetOperations(),
+		repo.GetOperationGroups(),
 		cfg.GetSecret(),
 	)
 

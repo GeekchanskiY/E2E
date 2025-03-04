@@ -18,5 +18,11 @@ func (c *Controller) Finance(ctx context.Context) (*template.Template, map[strin
 
 	data := utils.BuildDefaultDataMapFromContext(ctx)
 
+	wallets, err := c.walletsRepo.GetByUsername(ctx, ctx.Value("user").(string))
+	if err != nil {
+		return nil, nil, err
+	}
+	data["wallets"] = wallets
+
 	return html, data, nil
 }

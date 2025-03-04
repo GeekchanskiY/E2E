@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
@@ -26,7 +27,7 @@ type Repositories struct {
 	currencyStates   *currency_states.Repository
 }
 
-func NewRepositories(db *sqlx.DB) *Repositories {
+func NewRepositories(db *sqlx.DB, log *zap.Logger) *Repositories {
 	return &Repositories{
 		distributors:     distributors.New(db),
 		operationGroups:  operaton_groups.New(db),
@@ -34,7 +35,7 @@ func NewRepositories(db *sqlx.DB) *Repositories {
 		permissionGroups: permission_groups.New(db),
 		userPermissions:  user_permissions.New(db),
 		users:            users.New(db),
-		wallets:          wallets.New(db),
+		wallets:          wallets.New(db, log),
 		banks:            banks.New(db),
 		currencyStates:   currency_states.New(db),
 	}

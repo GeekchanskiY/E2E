@@ -6,14 +6,14 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) Create(ctx context.Context, wallet *models.Wallet) (*models.Wallet, error) {
+func (repo *Repository) Create(ctx context.Context, wallet *models.Wallet) (*models.Wallet, error) {
 	q := `
 		INSERT INTO 
     	wallets (name, description, permission_group_id, currency, is_salary, bank_id) 
 		VALUES (:name, :description, :permission_group_id, :currency, :is_salary, :bank_id) 
 		returning id, created_at`
 
-	namedStmt, err := r.db.PrepareNamed(q)
+	namedStmt, err := repo.db.PrepareNamed(q)
 	if err != nil {
 		return nil, err
 	}
