@@ -8,7 +8,8 @@ import (
 )
 
 func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("frontend.register")
+	h.logger.Debug("frontend.register.handler", zap.String("event", "got request"))
+
 	html, err := h.controller.Register(r.Context())
 	if err != nil {
 		h.logger.Error("frontend.register", zap.Error(err))

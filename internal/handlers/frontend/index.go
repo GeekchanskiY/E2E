@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) Index(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("frontend.index")
+	h.logger.Debug("frontend.index.handler", zap.String("event", "got request"))
 
 	html, err := h.controller.Index(r.Context())
 	if err != nil {

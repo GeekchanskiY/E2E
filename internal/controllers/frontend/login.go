@@ -10,10 +10,11 @@ import (
 	"finworker/internal/templates"
 	"finworker/internal/utils"
 	"github.com/dgrijalva/jwt-go"
+	"go.uber.org/zap"
 )
 
 func (c *Controller) Login(_ context.Context) (*template.Template, error) {
-	c.logger.Info("frontend.login")
+	c.logger.Debug("frontend.login.controller", zap.String("event", "got request"))
 
 	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.LoginTemplate)
 	if err != nil {
@@ -24,7 +25,7 @@ func (c *Controller) Login(_ context.Context) (*template.Template, error) {
 }
 
 func (c *Controller) LoginForm(ctx context.Context, username, password string) (*template.Template, string, error) {
-	c.logger.Info("frontend.login.form")
+	c.logger.Debug("frontend.login.controller.form", zap.String("event", "got request"))
 
 	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.LoginTemplate)
 	if err != nil {

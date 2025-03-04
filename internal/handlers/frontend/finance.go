@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) Finance(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("frontend.finance")
+	h.logger.Debug("frontend.finance.handler", zap.String("event", "got request"))
 	html, err := h.controller.Finance(r.Context())
 	if err != nil {
 		h.logger.Error("frontend.finance", zap.Error(err))

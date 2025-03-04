@@ -8,7 +8,7 @@ import (
 )
 
 func (h *Handler) Me(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("frontend.me")
+	h.logger.Debug("frontend.me.handler", zap.String("event", "got request"))
 
 	html, err := h.controller.User(r.Context(), r.Context().Value("user").(string))
 	if err != nil {

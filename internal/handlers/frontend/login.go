@@ -10,8 +10,12 @@ import (
 )
 
 func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("frontend.login")
 	if r.Method == http.MethodGet {
+		h.logger.Debug(
+			"frontend.login.handler",
+			zap.String("event", "got request"),
+			zap.String("method", "GET"),
+		)
 
 		// maybe I should move this logic to controller
 		user, ok := r.Context().Value("user").(string)
@@ -43,7 +47,15 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 	} else if r.Method == http.MethodPost {
+
+		h.logger.Debug(
+			"frontend.login.handler",
+			zap.String("event", "got request"),
+			zap.String("method", "POST"),
+		)
+
 		err := r.ParseForm()
 		if err != nil {
 			h.logger.Error("frontend.login", zap.Error(err))
@@ -51,6 +63,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		username := r.PostFormValue("username")
 		password := r.PostFormValue("password")
 
@@ -61,6 +74,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
+
 			err = html.ExecuteTemplate(w, "base", map[string]interface{}{
 				"error": err.Error(),
 			})
@@ -70,17 +84,26 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 
 		if html == nil {
 			h.logger.Error("frontend.login", zap.Error(frontend.ErrTemplateNotGenerated))
+
 			http.Error(w, frontend.ErrTemplateNotGenerated.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
 		if token == "" {
 			h.logger.Error("frontend.login", zap.Error(frontend.ErrTemplateNotGenerated))
+
 			http.Error(w, frontend.ErrTemplateNotGenerated.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
-		h.logger.Info("frontend.login", zap.String("username", username))
+		h.logger.Info(
+			"frontend.login.handler",
+			zap.String("event", "user logged in"),
+			zap.String("username", username),
+		)
+
 		cookie := http.Cookie{
 			Name:     "user",
 			Value:    token,
@@ -90,6 +113,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			Secure:   true,
 			SameSite: http.SameSiteLaxMode,
 		}
+
 		http.SetCookie(w, &cookie)
 
 		http.Redirect(w, r, "/me", http.StatusSeeOther)
