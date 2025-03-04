@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"html/template"
 	"time"
 
@@ -44,8 +43,6 @@ func (c *Controller) LoginForm(ctx context.Context, username, password string) (
 	if !isPasswordCorrect {
 		return html, "", errors.New("wrong password")
 	}
-
-	fmt.Println(c.secret)
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user": user,
