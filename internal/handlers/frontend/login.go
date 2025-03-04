@@ -16,16 +16,9 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			zap.String("method", "GET"),
 		)
 
-		// maybe I should move this logic to controller
-		user, ok := r.Context().Value("user").(string)
-		if !ok {
-			h.logger.Error("frontend.login: user is not a string")
+		_, ok := r.Context().Value("user").(string)
 
-			http.Error(w, "cant get user session data", http.StatusInternalServerError)
-			return
-		}
-
-		if user != "undefined" {
+		if ok {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 
 			return
@@ -64,7 +57,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		username := r.PostFormValue("username")
 		password := r.PostFormValue("password")
 
-		html, templateData, token, err := h.controller.LoginForm(r.Context(), username, password)
+		html, templateData, token, salt, err := h.controller.LoginForm(r.Context(), username, password)
 		if err != nil {
 			if html == nil {
 				h.logger.Error("frontend.login", zap.Error(err))
@@ -99,7 +92,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			zap.String("username", username),
 		)
 
-		cookie := http.Cookie{
+		authCookie := http.Cookie{
 			Name:     "user",
 			Value:    token,
 			Path:     "/",
@@ -109,7 +102,18 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			SameSite: http.SameSiteLaxMode,
 		}
 
-		http.SetCookie(w, &cookie)
+		saltCookie := http.Cookie{
+			Name:     "salt",
+			Value:    salt,
+			Path:     "/",
+			MaxAge:   7200,
+			HttpOnly: false,
+			Secure:   true,
+			SameSite: http.SameSiteLaxMode,
+		}
+
+		http.SetCookie(w, &authCookie)
+		http.SetCookie(w, &saltCookie)
 
 		http.Redirect(w, r, "/me", http.StatusSeeOther)
 

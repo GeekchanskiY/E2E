@@ -12,8 +12,7 @@ func Auth(secret string) func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 			tokenStr, err := req.Cookie("user")
 			if tokenStr == nil || err != nil {
-				ctx := context.WithValue(req.Context(), "user", "undefined")
-				next.ServeHTTP(w, req.WithContext(ctx))
+				next.ServeHTTP(w, req)
 
 				return
 			}

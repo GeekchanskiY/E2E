@@ -28,12 +28,12 @@ func (c *Controller) Login(ctx context.Context) (*template.Template, map[string]
 	return html, data, nil
 }
 
-func (c *Controller) LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, error) {
+func (c *Controller) LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, string, error) {
 	c.logger.Debug("frontend.login.controller.form", zap.String("event", "got request"))
 
 	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.LoginTemplate)
 	if err != nil {
-		return nil, nil, "", err
+		return nil, nil, "", "", err
 	}
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
@@ -41,14 +41,14 @@ func (c *Controller) LoginForm(ctx context.Context, username, password string) (
 	user, err := c.userRepo.GetByUsername(ctx, username)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return html, data, "", errors.New("user not found")
+			return html, data, "", "", errors.New("user not found")
 		}
-		return html, data, "", err
+		return html, data, "", "", err
 	}
 
 	isPasswordCorrect := utils.VerifyPassword(password, user.Password)
 	if !isPasswordCorrect {
-		return html, data, "", errors.New("wrong password")
+		return html, data, "", "", errors.New("wrong password")
 	}
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -57,8 +57,16 @@ func (c *Controller) LoginForm(ctx context.Context, username, password string) (
 		"time": time.Now(),
 	}).SignedString([]byte(c.secret))
 	if err != nil {
-		return html, data, "", err
+		return html, data, "", "", err
+	}
+	salt, err := utils.GenerateSaltFromPassword(password)
+	if err != nil {
+		return html, data, "", "", err
 	}
 
-	return html, data, token, nil
+	return html, data, token, salt, nil
+}
+
+func (c *Controller) GenerateUserSalt(password string) (string, error) {
+	return utils.GenerateSaltFromPassword(password)
 }
