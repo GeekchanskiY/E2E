@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	userKey = "user"
+	userKey = "username"
 )
 
 func BuildDefaultDataMapFromContext(ctx context.Context) map[string]interface{} {

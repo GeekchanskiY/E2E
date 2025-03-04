@@ -25,7 +25,7 @@
             <img src="/static/icons/coffee.png" alt="logo">
             <span>E2E</span>
         </a>
-        {{ if not .user }}
+        {{ if not .username }}
         <a href="/login" class="header-link header-right-link-first">
             <span>login</span>
         </a>
@@ -34,7 +34,7 @@
         </a>
         {{ else }}
             <a href="/me" class="header-link header-right-link-first">
-                <span>{{ .user }}</span>
+                <span>{{ .username }}</span>
             </a>
         {{ end }}
     </div>

@@ -3,7 +3,6 @@ package frontend
 import (
 	"net/http"
 
-	"finworker/internal/handlers/frontend/utils"
 	"go.uber.org/zap"
 
 	"finworker/internal/controllers/frontend"
@@ -32,14 +31,12 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		html, err := h.controller.Login(r.Context())
+		html, templateData, err := h.controller.Login(r.Context())
 		if err != nil {
 			h.logger.Error("frontend.login", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-		templateData := utils.BuildDefaultDataMapFromContext(r.Context())
 
 		err = html.ExecuteTemplate(w, "base", templateData)
 		if err != nil {
@@ -67,7 +64,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		username := r.PostFormValue("username")
 		password := r.PostFormValue("password")
 
-		html, token, err := h.controller.LoginForm(r.Context(), username, password)
+		html, templateData, token, err := h.controller.LoginForm(r.Context(), username, password)
 		if err != nil {
 			if html == nil {
 				h.logger.Error("frontend.login", zap.Error(err))
@@ -75,9 +72,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			err = html.ExecuteTemplate(w, "base", map[string]interface{}{
-				"error": err.Error(),
-			})
+			err = html.ExecuteTemplate(w, "base", templateData)
 
 			return
 		}

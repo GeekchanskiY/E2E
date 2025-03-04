@@ -4,16 +4,19 @@ import (
 	"context"
 	"html/template"
 
+	"finworker/internal/controllers/frontend/utils"
 	"finworker/internal/templates"
 	"go.uber.org/zap"
 )
 
-func (c *Controller) Finance(_ context.Context) (*template.Template, error) {
+func (c *Controller) Finance(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.finance.controller", zap.String("event", "got request"))
 	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.FinanceTemplate)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return html, nil
+	data := utils.BuildDefaultDataMapFromContext(ctx)
+
+	return html, data, nil
 }
