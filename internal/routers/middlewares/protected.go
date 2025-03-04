@@ -8,6 +8,7 @@ func Protected(loginRedirect bool) func(next http.Handler) http.Handler {
 
 			user := req.Context().Value("user")
 			if user == nil || user == "undefined" {
+				// for FE better usability
 				if loginRedirect {
 					http.Redirect(w, req, "/login", http.StatusSeeOther)
 					return

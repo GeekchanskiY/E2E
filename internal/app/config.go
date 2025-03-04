@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 
+	"finworker/internal/controllers"
 	"github.com/heetch/confita"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
@@ -12,9 +13,10 @@ import (
 )
 
 type Config struct {
-	Logger *zap.Logger `config:"-"`
-	Db     storage.Config
-	Router routers.Config
+	Logger      *zap.Logger `config:"-"`
+	Controllers controllers.Config
+	Db          storage.Config
+	Router      routers.Config
 }
 
 func NewConfig() *Config {
@@ -36,10 +38,11 @@ func NewConfig() *Config {
 	return &cfg
 }
 
-func GetDb(cfg *Config) storage.Config {
+func GetDbConfig(cfg *Config) storage.Config {
 	return cfg.Db
 }
-func GetRouter(cfg *Config) routers.Config { return cfg.Router }
+func GetRouterConfig(cfg *Config) routers.Config { return cfg.Router }
 func GetLogger(cfg *Config) *zap.Logger {
 	return cfg.Logger
 }
+func GetControllersConfig(cfg *Config) controllers.Config { return cfg.Controllers }

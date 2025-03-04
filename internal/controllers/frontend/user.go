@@ -3,12 +3,14 @@ package frontend
 import (
 	"context"
 	"html/template"
+
+	"finworker/internal/templates"
 )
 
-func (c *Controller) User(_ context.Context) (*template.Template, error) {
+func (c *Controller) User(_ context.Context, username string) (*template.Template, error) {
 	c.logger.Info("frontend.user")
 
-	html, err := template.ParseFS(c.fs, "base.gohtml", "user.gohtml")
+	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.UserTemplate)
 	if err != nil {
 		return nil, err
 	}

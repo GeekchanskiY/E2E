@@ -14,7 +14,7 @@ type Controllers struct {
 	frontend *frontend.Controller
 }
 
-func New(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
+func New(logger *zap.Logger, cfg Config, repo *repositories.Repositories) *Controllers {
 	userController := users.New(
 		logger,
 		repo.GetUsers(),
@@ -29,6 +29,7 @@ func New(logger *zap.Logger, repo *repositories.Repositories) *Controllers {
 	frontendController := frontend.New(
 		logger,
 		repo.GetUsers(),
+		cfg.GetSecret(),
 	)
 
 	return &Controllers{

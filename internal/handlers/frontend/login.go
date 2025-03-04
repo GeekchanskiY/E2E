@@ -51,7 +51,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		username := r.PostFormValue("username")
 		password := r.PostFormValue("password")
 
-		html, err := h.controller.LoginForm(r.Context(), username, password)
+		html, token, err := h.controller.LoginForm(r.Context(), username, password)
 		if err != nil {
 			if html == nil {
 				h.logger.Error("frontend.login", zap.Error(err))
@@ -71,12 +71,27 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = html.ExecuteTemplate(w, "base", nil)
-		if err != nil {
-			h.logger.Error("frontend.login", zap.Error(err))
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+		if token == "" {
+			h.logger.Error("frontend.login", zap.Error(frontend.ErrTemplateNotGenerated))
+			http.Error(w, frontend.ErrTemplateNotGenerated.Error(), http.StatusInternalServerError)
 			return
 		}
+
+		h.logger.Info("frontend.login", zap.String("username", username))
+		cookie := http.Cookie{
+			Name:     "user",
+			Value:    token,
+			Path:     "/",
+			MaxAge:   7200, // 120 min
+			HttpOnly: false,
+			Secure:   true,
+			SameSite: http.SameSiteLaxMode,
+		}
+		http.SetCookie(w, &cookie)
+
+		http.Redirect(w, r, "/me", http.StatusSeeOther)
+
+		return
 	} else {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}

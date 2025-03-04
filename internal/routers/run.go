@@ -18,7 +18,7 @@ func Run(h *Router) error {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.RequestID)
-	r.Use(middlewares.Auth)
+	r.Use(middlewares.Auth(h.config.Secret))
 
 	// static handling
 	fileServer := http.FileServer(http.FS(static.Fs))
@@ -46,6 +46,7 @@ func Run(h *Router) error {
 	r.Group(func(r chi.Router) {
 		r.Use(middlewares.Protected(true))
 		r.Get("/finance", h.handlers.GetFrontend().Finance)
+		r.Get("/me", h.handlers.GetFrontend().Me)
 	})
 
 	r.Route("/api/v1", func(r chi.Router) {
@@ -58,8 +59,12 @@ func Run(h *Router) error {
 		})
 	})
 
-	// used to avoid fx lock
 	go func() {
+		h.logger.Info(
+			"running server",
+			zap.String("addr", fmt.Sprintf("%s:%d", h.config.Host, h.config.Port)),
+		)
+
 		err := http.ListenAndServe(fmt.Sprintf("%s:%d", h.config.Host, h.config.Port), r)
 		if err != nil {
 			h.logger.Fatal("failed to start http server", zap.Error(err))

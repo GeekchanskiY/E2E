@@ -14,15 +14,19 @@ type Controller struct {
 
 	userRepo *users.Repository
 
+	secret string
+
 	fs embed.FS
 }
 
-func New(logger *zap.Logger, userRepo *users.Repository) *Controller {
+func New(logger *zap.Logger, userRepo *users.Repository, secret string) *Controller {
 
 	return &Controller{
 		logger: logger,
 
 		userRepo: userRepo,
+
+		secret: secret,
 
 		fs: templates.Fs,
 	}

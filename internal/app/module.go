@@ -16,9 +16,10 @@ func NewApp() *fx.App {
 
 		fx.Provide(
 			NewConfig,
-			GetDb,     // gets database config from main config instance
-			GetLogger, // gets logger from main config instance
-			GetRouter,
+			GetDbConfig, // gets database config from main config instance
+			GetLogger,   // gets logger from main config instance
+			GetControllersConfig,
+			GetRouterConfig,
 		),
 
 		// main logic modules & http server
