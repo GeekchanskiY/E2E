@@ -55,7 +55,7 @@ func TestController_RegisterUser(t *testing.T) {
 		}
 	})
 
-	repos := repositories.NewRepositories(db)
+	repos := repositories.NewRepositories(db, zap.NewNop())
 
 	controller := New(
 		zap.NewNop(),
