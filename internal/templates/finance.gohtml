@@ -6,9 +6,35 @@
     <main>
         <div class="container">
             <h2>Finances</h2>
-            {{ range .wallets }}
-                {{ .Name }}
-            {{ end }}
+            <table>
+                <caption>Кошельки</caption>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Название</th>
+                        <th>Валюта</th>
+                        <th>Зарплатная</th>
+                        <th>Описание</th>
+                        <th>Разрешения</th>
+                        <th>Дата создания</th>
+                        <th>Банк</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .wallets }}
+                        <tr>
+                            <td>{{ .Id }}</td>
+                            <td>{{ .Name }}</td>
+                            <td>{{ .Currency }}</td>
+                            <td>{{ if .IsSalary }} Да {{ else }} Нет {{ end }}</td>
+                            <td>{{ .Description }}</td>
+                            <td>{{ .Permission }}</td>
+                            <td>{{ .CreatedAt.Format "2006 Jan 02" }}</td>
+                            <td>{{ .BankName }}</td>
+                        </tr>
+                    {{ end }}
+                </tbody>
+            </table>
         </div>
     </main>
 {{ end }}
