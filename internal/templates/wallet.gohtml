@@ -8,6 +8,7 @@
             <h2>Кошелёк {{ .wallet.Name }} {{ .wallet.Currency }}</h2>
             {{ if .wallet.IsSalary }} <span>Зарплатный</span> <br> {{ end }}
             <p>Описание: {{ .wallet.Description }}</p>
+            <a href="/finance">вернуться</a>
             <table class="styled-table">
                 <caption><div class="tooltip">Дистрибьюторы
                         <span class="tooltip-text">
