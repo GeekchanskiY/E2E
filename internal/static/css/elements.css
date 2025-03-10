@@ -1,0 +1,53 @@
+/* e-lements (ui-kit) */
+
+.e-form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: var(--foreground);
+    color: var(--white);
+}
+
+.e-form div {
+    width: 400px;
+}
+
+.e-form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid gray;
+    outline: 0;
+    font-size: 1rem;
+    color: white;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.e-form__field::placeholder {
+    color: transparent;
+}
+
+.e-form__field:placeholder-shown ~ .e-form__label {
+}
+
+.e-form__label {
+    display: block;
+}
+
+.e-form__field:focus ~ .e-form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: wheat;
+    font-weight:700;
+}
+
+.e-form__field:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border: 1px solid red;
+}

@@ -72,6 +72,10 @@ select {
     }
 }
 
+.input{
+    &:required,&:invalid { box-shadow:none; }
+}
+
 ul {
     list-style-type: none
 }

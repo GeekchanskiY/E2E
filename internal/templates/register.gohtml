@@ -6,23 +6,25 @@
     <main>
         <div class="container">
             <h2>Register</h2>
-            <form action="/register" method="post">
-                <div>
-                    <label>
-                        <input type="text" placeholder="username" name="username">
+            <form class="e-form" action="/register" method="post">
+                <div class="e-form-group">
+
+                    <input class="e-form__field" type="text" placeholder="username" name="username" id="username">
+                    <label class="e-form__label" for="username">
+                        username
                     </label>
                 </div>
-                <div>
+                <div class="e-form-group">
                     <label>
                         <input type="password" placeholder="password" name="password">
                     </label>
                 </div>
-                <div>
+                <div class="e-form-group">
                     <label>
                         <input type="password" placeholder="repeat password" name="password_repeat">
                     </label>
                 </div>
-                <div>
+                <div class="e-form-group">
                     <label>
                         <span>Сеньор</span>
                         <input type="radio" name="gender" value="male" checked="checked">
@@ -33,13 +35,13 @@
                         <input type="radio" name="gender" value="female" checked="checked">
                     </label>
                 </div>
-                <div>
+                <div class="e-form-group">
                     <label>
                         <span>Др</span>
                         <input type="date" name="birthday" value="2000-01-01">
                     </label>
                 </div>
-                <div>
+                <div class="e-form-group">
                     <label>
                         <select name="currency">
                             <option value="priorbank">Приорбанк</option>
@@ -62,9 +64,11 @@
                         <input type="number" placeholder="9" name="salary_day" min="1" max="31">
                     </label>
                 </div>
-                <span>{{ .error }}</span>
-                <button type="submit">Зарегистрироваться</button>
-                <a href="/login">Уже есть аккаунт?</a>
+                <span>Ошибка{{ .error }}</span>
+                <div class="e-form-group">
+                    <button type="submit">Зарегистрироваться</button>
+                    <a href="/login">Уже есть аккаунт?</a>
+                </div>
             </form>
         </div>
     </main>
