@@ -5,7 +5,38 @@
 {{ define "main" }}
     <main>
         <div class="container">
+            <table class="styled-table">
+                <caption>Кошелёк {{ .wallet.Name }}</caption>
+                <thead>
+                    <tr>
+                        <th>Группа операций</th>
+                        <th>
+                            <div class="tooltip">Дистрибьютор
+                                <span class="tooltip-text">
+                                    Дистрибьюторы - объекты, которые распределяют все поступающие деньги
+                                    по разным кошелькам
+                                </span>
+                            </div>
+
+                        </th>
+                        <th>
+                            Кол-во операций
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <caption>Операции</caption>
+            </table>
             {{ .wallet.Name }}
+            {{ .wallet.Description }}
+            {{ .wallet.Currency }}
+            {{ .wallet.IsSalary }}
         </div>
     </main>
 {{ end }}
