@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (c *Controller) User(ctx context.Context, username string) (*template.Template, map[string]interface{}, error) {
+func (c *Controller) User(ctx context.Context, username string) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.user.controller", zap.String("event", "got request"))
 
 	data := utils.BuildDefaultDataMapFromContext(ctx)

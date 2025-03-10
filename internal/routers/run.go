@@ -49,6 +49,7 @@ func Run(h *Router) error {
 	r.Group(func(r chi.Router) {
 		r.Use(middlewares.Protected(true))
 		r.Get("/finance", h.handlers.GetFrontend().Finance)
+		r.Get("/finance/wallet/{id}", h.handlers.GetFrontend().Wallet)
 		r.Get("/me", h.handlers.GetFrontend().Me)
 	})
 

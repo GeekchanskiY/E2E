@@ -14,4 +14,5 @@ const (
 	LoginTemplate    = "login.gohtml"
 	RegisterTemplate = "register.gohtml"
 	UserTemplate     = "user.gohtml"
+	WalletTemplate   = "wallet.gohtml"
 )
