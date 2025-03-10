@@ -5,22 +5,27 @@
 {{ define "main" }}
     <main>
         <div class="container">
+            <h2>Кошелёк {{ .wallet.Name }} {{ .wallet.Currency }}</h2>
+            {{ if .wallet.IsSalary }} <span>Зарплатный</span> <br> {{ end }}
+            <p>Описание: {{ .wallet.Description }}</p>
             <table class="styled-table">
-                <caption>Кошелёк {{ .wallet.Name }}</caption>
-                <thead>
-                    <tr>
-                        <th>Группа операций</th>
-                        <th>
-                            <div class="tooltip">Дистрибьютор
-                                <span class="tooltip-text">
+                <caption><div class="tooltip">Дистрибьюторы
+                        <span class="tooltip-text">
                                     Дистрибьюторы - объекты, которые распределяют все поступающие деньги
                                     по разным кошелькам
                                 </span>
+                    </div> кошелька {{ .wallet.Name }}</caption>
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="tooltip">Целевой кошелёк
+                                <span class="tooltip-text">
+                                    Кошелёк, на который будет отправляться процент от зарплатного
+                                </span>
                             </div>
-
                         </th>
                         <th>
-                            Кол-во операций
+                            Процент
                         </th>
                     </tr>
                 </thead>
@@ -34,7 +39,6 @@
                 <caption>Операции</caption>
             </table>
             {{ .wallet.Name }}
-            {{ .wallet.Description }}
             {{ .wallet.Currency }}
             {{ .wallet.IsSalary }}
         </div>
