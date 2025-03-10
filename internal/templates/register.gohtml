@@ -6,6 +6,66 @@
     <main>
         <div class="container">
             <h2>Register</h2>
+            <form action="/register" method="post">
+                <div>
+                    <label>
+                        <input type="text" placeholder="username" name="username">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="password" placeholder="password" name="password">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="password" placeholder="repeat password" name="password_repeat">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Сеньор</span>
+                        <input type="radio" name="gender" value="male" checked="checked">
+                    </label>
+                    <br>
+                    <label>
+                        <span>Сеньорита</span>
+                        <input type="radio" name="gender" value="female" checked="checked">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Др</span>
+                        <input type="date" name="birthday" value="2000-01-01">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <select name="currency">
+                            <option value="priorbank">Приорбанк</option>
+                            <option value="alfabank">Альфа-банк</option>
+                        </select>
+                    </label>
+                    <label>
+                        <input type="number" name="salary" placeholder="зп">
+                    </label>
+                    <label>
+                        <select name="currency">
+                            <option value="USD">USD</option>
+                            <option value="BYN">BYN</option>
+                            <option value="RUB">RUB</option>
+                            <option value="CNY">CNY</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>День зп</span>
+                        <input type="number" placeholder="9" name="salary_day" min="1" max="31">
+                    </label>
+                </div>
+                <span>{{ .error }}</span>
+                <button type="submit">Зарегистрироваться</button>
+                <a href="/login">Уже есть аккаунт?</a>
+            </form>
         </div>
     </main>
 {{ end }}
