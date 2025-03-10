@@ -66,7 +66,11 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			}
 
 			err = html.ExecuteTemplate(w, "base", templateData)
-
+			if err != nil {
+				h.logger.Error("frontend.login", zap.Error(err))
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
 			return
 		}
 

@@ -1,0 +1,6 @@
+/* e-lements (ui-kit) */
+
+.e-form{
+    display: flex;
+    flex-direction: column;
+}

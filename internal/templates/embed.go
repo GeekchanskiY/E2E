@@ -8,11 +8,12 @@ import (
 var Fs embed.FS
 
 const (
-	BaseTemplate     = "base.gohtml"
-	FinanceTemplate  = "finance.gohtml"
-	IndexTemplate    = "index.gohtml"
-	LoginTemplate    = "login.gohtml"
-	RegisterTemplate = "register.gohtml"
-	UserTemplate     = "user.gohtml"
-	WalletTemplate   = "wallet.gohtml"
+	BaseTemplate         = "base.gohtml"
+	FinanceTemplate      = "finance.gohtml"
+	IndexTemplate        = "index.gohtml"
+	LoginTemplate        = "login.gohtml"
+	RegisterTemplate     = "register.gohtml"
+	UserTemplate         = "user.gohtml"
+	WalletTemplate       = "wallet.gohtml"
+	CreateWalletTemplate = "create_wallet.gohtml"
 )
