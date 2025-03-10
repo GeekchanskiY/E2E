@@ -23,7 +23,7 @@
                 <tbody>
                     {{ range .wallets }}
                         <tr>
-                            <td>{{ .Id }}</td>
+                            <td><a href="/finance/wallet/{{.Id}}">{{.Id}}</a></td>
                             <td>{{ .Name }}</td>
                             <td>{{ .Currency }}</td>
                             <td>{{ if .IsSalary }} Да {{ else }} Нет {{ end }}</td>
