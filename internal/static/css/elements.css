@@ -1,15 +1,27 @@
 /* e-lements (ui-kit) */
 
 .e-form{
+    margin-top: 20px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 5px;
     background: var(--foreground);
     color: var(--white);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
-.e-form div {
+.e-form .e-form-group {
     width: 400px;
+}
+
+.e-form-multiple {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 .e-form__field {
@@ -25,29 +37,47 @@
     transition: border-color 0.2s;
 }
 
-.e-form__field::placeholder {
-    color: transparent;
+.e-form__field__small {
+    width: 30%!important;
 }
-
-.e-form__field:placeholder-shown ~ .e-form__label {
-}
-
-.e-form__label {
-    display: block;
-}
-
-.e-form__field:focus ~ .e-form__label {
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 1rem;
-    color: wheat;
-    font-weight:700;
+.e-form__field__medium {
+    width: 50%!important;
 }
 
 .e-form__field:focus {
-    padding-bottom: 6px;
-    font-weight: 700;
-    border: 1px solid red;
+    font-weight: 600;
+    border: 1px solid var(--white);
+}
+
+.e-form__field option {
+    color: var(--foreground);
+}
+
+.e-form__button {
+    font-family: inherit;
+    background-color: var(--white);
+    color: var(--foreground);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.e-form__link {
+    font-family: inherit;
+    background-color: var(--white);
+    color: var(--foreground);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.e-form-header {
+    width: 100%!important;
+    background: var(--white);
+    color: var(--foreground);
+    text-align: center;
 }

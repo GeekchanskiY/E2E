@@ -5,70 +5,77 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <h2>Register</h2>
-            <form class="e-form" action="/register" method="post">
-                <div class="e-form-group">
 
-                    <input class="e-form__field" type="text" placeholder="username" name="username" id="username">
-                    <label class="e-form__label" for="username">
-                        username
+            <form class="e-form" action="/register" method="post">
+                <div class="e-form-header">
+                    <h2>Register</h2>
+                </div>
+                <div class="e-form-group">
+                    <label class="e-form__label">
+                        <input class="e-form__field" type="text" placeholder="username" name="username" id="username">
+                    </label>
+
+                </div>
+                <div class="e-form-group">
+                    <label class="e-form__label">
+                        <input class="e-form__field" type="password" placeholder="password" name="password">
                     </label>
                 </div>
                 <div class="e-form-group">
-                    <label>
-                        <input type="password" placeholder="password" name="password">
+                    <label class="e-form__label">
+                        <input class="e-form__field" type="password" placeholder="repeat password" name="password_repeat">
                     </label>
                 </div>
-                <div class="e-form-group">
+                <div class="e-form-group e-form-multiple">
                     <label>
-                        <input type="password" placeholder="repeat password" name="password_repeat">
+                        <span>Мужик с завода</span>
+                        <input type="radio" name="gender" value="male" checked>
                     </label>
-                </div>
-                <div class="e-form-group">
                     <label>
-                        <span>Сеньор</span>
-                        <input type="radio" name="gender" value="male" checked="checked">
-                    </label>
-                    <br>
-                    <label>
-                        <span>Сеньорита</span>
-                        <input type="radio" name="gender" value="female" checked="checked">
+                        <span>Огонь баба</span>
+                        <input type="radio" name="gender" value="female">
                     </label>
                 </div>
                 <div class="e-form-group">
                     <label>
                         <span>Др</span>
-                        <input type="date" name="birthday" value="2000-01-01">
+                        <input class="e-form__field" type="date" name="birthday" value="2000-01-01">
                     </label>
                 </div>
+                <h3>Данные финов</h3>
                 <div class="e-form-group">
                     <label>
-                        <select name="currency">
+                        <span>Банк</span>
+                        <select class="e-form__field" name="currency">
                             <option value="priorbank">Приорбанк</option>
                             <option value="alfabank">Альфа-банк</option>
                         </select>
                     </label>
+                </div>
+                <div class="e-form-group e-form-multiple">
                     <label>
-                        <input type="number" name="salary" placeholder="зп">
+                        <input class="e-form__field" type="number" name="salary" placeholder="зп">
                     </label>
-                    <label>
-                        <select name="currency">
+                    <label class="e-form__label">
+                        <select class="e-form__field" name="currency">
                             <option value="USD">USD</option>
                             <option value="BYN">BYN</option>
                             <option value="RUB">RUB</option>
                             <option value="CNY">CNY</option>
                         </select>
                     </label>
-                    <label>
+                </div>
+                <div class="e-form-group">
+                    <label class="e-form__label">
                         <span>День зп</span>
-                        <input type="number" placeholder="9" name="salary_day" min="1" max="31">
+                        <input class="e-form__field" type="number" placeholder="9" name="salary_day" min="1" max="31">
                     </label>
                 </div>
                 <span>Ошибка{{ .error }}</span>
-                <div class="e-form-group">
-                    <button type="submit">Зарегистрироваться</button>
-                    <a href="/login">Уже есть аккаунт?</a>
+                <div class="e-form-group e-form-multiple">
+                    <button type="submit" class="e-form__button">Зарегистрироваться</button>
                 </div>
+                <a href="/login" class="e-form__link">Войти</a>
             </form>
         </div>
     </main>
