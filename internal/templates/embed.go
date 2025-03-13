@@ -16,4 +16,5 @@ const (
 	UserTemplate         = "user.gohtml"
 	WalletTemplate       = "wallet.gohtml"
 	CreateWalletTemplate = "create_wallet.gohtml"
+	UIKitTemplate        = "ui_kit.gohtml"
 )

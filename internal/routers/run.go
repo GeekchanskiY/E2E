@@ -39,6 +39,7 @@ func Run(h *Router) error {
 	})
 
 	r.Get("/", h.handlers.GetFrontend().Index)
+	r.Get("/ui_kit", h.handlers.GetFrontend().UIKit)
 
 	// User routes
 	r.Get("/login", h.handlers.GetFrontend().Login)
