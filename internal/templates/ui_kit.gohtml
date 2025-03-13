@@ -5,14 +5,24 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <h2>UIKIT</h2>
+            <h2>UI kit</h2>
             <form class="e-form">
                 <fieldset>
                     <legend>
-                        UIKIT
+                        main fields
                     </legend>
+
+                    <label for="name">name</label>
+                    <input type="text" id="name" placeholder="Dmitry">
+
                 </fieldset>
             </form>
+
+            <p>
+                Fun fact, there is a <mark>mark</mark> tag, which stands for mark,
+                and <mark>kbd</mark> tag, which stands for user input, like: <br>
+                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd>
+            </p>
         </div>
     </main>
 {{ end }}
