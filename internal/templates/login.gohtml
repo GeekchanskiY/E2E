@@ -5,18 +5,22 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <h2>Login</h2>
-            <form action="/login" method="post">
-                <label>
-                    <input type="text" placeholder="Username" name="username">
+            <form action="/login" method="post" class="gc-form">
+                <div class="gc-form-header">
+                    Login
+                </div>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Username</span>
+                    <input class="gc-input-text" type="text" name="username">
                 </label>
-                <label>
-                    <input type="password" placeholder="Password" name="password">
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Password</span>
+                    <input class="gc-input-text" type="password" name="password">
                 </label>
-                <br>
-                <span>{{ .error }}</span>
-                <br>
-                <button type="submit">Login</button>
+                {{ if .error }}
+                    <span class="gc-form-error">{{ .error }}</span>
+                {{ end }}
+                <button type="submit" class="gc-input-button">Login</button>
             </form>
         </div>
     </main>
