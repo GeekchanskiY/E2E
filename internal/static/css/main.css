@@ -99,6 +99,7 @@ header {
 
 .header-link {
     text-decoration: none;
+    font-size: large;
     color: var(--gray);
 
     transition: var(--transition);
