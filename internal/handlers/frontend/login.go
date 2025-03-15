@@ -74,14 +74,6 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if html == nil {
-			h.logger.Error("frontend.login", zap.Error(frontend.ErrTemplateNotGenerated))
-
-			http.Error(w, frontend.ErrTemplateNotGenerated.Error(), http.StatusInternalServerError)
-
-			return
-		}
-
 		if token == "" {
 			h.logger.Error("frontend.login", zap.Error(frontend.ErrTemplateNotGenerated))
 

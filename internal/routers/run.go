@@ -45,6 +45,7 @@ func Run(h *Router) error {
 	r.Get("/login", h.handlers.GetFrontend().Login)
 	r.Post("/login", h.handlers.GetFrontend().Login)
 	r.Get("/register", h.handlers.GetFrontend().Register)
+	r.Post("/register", h.handlers.GetFrontend().Register)
 	r.Get("/logout", h.handlers.GetFrontend().Logout)
 
 	r.Group(func(r chi.Router) {
