@@ -23,6 +23,8 @@ func Run(h *Router) error {
 	// static handling
 	fileServer := http.FileServer(http.FS(static.Fs))
 
+	r.NotFound(h.handlers.GetFrontend().PageNotFound)
+
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
