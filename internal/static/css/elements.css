@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 0 20px 10px 20px;
+    padding: 0 30px 10px 30px;
     border-radius: var(--border-radius);
 
     background-color: var(--dark0-soft);
@@ -13,8 +13,32 @@
     background-color: var(--dark0-hard);
     text-align: center;
     color: var(--light0-soft);
-    font-size: large;
+    font-size: x-large;
     border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+.gc-form-group-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.gc-form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gc-form-divider {
+    margin-top: 20px;
+    width: 100%;
+    border-bottom: 1px var(--light0-soft) solid;
+    text-align: center;
+}
+
+.gc-form-divider-label {
+    color: var(--light0-soft);
+    font-size: large;
 }
 
 .gc-form-label {
@@ -39,6 +63,11 @@
     padding: 5px 10px;
 }
 
+.gc-input-text[type=date]::-webkit-calendar-picker-indicator {
+    background-color: var(--light0-soft);
+    border-radius: var(--border-radius);
+}
+
 .gc-input-button {
     outline: none;
     background-color: var(--light0-soft);
@@ -46,6 +75,13 @@
     color: var(--dark0);
     border-radius: var(--border-radius);
     padding: 5px 10px;
+}
+
+.gc-form-link {
+    width: 100%;
+    text-align: center;
+    color: var(--light0-soft);
+    text-decoration: underline;
 }
 
 .gc-form-error {
