@@ -49,5 +49,7 @@
 }
 
 .gc-form-error {
-    color: var(--faded-red);
+    width: 100%;
+    text-align: center;
+    color: var(--neutral-red);
 }

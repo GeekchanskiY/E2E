@@ -41,14 +41,18 @@ func (c *Controller) LoginForm(ctx context.Context, username, password string) (
 	user, err := c.userRepo.GetByUsername(ctx, username)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
+			data["error"] = "user not found"
 			return html, data, "", "", errors.New("user not found")
 		}
+
+		data["error"] = err.Error()
 		return html, data, "", "", err
 	}
 
 	isPasswordCorrect := utils.VerifyPassword(password, user.Password)
 	if !isPasswordCorrect {
-		return html, data, "", "", errors.New("wrong password")
+		data["error"] = "invalid password"
+		return html, data, "", "", errors.New("invalid password")
 	}
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -57,10 +61,12 @@ func (c *Controller) LoginForm(ctx context.Context, username, password string) (
 		"time": time.Now(),
 	}).SignedString([]byte(c.secret))
 	if err != nil {
+		data["error"] = err.Error()
 		return html, data, "", "", err
 	}
 	salt, err := utils.GenerateSaltFromPassword(password)
 	if err != nil {
+		data["error"] = err.Error()
 		return html, data, "", "", err
 	}
 
