@@ -21,7 +21,7 @@
                 </label>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Repeat password</span>
-                    <input class="gc-input-text" type="password" name="password_repeat">
+                    <input class="gc-input-text" type="password" name="repeat_password">
                 </label>
                 <div class="gc-form-group-container">
                     <span class="gc-form-label-text">Gender</span>
@@ -70,7 +70,7 @@
                 </div>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Payday</span>
-                    <input class="gc-input-text" type="number" name="salary_day" min="1" max="31">
+                    <input class="gc-input-text" type="number" name="payday" min="1" max="31">
                 </label>
                 {{ if .error }}
                     <span class="gc-form-error">{{ .error }}</span>
