@@ -58,7 +58,7 @@
                     <span class="gc-form-label-text">Salary</span>
                     <div class="gc-form-group">
                         <label>
-                            <input class="gc-input-text" type="number" name="salary" placeholder="зп">
+                            <input class="gc-input-text" type="number" name="salary">
                         </label>
                         <label class="gc-form-label">
                             <select class="gc-input-text" name="currency">
@@ -70,7 +70,7 @@
                 </div>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Payday</span>
-                    <input class="gc-input-text" type="number" placeholder="9" name="salary_day" min="1" max="31">
+                    <input class="gc-input-text" type="number" name="salary_day" min="1" max="31">
                 </label>
                 {{ if .error }}
                     <span class="gc-form-error">{{ .error }}</span>
