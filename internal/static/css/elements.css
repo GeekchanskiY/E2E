@@ -90,6 +90,46 @@
     color: var(--neutral-red);
 }
 
+/* Table */
+
+.gc-table {
+    width: 80%;
+}
+
+.gc-table caption {
+    border-bottom: 1px var(--neutral-aqua) solid;
+    color: var(--light0-hard);
+}
+
+.gc-table thead tr th {
+    border-bottom: 1px var(--neutral-blue) solid;
+    padding: 10px;
+    background-color: var(--dark0-soft);
+    border-radius: var(--border-radius);
+}
+
+.gc-table tbody {
+    background-color: var(--dark0-hard);
+    color: var(--light0-hard);
+}
+
+.gc-table tbody tr td {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border-bottom: 1px solid var(--neutral-blue);
+}
+
+.gc-table tbody tr:first-child td {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border-bottom: 1px solid var(--neutral-aqua);
+}
+
+.gc-table tbody tr td:first-child a {
+    color: var(--bright-blue);
+    text-decoration: none;
+}
+
 /* Index stuff */
 
 .index-title {
