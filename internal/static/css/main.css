@@ -59,6 +59,7 @@
 
 body {
     background-color: var(--dark0);
+    color: var(--light0-soft);
 }
 
 #gopher {

@@ -5,13 +5,39 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <h2>CRM</h2>
-            <span>автор: <a href="https://github.com/GeekchanskiY">GeekchanskiY</a></span> <br>
-            <span>Супер-сообщение от сервера: {{ .text }}</span>
-            <h3>Сервисы</h3>
-            <ul>
-                <li class="icon-list-link"><a href="/finance"><img src="/static/icons/increase.png" alt="finance"><span>Финансы</span></a> </li>
-            </ul>
+            <div class="index-title">
+                <h2>E2E</h2>
+                <p>CRM-like platform for personal use</p>
+                <a href="https://github.com/GeekchanskiY">
+                    <img src="/static/img/github.png" alt="github"/>
+                    <span>GeekchanskiY</span>
+                </a>
+                <a href="https://github.com/GeekchanskiY/E2E">
+                    <img src="/static/img/github.png" alt="github"/>
+                    <span>E2E source</span>
+                </a>
+                <span>Супер-сообщение от сервера: {{ .text }}</span>
+            </div>
+            <div class="index-services">
+                <a class="image-link-block" href="/finance">
+                    <img src="/static/img/money.png" alt="finance" style="background-color: var(--neutral-purple);">
+                    <span>Финансы</span>
+                </a>
+                <a class="image-link-block" href="/finance">
+                    <img src="/static/img/money.png" alt="finance" style="background-color: var(--neutral-blue);">
+                    <span>Финансы</span>
+                </a>
+                <a class="image-link-block" href="/finance">
+                    <img src="/static/img/money.png" alt="finance" style="background-color: var(--neutral-green);">
+                    <span>Финансы</span>
+                </a>
+                <a class="image-link-block" href="/finance">
+                    <img src="/static/img/money.png" alt="finance" style="background-color: var(--neutral-orange);">
+                    <span>Финансы</span>
+                </a>
+            </div>
+
+
         </div>
     </main>
 {{ end }}
