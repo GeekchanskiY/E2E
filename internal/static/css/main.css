@@ -67,6 +67,8 @@ body {
     height: 50px;
 }
 
+/* containers */
+
 .container {
     display: flex;
     justify-content: center;
@@ -75,6 +77,24 @@ body {
 
     width: 100%;
 }
+
+.container-flex{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+}
+
+.container-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    padding: 20px;
+}
+
+/* main */
 
 main {
     padding-top: 20px;

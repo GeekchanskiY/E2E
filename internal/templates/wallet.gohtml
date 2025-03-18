@@ -4,26 +4,24 @@
 
 {{ define "main" }}
     <main>
-        <div class="container">
-            <h2>Кошелёк {{ .wallet.Name }} {{ .wallet.Currency }}</h2>
-            {{ if .wallet.IsSalary }} <span>Зарплатный</span> <br> {{ end }}
-            <p>Описание: {{ .wallet.Description }}</p>
-            <a href="/finance">вернуться</a>
-            <table class="styled-table">
-                <caption><div class="tooltip">Дистрибьюторы
-                        <span class="tooltip-text">
-                                    Дистрибьюторы - объекты, которые распределяют все поступающие деньги
-                                    по разным кошелькам
-                                </span>
-                    </div> кошелька {{ .wallet.Name }}</caption>
+        <div class="container container-flex">
+            <div class="gc-info-block">
+                <h2 class="gc-cool-text-1">{{ .wallet.Name }}</h2>
+                {{ if .wallet.IsSalary }} <span class="gc-cool-text-3">Зарплатный</span>{{ end }}
+                <span>Валюта: <span class="gc-cool-text-3">{{ .wallet.Currency }}</span></span>
+                <p>Описание: <span class="gc-cool-text-3">{{ .wallet.Description }}</span></p>
+            </div>
+            <div class="container-buttons">
+                <a class="gc-button-link" href="/finance">Вернуться к финансам</a>
+                <a class="gc-button-link" href="/finance">Создать дистрибьютора</a>
+                <a class="gc-button-link" href="/finance">Добавить операцию</a>
+            </div>
+            <table class="gc-table">
+                <caption><a class="gc-cool-link" href="/faq#distributors">Дистрибьюторы</a> кошелька {{ .wallet.Name }}</caption>
                 <thead>
                     <tr>
                         <th>
-                            <div class="tooltip">Целевой кошелёк
-                                <span class="tooltip-text">
-                                    Кошелёк, на который будет отправляться процент от зарплатного
-                                </span>
-                            </div>
+                            Цель
                         </th>
                         <th>
                             Процент
@@ -36,12 +34,9 @@
                     </tr>
                 </tbody>
             </table>
-            <table>
+            <table class="gc-table">
                 <caption>Операции</caption>
             </table>
-            {{ .wallet.Name }}
-            {{ .wallet.Currency }}
-            {{ .wallet.IsSalary }}
         </div>
     </main>
 {{ end }}
