@@ -59,7 +59,7 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 		Name:              req.Username + "_salary",
 		Description:       "Salary wallet",
 		PermissionGroupId: permissionGroup.Id,
-		Currency:          models.CurrencyBYN,
+		Currency:          models.Currency(req.SalaryCurrency),
 		BankId:            bank.Id,
 		IsSalary:          true,
 	})

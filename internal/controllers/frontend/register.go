@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"html/template"
 	"strconv"
 	"time"
@@ -124,10 +123,6 @@ func (c *Controller) RegisterForm(ctx context.Context, username, name, password,
 		return html, data, "", "", err
 	}
 
-	fmt.Println("birthdayDate:", birthdayDate)
-	fmt.Println("salaryInt:", salaryInt)
-	fmt.Println("currency:", paydayInt)
-
 	dbBank, err := c.banksRepo.GetByName(bank)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -187,7 +182,7 @@ func (c *Controller) RegisterForm(ctx context.Context, username, name, password,
 		Name:              username + "_salary",
 		Description:       "Salary wallet",
 		PermissionGroupId: permissionGroup.Id,
-		Currency:          models.CurrencyBYN,
+		Currency:          models.Currency(currency),
 		BankId:            dbBank.Id,
 		IsSalary:          true,
 	})
