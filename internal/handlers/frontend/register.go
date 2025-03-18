@@ -39,6 +39,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 			zap.String("method", "POST"),
 		)
 		username := r.PostFormValue("username")
+		name := r.PostFormValue("name")
 		password := r.PostFormValue("password")
 		repeatPassword := r.PostFormValue("repeat_password")
 		gender := r.PostFormValue("gender")
@@ -48,7 +49,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		currency := r.PostFormValue("currency")
 		payday := r.PostFormValue("payday")
 
-		html, templateData, token, salt, err := h.controller.RegisterForm(r.Context(), username, password, repeatPassword, gender, birthday, bank, salary, currency, payday)
+		html, templateData, token, salt, err := h.controller.RegisterForm(r.Context(), username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday)
 		if err != nil {
 			if html == nil {
 				h.logger.Error("frontend.register", zap.Error(err))
@@ -66,7 +67,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if token == "" {
-			h.logger.Error("frontend.login", zap.Error(frontend.ErrTemplateNotGenerated))
+			h.logger.Error("frontend.register.handler", zap.Error(frontend.ErrTemplateNotGenerated))
 
 			http.Error(w, frontend.ErrTemplateNotGenerated.Error(), http.StatusInternalServerError)
 
@@ -74,7 +75,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		}
 
 		h.logger.Info(
-			"frontend.login.handler",
+			"frontend.register.handler",
 			zap.String("event", "user registered"),
 			zap.String("username", username),
 		)
