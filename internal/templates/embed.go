@@ -18,4 +18,5 @@ const (
 	CreateWalletTemplate = "create_wallet.gohtml"
 	UIKitTemplate        = "ui_kit.gohtml"
 	PageNotFoundTemplate = "page_not_found.gohtml"
+	FaqTemplate          = "faq.gohtml"
 )

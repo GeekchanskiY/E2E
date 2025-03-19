@@ -243,3 +243,72 @@
     font-style: italic;
     color: var(--neutral-aqua);
 }
+
+/* FAQ */
+
+/* Style for the main FAQ container */
+.faq-container {
+    max-width: 800px; /* Limit the width for better readability */
+    margin: 50px auto; /* Center the container and add vertical spacing */
+    padding: 20px;
+    color: var(--dark0-soft); /* Base text color */
+}
+
+/* Style for the main title */
+.faq-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--neutral-aqua); /* Dark blue color for the title */
+}
+
+/* Style for each FAQ item */
+.faq-item {
+    border-bottom: 1px solid var(--dark0-soft); /* Light gray border between items */
+    overflow: hidden; /* Hide overflowing content */
+}
+
+/* Style for the question buttons */
+.faq-question {
+    background-color: var(--light0); /* Light gray background */
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease; /* Smooth background transition on hover */
+}
+
+/* Hover effect for question buttons */
+.faq-question:hover {
+    background-color: var(--light0-soft); /* Slightly darker gray on hover */
+}
+
+/* Style for the arrow icon */
+.faq-question .arrow {
+    position: absolute;
+    right: 20px;
+    transition: transform 0.3s ease; /* Smooth rotation transition */
+}
+
+/* Rotate the arrow when the question is active (expanded) */
+.faq-question.active .arrow {
+    transform: rotate(180deg); /* Rotate arrow 180 degrees */
+}
+
+/* Style for the answer sections */
+.faq-answer {
+    max-height: 0; /* Initially hide the answer */
+    overflow: hidden;
+    transition: max-height 0.3s ease; /* Smooth transition for expanding */
+    background-color: var(--light0-hard); /* White background for answers */
+}
+
+.faq-answer p {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--dark0-soft);
+}

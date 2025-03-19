@@ -1,0 +1,75 @@
+{{ define "title"}}
+    Index
+{{ end }}
+
+{{ define "main" }}
+    <main>
+        <div class="container">
+            <div class="faq-container">
+                <h1>Frequently Asked Questions</h1>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Зачем нужен E2E
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p id="faq">
+                            E2E - полноценная CRM/CMS система, которая позволяет создавать,
+                            управлять, и делиться данными различных типов в удобной форме.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Можно ли интегрировать данные E2E с другими сервисами?
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p id="integration">Да, информацию о доступном API можно найти по <a href="/specification">ссылке</a></p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Безопасно ли хранить тут данные?
+                        <span class="arrow">&#9660;</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p id="is_service_safe">
+                            Да, сервис делался в большей степени для сохранения максимальной степени безопасности,
+                            и если даже забыть пароль, то данные уже будет никак не прочитать
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script>
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        // TODO: add fragment identifier in a URL toggle
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+
+                faqQuestions.forEach(item => {
+                    if (item !== question) {
+                        item.classList.remove('active');
+                        item.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+
+                question.classList.toggle('active');
+
+                const answer = question.nextElementSibling;
+
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+    </script>
+{{ end }}
