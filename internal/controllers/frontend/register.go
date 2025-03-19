@@ -123,7 +123,7 @@ func (c *Controller) RegisterForm(ctx context.Context, username, name, password,
 		return html, data, "", "", err
 	}
 
-	dbBank, err := c.banksRepo.GetByName(bank)
+	dbBank, err := c.banksRepo.GetByName(ctx, bank)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			err = errors.New("bank does not exist")

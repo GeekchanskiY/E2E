@@ -12,7 +12,7 @@ import (
 func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequest) (resp *responses.RegisterResponse, err error) {
 	c.logger.Info("UserController.RegisterUser")
 
-	bank, err := c.bankRepo.GetByName(req.PreferredBankName)
+	bank, err := c.bankRepo.GetByName(ctx, req.PreferredBankName)
 	if err != nil {
 		return nil, err
 	}

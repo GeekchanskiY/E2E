@@ -61,7 +61,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 	for _, currency := range currencies {
 		switch currency.BankName {
 		case "INSNC by Alfa Bank":
-			bank, err := scraper.banksRepo.GetByName("alfabank")
+			bank, err := scraper.banksRepo.GetByName(ctx, "alfabank")
 			if err != nil {
 				errChan <- err
 
@@ -82,7 +82,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 			}
 			break
 		case "Альфа Банк":
-			bank, err := scraper.banksRepo.GetByName("alfabank")
+			bank, err := scraper.banksRepo.GetByName(ctx, "alfabank")
 			if err != nil {
 				errChan <- err
 
@@ -103,7 +103,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 			}
 			break
 		case "Приорбанк":
-			bank, err := scraper.banksRepo.GetByName("priorbank")
+			bank, err := scraper.banksRepo.GetByName(ctx, "priorbank")
 			if err != nil {
 				errChan <- err
 
