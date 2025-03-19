@@ -5,29 +5,34 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <h2>Login</h2>
-            <form class="e-form" action="/finance/create_wallet" method="post">
-                <label>
-                    <input type="text" placeholder="name" name="name">
+            <form class="gc-form" action="/finance/create_wallet" method="post">
+                <div class="gc-form-header">
+                    Создать кошелёк
+                </div>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Название</span>
+                    <input type="text" name="name">
                 </label>
-                <label>
-                    <input type="text" placeholder="currency" name="currency">
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Валюта</span>
+                    <input type="text" name="currency">
                 </label>
-                <label>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Описание</span>
                     <input type="text" placeholder="description" name="description">
                 </label>
-                <label>
-                    <span>is_salary</span>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Зарплатный?</span>
                     <input type="checkbox" name="is_salary">
                 </label>
-                <label>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Банк</span>
                     <input type="text" placeholder="bank" name="bank">
                 </label>
-                <!-- TODO: add other elements here -->
-                <br>
+
                 <span>{{ .error }}</span>
-                <br>
-                <button type="submit">Create</button>
+
+                <button type="submit">Создать</button>
             </form>
         </div>
     </main>
