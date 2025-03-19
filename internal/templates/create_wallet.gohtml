@@ -11,28 +11,29 @@
                 </div>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Название</span>
-                    <input type="text" name="name">
+                    <input class="gc-input-text" type="text" name="name">
                 </label>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Валюта</span>
-                    <input type="text" name="currency">
+                    <input class="gc-input-text" type="text" name="currency">
                 </label>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Описание</span>
-                    <input type="text" placeholder="description" name="description">
+                    <input class="gc-input-text" type="text" name="description">
                 </label>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Зарплатный?</span>
-                    <input type="checkbox" name="is_salary">
+                    <input class="gc-input-text" type="checkbox" name="is_salary">
                 </label>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Банк</span>
-                    <input type="text" placeholder="bank" name="bank">
+                    <input class="gc-input-text" type="text"  name="bank">
                 </label>
 
-                <span>{{ .error }}</span>
-
-                <button type="submit">Создать</button>
+                {{ if .error }}
+                    <span class="gc-form-error">{{ .error }}</span>
+                {{ end }}
+                <button type="submit" class="gc-input-button">Создать</button>
             </form>
         </div>
     </main>
