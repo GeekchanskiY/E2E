@@ -29,9 +29,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                    </tr>
+                    {{ range .distributors }}
+                        <tr>
+                            <td><a href="/finance/wallet/{{ .TargetWalletId }}">{{ .TargetWalletName }}</a></td>
+                            <td>{{ .Percent }}</td>
+                        </tr>
+                    {{ end }}
                 </tbody>
             </table>
             <table class="gc-table">

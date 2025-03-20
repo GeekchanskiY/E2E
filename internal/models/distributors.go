@@ -35,3 +35,13 @@ func (d *Distributor) Validate() error {
 
 	return nil
 }
+
+type DistributorExtended struct {
+	Id               int     `db:"id"`
+	Name             string  `db:"name"`
+	SourceWalletId   int     `db:"source_wallet_id"`
+	SourceWalletName string  `db:"source_wallet_name"`
+	TargetWalletId   int     `db:"target_wallet_id"`
+	TargetWalletName string  `db:"target_wallet_name"`
+	Percent          float64 `db:"percent"`
+}

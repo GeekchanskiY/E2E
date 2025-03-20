@@ -2,6 +2,7 @@ package frontend
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi/v5"
 	"go.uber.org/zap"
@@ -10,14 +11,14 @@ import (
 func (h *Handler) Wallet(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.wallet.handler", zap.String("event", "got request"))
 
-	walletId := chi.URLParam(r, "id")
-	if walletId == "" {
-		h.logger.Error("frontend.wallet.handler: walletId is empty")
+	walletId, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if walletId == 0 || err != nil {
+		h.logger.Error("frontend.wallet.handler: walletId is empty", zap.Error(err))
 		http.Error(w, "walletId is empty", http.StatusBadRequest)
 		return
 	}
 
-	html, templateData, err := h.controller.Wallet(r.Context(), 1)
+	html, templateData, err := h.controller.Wallet(r.Context(), walletId)
 	if err != nil {
 		h.logger.Error("frontend.wallet", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

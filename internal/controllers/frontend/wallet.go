@@ -4,9 +4,10 @@ import (
 	"context"
 	"html/template"
 
+	"go.uber.org/zap"
+
 	"finworker/internal/controllers/frontend/utils"
 	"finworker/internal/templates"
-	"go.uber.org/zap"
 )
 
 func (c *Controller) Wallet(ctx context.Context, walletId int) (*template.Template, map[string]any, error) {
@@ -21,6 +22,14 @@ func (c *Controller) Wallet(ctx context.Context, walletId int) (*template.Templa
 	}
 
 	data["wallet"] = walletData
+
+	distributors, err := c.distributorsRepo.GetForWallet(ctx, walletData.Id)
+	if err != nil {
+		c.logger.Error("frontend.wallet.controller", zap.Error(err))
+		return nil, nil, err
+	}
+
+	data["distributors"] = distributors
 
 	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.WalletTemplate)
 	if err != nil {
