@@ -1,8 +1,23 @@
 package models
 
-// TODO: set id's to int64
+import (
+	"errors"
+)
+
 type OperationGroup struct {
 	Id       int    `db:"id"`
 	Name     string `db:"name"`
 	WalletId int    `db:"wallet_id"`
+}
+
+func (o *OperationGroup) Validate() error {
+	if o.Name == "" {
+		return errors.New("name is required")
+	}
+
+	if o.WalletId == 0 {
+		return errors.New("walletId is required")
+	}
+
+	return nil
 }
