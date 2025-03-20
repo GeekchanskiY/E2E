@@ -31,8 +31,8 @@ func (c *Controller) CreateWallet(ctx context.Context) (*template.Template, map[
 
 	data["banks"] = banks
 
-	userId := ctx.Value("userId").(int64)
-	if userId == 0 {
+	userId, ok := ctx.Value("userId").(int64)
+	if userId == 0 || !ok {
 		err = errors.New("userId is empty")
 		data["error"] = err.Error()
 
@@ -101,8 +101,8 @@ func (c *Controller) CreateWalletFormError(ctx context.Context, userErr error) (
 
 	data["banks"] = banks
 
-	userId := ctx.Value("userId").(int64)
-	if userId == 0 {
+	userId, ok := ctx.Value("userId").(int64)
+	if userId == 0 || !ok {
 		err = errors.New("userId is empty")
 		data["error"] = err.Error()
 
