@@ -96,9 +96,42 @@
     width: 80%;
 }
 
-.gc-table caption {
+.gc-table-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: var(--border-radius);
+
+    background-color: var(--faded-orange);
+
+    transition: var(--transition);
+}
+
+.gc-table-add:hover {
+    background-color: var(--bright-orange);
+}
+
+.gc-table-caption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    font-size: x-large;
+
+    margin-bottom: 10px;
+
     border-bottom: 1px var(--neutral-aqua) solid;
     color: var(--light0-hard);
+}
+
+.gc-table-caption a {
+    color: var(--light0-soft);
+    text-decoration: none;
 }
 
 .gc-table thead tr th {
