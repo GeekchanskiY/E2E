@@ -5,19 +5,19 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <form class="gc-form" action="/finance/create_wallet" method="post">
+            <form class="gc-form" action="/finance/create_operation/{{ .wallet.Id }}" method="post">
                 <div class="gc-form-header">
-                    Создать операцию
+                    Создать операцию для {{ .wallet.Name }} ({{ .wallet.Currency }})
                 </div>
                 <label class="gc-form-label">
-                    <span class="gc-form-label-text">Название</span>
-                    <input class="gc-input-text" type="text" name="name">
+                    <span class="gc-form-label-text">Сумма</span>
+                    <input class="gc-input-text" type="number" name="amount">
                 </label>
                 <label class="gc-form-label">
-                    <span class="gc-form-label-text">Группа операций <a href="/finance/create_operation_group">Добавить</a></span>
+                    <span class="gc-form-label-text">Группа операций <a class="gc-table-add" href="/finance/create_operation_group">+</a></span>
                     <select class="gc-input-text" name="operation_group">
-                        {{ range .userPermissionGroups }}
-                            <option value="{{ .Name }}">{{ .Name }}</option>
+                        {{ range .operation_groups }}
+                            <option value="{{ .Id }}">{{ .Name }}</option>
                         {{ end }}
                     </select>
                 </label>

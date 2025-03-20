@@ -64,6 +64,9 @@ func Run(h *Router) error {
 		r.Get("/finance/create_operation_group", h.handlers.GetFrontend().CreateOperationGroup)
 		r.Post("/finance/create_operation_group", h.handlers.GetFrontend().CreateOperationGroup)
 
+		r.Get("/finance/create_operation/{walletId}", h.handlers.GetFrontend().CreateOperation)
+		r.Post("/finance/create_operation/{walletId}", h.handlers.GetFrontend().CreateOperation)
+
 		r.Get("/finance/wallet/{id}", h.handlers.GetFrontend().Wallet)
 		r.Get("/me", h.handlers.GetFrontend().Me)
 	})
