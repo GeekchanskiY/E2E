@@ -6,25 +6,24 @@
     <main>
         <div class="container">
             <h2>UI kit</h2>
-            <form class="e-form">
-                <div class="e-form-header">Форма</div>
-                <fieldset>
-                    <legend>
-                        О себе
-                    </legend>
-
-                    <div class="e-form-group"></div>
-                    <label for="name">name</label>
-                    <input type="text" id="name" placeholder="Dmitry">
-
-                </fieldset>
+            <form class="gc-form" action="#" method="post">
+                <div class="gc-form-header">
+                    Форма
+                </div>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Текст</span>
+                    <input class="gc-input-text" type="text" name="amount">
+                </label>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Группа операций <a class="gc-table-add" href="#">+</a></span>
+                    <select class="gc-input-text" name="operation_group">
+                        <option value="test1">операция 1</option>
+                        <option value="test2">операция 2</option>
+                    </select>
+                </label>
+                <span class="gc-form-error">Ошибка</span>
+                <button type="submit" class="gc-input-button">Создать</button>
             </form>
-
-            <p>
-                Fun fact, there is a <mark>mark</mark> tag, which stands for mark,
-                and <mark>kbd</mark> tag, which stands for user input, like: <br>
-                <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd>
-            </p>
         </div>
     </main>
 {{ end }}

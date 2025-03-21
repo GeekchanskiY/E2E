@@ -113,6 +113,14 @@
     transition: var(--transition);
 }
 
+.gc-form-label-text {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+}
+
 .gc-table-add:hover {
     background-color: var(--bright-orange);
     color: var(--light0-hard);
