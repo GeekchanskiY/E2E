@@ -72,9 +72,25 @@
     outline: none;
     background-color: var(--light0-soft);
     border: 1px solid var(--light0);
-    color: var(--dark0);
     border-radius: var(--border-radius);
     padding: 5px 10px;
+}
+
+.gc-input-checkbox{
+    display: block;
+    border-radius: var(--border-radius);
+    width: 20px;
+    height: 20px;
+    accent-color: var(--light0-soft);
+}
+
+.gc-input-checkbox:hover{
+    background-color: var(--bright-orange);
+}
+
+.gc-input-checkbox:checked {
+    background-color: var(--dark0-hard);
+    color: var(--light0-hard);
 }
 
 .gc-form-link {
