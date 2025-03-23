@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (repo *Repository) GetForWallet(ctx context.Context, walletId int) ([]models.DistributorExtended, error) {
+func (repo *Repository) GetForWallet(ctx context.Context, walletId int64) ([]*models.DistributorExtended, error) {
 	q := `SELECT 
     distributors.id, distributors.name, distributors.source_wallet_id, source.name, distributors.target_wallet_id, target.name, distributors.percent
 	FROM distributors
@@ -24,9 +24,9 @@ func (repo *Repository) GetForWallet(ctx context.Context, walletId int) ([]model
 		}
 	}()
 
-	var distributors = make([]models.DistributorExtended, 0)
+	var distributors = make([]*models.DistributorExtended, 0)
 	for rows.Next() {
-		var distributor models.DistributorExtended
+		distributor := new(models.DistributorExtended)
 
 		err = rows.Scan(
 			&distributor.Id,

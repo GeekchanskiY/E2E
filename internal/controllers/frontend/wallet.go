@@ -23,7 +23,7 @@ func (c *Controller) Wallet(ctx context.Context, walletId int) (*template.Templa
 
 	data["wallet"] = walletData
 
-	distributors, err := c.distributorsRepo.GetForWallet(ctx, walletData.Id)
+	distributors, err := c.distributorsRepo.GetForWallet(ctx, int64(walletData.Id))
 	if err != nil {
 		c.logger.Error("frontend.wallet.controller", zap.Error(err))
 		return nil, nil, err
