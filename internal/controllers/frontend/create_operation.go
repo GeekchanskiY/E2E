@@ -71,18 +71,22 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 
 	if len(distributors) != 0 {
 		for _, d := range distributors {
-			percentToWallet := operation.Amount / d.Percent
-			print(percentToWallet)
+			amountToWallet := (operation.Amount / 100) * d.Percent
 
-			// TODO: fill distributed operations
+			operationGroup, err := c.operationGroupsRepo.GetOrCreateForWalletByName(ctx, int64(d.TargetWalletId), "distributed")
+			if err != nil {
+				c.logger.Error("frontend.create_operation.controller.get_or_create_operation_groups", zap.Error(err))
+
+				return c.CreateOperationFormError(ctx, walletId, err)
+			}
 			operations = append(operations, &models.Operation{
-				OperationGroupId: 0,
+				OperationGroupId: operationGroup.Id,
 				IsConsumption:    false,
-				Time:             time.Time{},
+				Time:             time.Now(),
 				IsMonthly:        false,
-				IsConfirmed:      false,
-				Amount:           0,
-				InitiatorId:      0,
+				IsConfirmed:      true,
+				Amount:           amountToWallet,
+				InitiatorId:      int(ctx.Value("userId").(int64)),
 			})
 		}
 	}
