@@ -204,7 +204,6 @@ func (c *Controller) RegisterForm(ctx context.Context, username, name, password,
 
 		_, err = c.operationsRepo.Create(ctx, &models.Operation{
 			OperationGroupId: operationGroup.Id,
-			IsConsumption:    false,
 			Time:             time.Date(time.Now().Year(), time.Now().Month(), paydayInt, 0, 0, 0, 0, time.Local),
 			IsMonthly:        true,
 			Amount:           float64(salaryInt),

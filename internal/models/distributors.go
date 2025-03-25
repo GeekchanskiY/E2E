@@ -5,10 +5,10 @@ import (
 )
 
 type Distributor struct {
-	Id             int     `db:"id"`
+	Id             int64   `db:"id"`
 	Name           string  `db:"name"`
-	SourceWalletId int     `db:"source_wallet_id"`
-	TargetWalletId int     `db:"target_wallet_id"`
+	SourceWalletId int64   `db:"source_wallet_id"`
+	TargetWalletId int64   `db:"target_wallet_id"`
 	Percent        float64 `db:"percent"`
 }
 
@@ -37,11 +37,11 @@ func (d *Distributor) Validate() error {
 }
 
 type DistributorExtended struct {
-	Id               int     `db:"id"`
+	Id               int64   `db:"id"`
 	Name             string  `db:"name"`
-	SourceWalletId   int     `db:"source_wallet_id"`
+	SourceWalletId   int64   `db:"source_wallet_id"`
 	SourceWalletName string  `db:"source_wallet_name"`
-	TargetWalletId   int     `db:"target_wallet_id"`
+	TargetWalletId   int64   `db:"target_wallet_id"`
 	TargetWalletName string  `db:"target_wallet_name"`
 	Percent          float64 `db:"percent"`
 }

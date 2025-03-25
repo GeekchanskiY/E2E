@@ -6,14 +6,13 @@ import (
 )
 
 type Operation struct {
-	Id               int       `db:"id"`
-	OperationGroupId int       `db:"operation_group_id"`
-	IsConsumption    bool      `db:"is_consumption"`
+	Id               int64     `db:"id"`
+	OperationGroupId int64     `db:"operation_group_id"`
 	Time             time.Time `db:"time"`
 	IsMonthly        bool      `db:"is_monthly"`
 	IsConfirmed      bool      `db:"is_confirmed"`
 	Amount           float64   `db:"amount"`
-	InitiatorId      int       `db:"initiator_id"`
+	InitiatorId      int64     `db:"initiator_id"`
 }
 
 func (op *Operation) Validate() error {

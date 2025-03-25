@@ -25,11 +25,11 @@ func (h *Handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 
-		sourceWallet, err := strconv.Atoi(r.PostFormValue("source_wallet"))
+		sourceWallet, err := strconv.ParseInt(r.PostFormValue("source_wallet"), 10, 64)
 		if err != nil {
 			sourceWallet = 0
 		}
-		targetWallet, err := strconv.Atoi(r.PostFormValue("target_wallet"))
+		targetWallet, err := strconv.ParseInt(r.PostFormValue("target_wallet"), 10, 64)
 		if err != nil {
 			targetWallet = 0
 		}

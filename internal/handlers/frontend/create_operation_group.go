@@ -25,7 +25,7 @@ func (h *Handler) CreateOperationGroup(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 
-		walletId, err := strconv.Atoi(r.PostFormValue("wallet"))
+		walletId, err := strconv.ParseInt(r.PostFormValue("wallet"), 10, 64)
 		if err != nil {
 			walletId = 0
 		}

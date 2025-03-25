@@ -56,7 +56,7 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 		errs       []error
 	)
 
-	operation.InitiatorId = int(ctx.Value("userId").(int64))
+	operation.InitiatorId = ctx.Value("userId").(int64)
 
 	err := operation.Validate()
 	if err != nil {
@@ -81,12 +81,11 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 			}
 			operations = append(operations, &models.Operation{
 				OperationGroupId: operationGroup.Id,
-				IsConsumption:    false,
 				Time:             time.Now(),
 				IsMonthly:        false,
 				IsConfirmed:      true,
 				Amount:           amountToWallet,
-				InitiatorId:      int(ctx.Value("userId").(int64)),
+				InitiatorId:      ctx.Value("userId").(int64),
 			})
 		}
 	}

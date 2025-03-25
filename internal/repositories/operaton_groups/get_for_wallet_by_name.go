@@ -25,7 +25,7 @@ func (r *Repository) GetOrCreateForWalletByName(ctx context.Context, walletId in
 	if errors.Is(sql.ErrNoRows, err) {
 		operationGroup, err = r.Create(ctx, &models.OperationGroup{
 			Name:     name,
-			WalletId: int(walletId),
+			WalletId: walletId,
 		})
 	}
 

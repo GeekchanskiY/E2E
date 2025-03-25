@@ -47,7 +47,7 @@ func (h *Handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		operationGroupId, err := strconv.Atoi(r.PostFormValue("operation_group"))
+		operationGroupId, err := strconv.ParseInt(r.PostFormValue("operation_group"), 10, 64)
 		if err != nil {
 			h.logger.Error("frontend.create_operation.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusBadRequest)

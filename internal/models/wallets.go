@@ -16,20 +16,20 @@ const (
 )
 
 type Wallet struct {
-	Id                int       `db:"id"`
+	Id                int64     `db:"id"`
 	Name              string    `db:"name"`
 	Description       string    `db:"description"`
-	PermissionGroupId int       `db:"permission_group_id"`
+	PermissionGroupId int64     `db:"permission_group_id"`
 	CreatedAt         time.Time `db:"created_at"`
 	Currency          Currency  `db:"currency"`
 	IsSalary          bool      `db:"is_salary"`
 
 	// BankId refers to internal bank id
-	BankId int `db:"bank_id" json:"bank_id"`
+	BankId int64 `db:"bank_id" json:"bank_id"`
 }
 
 type WalletExtended struct {
-	Id          int
+	Id          int64
 	Name        string
 	Description string
 	Permission  string

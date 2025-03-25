@@ -5,8 +5,8 @@ import (
 )
 
 type CurrencyState struct {
-	Id           int       `db:"id" json:"id"`
-	BankId       int       `db:"bank_id" json:"bank_id"`
+	Id           int64     `db:"id" json:"id"`
+	BankId       int64     `db:"bank_id" json:"bank_id"`
 	CurrencyName string    `db:"currency_name" json:"currency_name"`
 	SourceName   string    `db:"source_name" json:"source_name"`
 	SellUsd      float64   `db:"sell_usd" json:"sell_usd"`

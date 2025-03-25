@@ -80,7 +80,6 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 
 		operation, err = c.operationsRepo.Create(ctx, &models.Operation{
 			OperationGroupId: operationGroup.Id,
-			IsConsumption:    false,
 			Time:             req.SalaryDate,
 			IsMonthly:        true,
 			Amount:           req.Salary,

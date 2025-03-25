@@ -5,9 +5,9 @@ import (
 )
 
 type OperationGroup struct {
-	Id       int    `db:"id"`
+	Id       int64  `db:"id"`
 	Name     string `db:"name"`
-	WalletId int    `db:"wallet_id"`
+	WalletId int64  `db:"wallet_id"`
 }
 
 func (o *OperationGroup) Validate() error {
