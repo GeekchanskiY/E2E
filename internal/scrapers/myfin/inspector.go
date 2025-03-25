@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	timeZoneDifference  = 3 * time.Hour // bad practice, but I dont see other way to resolve this now
 	inspectionFrequency = 12 * time.Hour
 )
 
@@ -28,11 +27,8 @@ func RunPeriodicScraping(scraper *Scraper) error {
 	defer ticker.Stop()
 
 	// running initial scraping if required
-	if lastUpdateTime.IsZero() || lastUpdateTime.After(time.Now().Add(inspectionFrequency)) {
-		go runScraping(ctx, errChan, scraper)
-	} else {
-		// TODO: wtf (what a terrible failure)
-		// ticker.Reset(-(inspectionFrequency - time.Now().Add(timeZoneDifference).Sub(lastUpdateTime)))
+	if lastUpdateTime.IsZero() || lastUpdateTime.Before(time.Now().Add(-inspectionFrequency)) {
+		ticker.Reset(time.Second)
 	}
 
 	select {
