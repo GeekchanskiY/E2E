@@ -73,7 +73,7 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 		for _, d := range distributors {
 			amountToWallet := (operation.Amount / 100) * d.Percent
 
-			operationGroup, err := c.operationGroupsRepo.GetOrCreateForWalletByName(ctx, int64(d.TargetWalletId), "distributed")
+			operationGroup, err := c.operationGroupsRepo.GetOrCreateForWalletByName(ctx, d.TargetWalletId, "distributed")
 			if err != nil {
 				c.logger.Error("frontend.create_operation.controller.get_or_create_operation_groups", zap.Error(err))
 
