@@ -26,3 +26,15 @@ func (op *Operation) Validate() error {
 
 	return nil
 }
+
+type OperationExtended struct {
+	Id                 int64     `db:"id"`
+	OperationGroupId   int64     `db:"operation_group_id"`
+	OperationGroupName string    `db:"operation_group_name"`
+	Time               time.Time `db:"time"`
+	IsMonthly          bool      `db:"is_monthly"`
+	IsConfirmed        bool      `db:"is_confirmed"`
+	Amount             float64   `db:"amount"`
+	InitiatorId        int64     `db:"initiator_id"`
+	InitiatorName      string    `db:"initiator_name"`
+}

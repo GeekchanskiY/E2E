@@ -23,13 +23,29 @@ func (c *Controller) Wallet(ctx context.Context, walletId int) (*template.Templa
 
 	data["wallet"] = walletData
 
-	distributors, err := c.distributorsRepo.GetForWallet(ctx, int64(walletData.Id))
+	distributors, err := c.distributorsRepo.GetForWallet(ctx, walletData.Id)
 	if err != nil {
 		c.logger.Error("frontend.wallet.controller", zap.Error(err))
 		return nil, nil, err
 	}
 
 	data["distributors"] = distributors
+
+	operationGroups, err := c.operationGroupsRepo.GetByWallet(ctx, walletData.Id)
+	if err != nil {
+		c.logger.Error("frontend.wallet.controller", zap.Error(err))
+		return nil, nil, err
+	}
+
+	data["operationGroups"] = operationGroups
+
+	operations, err := c.operationsRepo.GetForWallet(ctx, walletData.Id)
+	if err != nil {
+		c.logger.Error("frontend.wallet.controller", zap.Error(err))
+		return nil, nil, err
+	}
+
+	data["operations"] = operations
 
 	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.WalletTemplate)
 	if err != nil {

@@ -10,6 +10,8 @@
                 {{ if .wallet.IsSalary }} <span class="gc-cool-text-3">Зарплатный</span>{{ end }}
                 <span>Валюта: <span class="gc-cool-text-3">{{ .wallet.Currency }}</span></span>
                 <p>Описание: <span class="gc-cool-text-3">{{ .wallet.Description }}</span></p>
+                <span>Группы операций: <span class="gc-cool-text-3">{{ len .operationGroups }}</span></span>
+                <span>Операции: <span class="gc-cool-text-3">{{ len .operations }}</span></span>
             </div>
             <div class="container-buttons">
                 <a class="gc-button-link" href="/finance">Вернуться к финансам</a>
@@ -39,6 +41,36 @@
             </table>
             <table class="gc-table">
                 <caption>Операции</caption>
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Группа операций
+                    </th>
+                    <th>
+                        Сумма
+                    </th>
+                    <th>
+                        Время
+                    </th>
+                    <th>
+                        Инициатор
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range .operations }}
+                    <tr>
+                        <td>{{ .Id }}</td>
+                        <td>{{ .OperationGroupName }}</td>
+                        <td>{{ .Amount }}</td>
+                        <td>{{ .Time }}</td>
+                        <td>{{ .InitiatorName }}</td>
+                    </tr>
+                {{ end }}
+                </tbody>
             </table>
         </div>
     </main>
