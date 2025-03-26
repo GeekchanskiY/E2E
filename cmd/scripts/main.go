@@ -19,16 +19,16 @@ func main() {
 
 	fmt.Print("E2E scripts \n\n")
 	fmt.Println(`Choose script to run:
-	1 - create superuser
-	2 - clear all tables
-	3 - drop all tables`)
+	1 - clear all tables
+	2 - drop all tables`)
 
 	_, err = fmt.Scanf("%d", &userInput)
 	if err != nil {
 		panic(err)
 	}
 
-	if userInput == 2 {
+	switch userInput {
+	case 1:
 		fmt.Println(`Are you sure you want to clear all data? y/n`)
 		_, err = fmt.Scanf("%s", &confirm)
 		if err != nil {
@@ -43,9 +43,7 @@ func main() {
 
 		fmt.Println("Clearing all data...")
 		clearAllTables()
-	}
-
-	if userInput == 3 {
+	case 2:
 		fmt.Println(`Are you sure you want to drop all tables? y/n`)
 		_, err = fmt.Scanf("%s", &confirm)
 		if err != nil {
@@ -60,7 +58,11 @@ func main() {
 
 		fmt.Println("Clearing all data...")
 		dropAllTables()
+	default:
+		fmt.Println("Invalid input")
 	}
+
+	os.Exit(0)
 }
 
 func clearAllTables() {
@@ -96,7 +98,6 @@ func clearAllTables() {
 	}
 
 	fmt.Println("done")
-	os.Exit(0)
 }
 
 func dropAllTables() {
@@ -136,7 +137,6 @@ func dropAllTables() {
 	}
 
 	fmt.Println("done")
-	os.Exit(0)
 }
 
 func confirmed(s string) bool {
