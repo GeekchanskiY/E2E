@@ -13,6 +13,7 @@ import (
 	"finworker/internal/repositories/user_permissions"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
+	"finworker/internal/repositories/work"
 )
 
 type Repositories struct {
@@ -25,6 +26,7 @@ type Repositories struct {
 	wallets          *wallets.Repository
 	banks            *banks.Repository
 	currencyStates   *currency_states.Repository
+	work             *work.Repository
 }
 
 func NewRepositories(db *sqlx.DB, log *zap.Logger) *Repositories {
@@ -38,6 +40,7 @@ func NewRepositories(db *sqlx.DB, log *zap.Logger) *Repositories {
 		wallets:          wallets.New(db, log),
 		banks:            banks.New(db),
 		currencyStates:   currency_states.New(db),
+		work:             work.New(db, log),
 	}
 }
 
@@ -75,4 +78,8 @@ func (r *Repositories) GetBanks() *banks.Repository {
 
 func (r *Repositories) GetCurrencyStates() *currency_states.Repository {
 	return r.currencyStates
+}
+
+func (r *Repositories) GetWork() *work.Repository {
+	return r.work
 }
