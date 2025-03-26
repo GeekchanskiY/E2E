@@ -27,7 +27,7 @@ func (c *Controller) User(ctx context.Context, username string) (*template.Templ
 	data["userGender"] = userData.Gender
 	data["userBirthday"] = userData.Birthday
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.UserTemplate)
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.UserTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

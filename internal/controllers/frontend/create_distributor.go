@@ -15,7 +15,7 @@ import (
 func (c *Controller) CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_distributor.controller", zap.String("event", "got request"))
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.CreateDistributorTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateDistributorTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -58,7 +58,7 @@ func (c *Controller) CreateDistributorForm(ctx context.Context, distributor mode
 }
 
 func (c *Controller) CreateDistributorFormError(ctx context.Context, userErr error) (*template.Template, map[string]any, error) {
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.CreateDistributorTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateDistributorTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

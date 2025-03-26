@@ -15,7 +15,7 @@ import (
 func (c *Controller) CreateWallet(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_wallet.controller", zap.String("event", "got request"))
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.CreateWalletTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateWalletTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -85,7 +85,7 @@ func (c *Controller) CreateWalletForm(ctx context.Context, walletData models.Wal
 }
 
 func (c *Controller) CreateWalletFormError(ctx context.Context, userErr error) (*template.Template, map[string]any, error) {
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.CreateWalletTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateWalletTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

@@ -9,6 +9,7 @@
                 <h2 class="gc-cool-text-1">{{ .wallet.Name }}</h2>
                 {{ if .wallet.IsSalary }} <span class="gc-cool-text-3">Зарплатный</span>{{ end }}
                 <span>Валюта: <span class="gc-cool-text-3">{{ .wallet.Currency }}</span></span>
+                <span>Баланс: <span class="gc-cool-text-3">{{ formatFloat .balance }}</span></span>
                 <p>Описание: <span class="gc-cool-text-3">{{ .wallet.Description }}</span></p>
                 <span>Группы операций: <span class="gc-cool-text-3">{{ len .operationGroups }}</span></span>
                 <span>Операции: <span class="gc-cool-text-3">{{ len .operations }}</span></span>

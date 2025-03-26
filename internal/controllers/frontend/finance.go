@@ -12,7 +12,7 @@ import (
 
 func (c *Controller) Finance(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.finance.controller", zap.String("event", "got request"))
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.FinanceTemplate)
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.FinanceTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

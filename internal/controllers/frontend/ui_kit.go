@@ -12,7 +12,7 @@ import (
 
 func (c *Controller) UIKit(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.ui_kit.controller", zap.String("event", "got request"))
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.UIKitTemplate)
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.UIKitTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

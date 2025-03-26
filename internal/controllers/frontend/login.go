@@ -18,7 +18,7 @@ import (
 func (c *Controller) Login(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.login.controller", zap.String("event", "got request"))
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.LoginTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.LoginTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -31,7 +31,7 @@ func (c *Controller) Login(ctx context.Context) (*template.Template, map[string]
 func (c *Controller) LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, string, error) {
 	c.logger.Debug("frontend.login.controller.form", zap.String("event", "got request"))
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.LoginTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.LoginTemplate)
 	if err != nil {
 		return nil, nil, "", "", err
 	}

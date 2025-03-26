@@ -16,7 +16,7 @@ import (
 func (c *Controller) CreateOperation(ctx context.Context, walletId int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_operation.controller", zap.String("event", "got request"))
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.CreateOperationTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateOperationTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -110,7 +110,7 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 }
 
 func (c *Controller) CreateOperationFormError(ctx context.Context, walletId int64, userErr error) (*template.Template, map[string]any, error) {
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.CreateOperationTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateOperationTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

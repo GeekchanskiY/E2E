@@ -20,7 +20,7 @@ import (
 
 func (c *Controller) Register(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.register.controller", zap.String("event", "got request"))
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -37,7 +37,7 @@ func (c *Controller) RegisterForm(ctx context.Context, username, name, password,
 		err error
 	)
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
 	if err != nil {
 		return nil, nil, "", "", err
 	}

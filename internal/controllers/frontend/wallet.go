@@ -3,6 +3,7 @@ package frontend
 import (
 	"context"
 	"html/template"
+	"math"
 
 	"go.uber.org/zap"
 
@@ -47,7 +48,14 @@ func (c *Controller) Wallet(ctx context.Context, walletId int) (*template.Templa
 
 	data["operations"] = operations
 
-	html, err := template.ParseFS(c.fs, templates.BaseTemplate, templates.WalletTemplate)
+	var balance float64 = 0
+	for _, operation := range operations {
+		balance += operation.Amount
+	}
+	balance = math.Round(balance*100) / 100
+	data["balance"] = balance
+
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.WalletTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
