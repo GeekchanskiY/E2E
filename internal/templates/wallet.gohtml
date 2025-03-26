@@ -8,8 +8,7 @@
             <div class="gc-info-block">
                 <h2 class="gc-cool-text-1">{{ .wallet.Name }}</h2>
                 {{ if .wallet.IsSalary }} <span class="gc-cool-text-3">Зарплатный</span>{{ end }}
-                <span>Валюта: <span class="gc-cool-text-3">{{ .wallet.Currency }}</span></span>
-                <span>Баланс: <span class="gc-cool-text-3">{{ formatFloat .balance }}</span></span>
+                <span>Баланс: <span class="gc-cool-text-3">{{ formatFloat .balance }} {{ .wallet.Currency }}</span></span>
                 <p>Описание: <span class="gc-cool-text-3">{{ .wallet.Description }}</span></p>
                 <span>Группы операций: <span class="gc-cool-text-3">{{ len .operationGroups }}</span></span>
                 <span>Операции: <span class="gc-cool-text-3">{{ len .operations }}</span></span>
@@ -35,7 +34,7 @@
                     {{ range .distributors }}
                         <tr>
                             <td><a href="/finance/wallet/{{ .TargetWalletId }}">{{ .TargetWalletName }}</a></td>
-                            <td>{{ .Percent }}</td>
+                            <td>{{ formatFloat .Percent }}</td>
                         </tr>
                     {{ end }}
                 </tbody>
@@ -66,8 +65,8 @@
                     <tr>
                         <td>{{ .Id }}</td>
                         <td>{{ .OperationGroupName }}</td>
-                        <td>{{ .Amount }}</td>
-                        <td>{{ .Time }}</td>
+                        <td>{{ formatFloat .Amount }}</td>
+                        <td>{{ formatTime .Time }}</td>
                         <td>{{ .InitiatorName }}</td>
                     </tr>
                 {{ end }}
