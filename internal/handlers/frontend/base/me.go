@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"net/http"
@@ -6,10 +6,10 @@ import (
 	"go.uber.org/zap"
 )
 
-func (h *Handler) Me(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Me(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.me.handler", zap.String("event", "got request"))
 
-	html, templateData, err := h.controllers.Base().User(r.Context(), r.Context().Value("user").(string))
+	html, templateData, err := h.controller.User(r.Context(), r.Context().Value("user").(string))
 	if err != nil {
 		h.logger.Error("frontend.me", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

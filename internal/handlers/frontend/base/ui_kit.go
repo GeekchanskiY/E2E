@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"net/http"
@@ -6,10 +6,10 @@ import (
 	"go.uber.org/zap"
 )
 
-func (h *Handler) UIKit(w http.ResponseWriter, r *http.Request) {
+func (h *handler) UIKit(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.ui_kit.handler", zap.String("event", "got request"))
 
-	html, templateData, err := h.controllers.Base().UIKit(r.Context())
+	html, templateData, err := h.controller.UIKit(r.Context())
 	if err != nil {
 		h.logger.Error("frontend.ui_kit", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

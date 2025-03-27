@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (h *Handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
+func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_operation.handler", zap.String("event", "got request"))
 	walletId, err := strconv.ParseInt(chi.URLParam(r, "walletId"), 10, 64)
 	if err != nil {
@@ -23,7 +23,7 @@ func (h *Handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.Method {
 	case http.MethodGet:
-		html, templateData, err := h.controllers.Finance().CreateOperation(r.Context(), walletId)
+		html, templateData, err := h.controller.CreateOperation(r.Context(), walletId)
 		if err != nil {
 
 			h.logger.Error("frontend.create_operation.handler", zap.Error(err))
@@ -55,7 +55,7 @@ func (h *Handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		html, templateData, err := h.controllers.Finance().CreateOperationForm(r.Context(), models.Operation{
+		html, templateData, err := h.controller.CreateOperationForm(r.Context(), models.Operation{
 			OperationGroupId: operationGroupId,
 			Time:             time.Now(),
 			IsMonthly:        false,

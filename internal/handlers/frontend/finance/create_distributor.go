@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"net/http"
@@ -9,11 +9,11 @@ import (
 	"finworker/internal/models"
 )
 
-func (h *Handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
+func (h *handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_distributor.handler", zap.String("event", "got request"))
 	switch r.Method {
 	case http.MethodGet:
-		html, templateData, err := h.controllers.Finance().CreateDistributor(r.Context())
+		html, templateData, err := h.controller.CreateDistributor(r.Context())
 		if err != nil {
 
 			h.logger.Error("frontend.create_distributor.handler", zap.Error(err))
@@ -39,7 +39,7 @@ func (h *Handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 			percent = 0.0
 		}
 
-		html, templateData, err := h.controllers.Finance().CreateDistributorForm(r.Context(), models.Distributor{
+		html, templateData, err := h.controller.CreateDistributorForm(r.Context(), models.Distributor{
 			Name:           name,
 			SourceWalletId: sourceWallet,
 			TargetWalletId: targetWallet,

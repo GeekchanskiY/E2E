@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"net/http"
@@ -6,9 +6,9 @@ import (
 	"go.uber.org/zap"
 )
 
-func (h *Handler) Finance(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Finance(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.finance.handler", zap.String("event", "got request"))
-	html, templateData, err := h.controllers.Finance().Finance(r.Context())
+	html, templateData, err := h.controller.Finance(r.Context())
 	if err != nil {
 		h.logger.Error("frontend.finance", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

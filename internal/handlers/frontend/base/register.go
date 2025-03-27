@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 	"finworker/internal/controllers/frontend"
 )
 
-func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.register.handler", zap.String("event", "got request"))
 	if r.Method == http.MethodGet {
 		h.logger.Debug(
@@ -17,7 +17,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 			zap.String("method", "GET"),
 		)
 
-		html, templateData, err := h.controllers.Base().Register(r.Context())
+		html, templateData, err := h.controller.Register(r.Context())
 		if err != nil {
 			h.logger.Error("frontend.register", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -49,7 +49,7 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		currency := r.PostFormValue("currency")
 		payday := r.PostFormValue("payday")
 
-		html, templateData, token, salt, err := h.controllers.Base().RegisterForm(r.Context(), username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday)
+		html, templateData, token, salt, err := h.controller.RegisterForm(r.Context(), username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday)
 		if err != nil {
 			if html == nil {
 				h.logger.Error("frontend.register", zap.Error(err))

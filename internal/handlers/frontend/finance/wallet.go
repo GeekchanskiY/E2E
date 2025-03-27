@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (h *Handler) Wallet(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Wallet(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.wallet.handler", zap.String("event", "got request"))
 
 	walletId, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -18,7 +18,7 @@ func (h *Handler) Wallet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html, templateData, err := h.controllers.Finance().Wallet(r.Context(), walletId)
+	html, templateData, err := h.controller.Wallet(r.Context(), walletId)
 	if err != nil {
 		h.logger.Error("frontend.wallet", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

@@ -23,7 +23,7 @@ func Run(h *Router) error {
 	// static handling
 	fileServer := http.FileServer(http.FS(static.Fs))
 
-	r.NotFound(h.handlers.GetFrontend().PageNotFound)
+	r.NotFound(h.handlers.GetFrontend().Base().PageNotFound)
 
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
@@ -40,35 +40,35 @@ func Run(h *Router) error {
 		}
 	})
 
-	r.Get("/", h.handlers.GetFrontend().Index)
-	r.Get("/ui_kit", h.handlers.GetFrontend().UIKit)
-	r.Get("/faq", h.handlers.GetFrontend().FAQ)
+	r.Get("/", h.handlers.GetFrontend().Base().Index)
+	r.Get("/ui_kit", h.handlers.GetFrontend().Base().UIKit)
+	r.Get("/faq", h.handlers.GetFrontend().Base().FAQ)
 
 	// User routes
-	r.Get("/login", h.handlers.GetFrontend().Login)
-	r.Post("/login", h.handlers.GetFrontend().Login)
-	r.Get("/register", h.handlers.GetFrontend().Register)
-	r.Post("/register", h.handlers.GetFrontend().Register)
-	r.Get("/logout", h.handlers.GetFrontend().Logout)
+	r.Get("/login", h.handlers.GetFrontend().Base().Login)
+	r.Post("/login", h.handlers.GetFrontend().Base().Login)
+	r.Get("/register", h.handlers.GetFrontend().Base().Register)
+	r.Post("/register", h.handlers.GetFrontend().Base().Register)
+	r.Get("/logout", h.handlers.GetFrontend().Base().Logout)
 
 	r.Group(func(r chi.Router) {
 		r.Use(middlewares.Protected(true))
-		r.Get("/finance", h.handlers.GetFrontend().Finance)
+		r.Get("/finance", h.handlers.GetFrontend().Finance().Finance)
 
-		r.Get("/finance/create_wallet", h.handlers.GetFrontend().CreateWallet)
-		r.Post("/finance/create_wallet", h.handlers.GetFrontend().CreateWallet)
+		r.Get("/finance/create_wallet", h.handlers.GetFrontend().Finance().CreateWallet)
+		r.Post("/finance/create_wallet", h.handlers.GetFrontend().Finance().CreateWallet)
 
-		r.Get("/finance/create_distributor", h.handlers.GetFrontend().CreateDistributor)
-		r.Post("/finance/create_distributor", h.handlers.GetFrontend().CreateDistributor)
+		r.Get("/finance/create_distributor", h.handlers.GetFrontend().Finance().CreateDistributor)
+		r.Post("/finance/create_distributor", h.handlers.GetFrontend().Finance().CreateDistributor)
 
-		r.Get("/finance/create_operation_group", h.handlers.GetFrontend().CreateOperationGroup)
-		r.Post("/finance/create_operation_group", h.handlers.GetFrontend().CreateOperationGroup)
+		r.Get("/finance/create_operation_group", h.handlers.GetFrontend().Finance().CreateOperationGroup)
+		r.Post("/finance/create_operation_group", h.handlers.GetFrontend().Finance().CreateOperationGroup)
 
-		r.Get("/finance/create_operation/{walletId}", h.handlers.GetFrontend().CreateOperation)
-		r.Post("/finance/create_operation/{walletId}", h.handlers.GetFrontend().CreateOperation)
+		r.Get("/finance/create_operation/{walletId}", h.handlers.GetFrontend().Finance().CreateOperation)
+		r.Post("/finance/create_operation/{walletId}", h.handlers.GetFrontend().Finance().CreateOperation)
 
-		r.Get("/finance/wallet/{id}", h.handlers.GetFrontend().Wallet)
-		r.Get("/me", h.handlers.GetFrontend().Me)
+		r.Get("/finance/wallet/{id}", h.handlers.GetFrontend().Finance().Wallet)
+		r.Get("/me", h.handlers.GetFrontend().Base().Me)
 	})
 
 	r.Route("/api/v1", func(r chi.Router) {

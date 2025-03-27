@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Logout(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug(
 		"frontend.logout.handler",
 		zap.String("event", "got request"),

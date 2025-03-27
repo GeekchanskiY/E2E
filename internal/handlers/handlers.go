@@ -9,14 +9,14 @@ import (
 )
 
 type Handlers struct {
-	userHandler     *users.Handler
-	frontendHandler *frontend.Handler
+	userHandler      *users.Handler
+	frontendHandlers frontend.Handlers
 }
 
 func New(logger *zap.Logger, controller *controllers.Controllers) *Handlers {
 	return &Handlers{
-		userHandler:     users.NewHandler(logger, controller.GetUsers()),
-		frontendHandler: frontend.NewHandler(logger, controller.GetFrontend()),
+		userHandler:      users.NewHandler(logger, controller.GetUsers()),
+		frontendHandlers: frontend.New(logger, controller.GetFrontend()),
 	}
 }
 
@@ -24,6 +24,6 @@ func (h *Handlers) GetUsers() *users.Handler {
 	return h.userHandler
 }
 
-func (h *Handlers) GetFrontend() *frontend.Handler {
-	return h.frontendHandler
+func (h *Handlers) GetFrontend() frontend.Handlers {
+	return h.frontendHandlers
 }
