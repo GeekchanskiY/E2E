@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"github.com/go-chi/chi/v5"
 	"go.uber.org/zap"
 
 	"finworker/internal/handlers"
@@ -8,14 +9,18 @@ import (
 
 type Router struct {
 	logger   *zap.Logger
-	handlers *handlers.Handlers
+	handlers handlers.Handlers
 	config   Config
+
+	mux *chi.Mux
 }
 
-func NewRouter(logger *zap.Logger, handlers *handlers.Handlers, config Config) *Router {
+func New(logger *zap.Logger, handlers handlers.Handlers, config Config) *Router {
+	mux := chi.NewRouter()
 	return &Router{
 		logger:   logger,
 		handlers: handlers,
 		config:   config,
+		mux:      mux,
 	}
 }

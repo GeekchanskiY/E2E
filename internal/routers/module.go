@@ -6,7 +6,7 @@ import (
 
 func NewModule() fx.Option {
 	return fx.Options(
-		fx.Provide(NewRouter),
+		fx.Provide(New),
 		fx.Invoke(Run),
 	)
 }
