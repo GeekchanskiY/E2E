@@ -27,6 +27,8 @@ func (r *Repository) GetOrCreateForWalletByName(ctx context.Context, walletId in
 			Name:     name,
 			WalletId: walletId,
 		})
+
+		return operationGroup, nil
 	}
 
 	return nil, err
