@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (c *Controller) CreateOperation(ctx context.Context, walletId int64) (*template.Template, map[string]any, error) {
+func (c *controller) CreateOperation(ctx context.Context, walletId int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_operation.controller", zap.String("event", "got request"))
 
 	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateOperationTemplate)
@@ -48,7 +48,7 @@ func (c *Controller) CreateOperation(ctx context.Context, walletId int64) (*temp
 	return html, data, nil
 }
 
-func (c *Controller) CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error) {
+func (c *controller) CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_operation.controller.form", zap.String("event", "got request"))
 
 	var (
@@ -60,13 +60,13 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 
 	err := operation.Validate()
 	if err != nil {
-		return c.CreateOperationFormError(ctx, walletId, err)
+		return c.createOperationFormError(ctx, walletId, err)
 	}
 
 	distributors, err := c.distributorsRepo.GetForWallet(ctx, walletId)
 	if err != nil {
 		c.logger.Error("frontend.create_operation.controller.get_distributors", zap.Error(err))
-		return c.CreateOperationFormError(ctx, walletId, err)
+		return c.createOperationFormError(ctx, walletId, err)
 	}
 
 	if len(distributors) != 0 {
@@ -77,7 +77,7 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 			if err != nil {
 				c.logger.Error("frontend.create_operation.controller.get_or_create_operation_groups", zap.Error(err))
 
-				return c.CreateOperationFormError(ctx, walletId, err)
+				return c.createOperationFormError(ctx, walletId, err)
 			}
 			operations = append(operations, &models.Operation{
 				OperationGroupId: operationGroup.Id,
@@ -98,18 +98,18 @@ func (c *Controller) CreateOperationForm(ctx context.Context, operation models.O
 	}
 
 	if err = errors.Join(errs...); err != nil {
-		return c.CreateOperationFormError(ctx, walletId, err)
+		return c.createOperationFormError(ctx, walletId, err)
 	}
 
 	_, err = c.operationsRepo.Create(ctx, &operation)
 	if err != nil {
-		return c.CreateOperationFormError(ctx, walletId, err)
+		return c.createOperationFormError(ctx, walletId, err)
 	}
 
 	return nil, nil, nil
 }
 
-func (c *Controller) CreateOperationFormError(ctx context.Context, walletId int64, userErr error) (*template.Template, map[string]any, error) {
+func (c *controller) createOperationFormError(ctx context.Context, walletId int64, userErr error) (*template.Template, map[string]any, error) {
 	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateOperationTemplate)
 	if err != nil {
 		return nil, nil, err

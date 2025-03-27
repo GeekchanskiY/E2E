@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (c *Controller) Finance(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) Finance(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.finance.controller", zap.String("event", "got request"))
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.FinanceTemplate)
 	if err != nil {

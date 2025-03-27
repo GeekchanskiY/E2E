@@ -1,10 +1,13 @@
-package frontend
+package finance
 
 import (
+	"context"
 	"embed"
+	"html/template"
 
-	"finworker/internal/controllers/frontend/base"
-	"finworker/internal/controllers/frontend/finance"
+	"go.uber.org/zap"
+
+	"finworker/internal/models"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 	"finworker/internal/repositories/distributors"
@@ -15,20 +18,23 @@ import (
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
 	"finworker/internal/templates"
-
-	"go.uber.org/zap"
 )
 
-type Controllers interface {
-	Finance() finance.Controller
-	Base() base.Controller
+type Controller interface {
+	Finance(ctx context.Context) (*template.Template, map[string]any, error)
+	CreateWallet(ctx context.Context) (*template.Template, map[string]any, error)
+	CreateWalletForm(ctx context.Context, walletData models.WalletExtended) (*template.Template, map[string]any, error)
+	CreateOperationGroup(ctx context.Context) (*template.Template, map[string]any, error)
+	CreateOperationGroupForm(ctx context.Context, operationGroup models.OperationGroup) (*template.Template, map[string]any, error)
+	CreateOperation(ctx context.Context, walletId int64) (*template.Template, map[string]any, error)
+	CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error)
+	CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error)
+	CreateDistributorForm(ctx context.Context, distributor models.Distributor) (*template.Template, map[string]any, error)
+	Wallet(ctx context.Context, walletId int) (*template.Template, map[string]any, error)
 }
 
-type controllers struct {
+type controller struct {
 	logger *zap.Logger
-
-	base    base.Controller
-	finance finance.Controller
 
 	userRepo             *users.Repository
 	banksRepo            *banks.Repository
@@ -57,14 +63,9 @@ func New(
 	operationsRepo *operations.Repository,
 	operationGroupsRepo *operaton_groups.Repository,
 	secret string,
-) Controllers {
-	baseController := base.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
-	financeController := finance.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
-	return &controllers{
+) Controller {
+	return &controller{
 		logger: logger,
-
-		base:    baseController,
-		finance: financeController,
 
 		userRepo:             userRepo,
 		banksRepo:            banksRepo,
@@ -80,12 +81,4 @@ func New(
 
 		fs: templates.Fs,
 	}
-}
-
-func (c *controllers) Base() base.Controller {
-	return c.base
-}
-
-func (c *controllers) Finance() finance.Controller {
-	return c.finance
 }

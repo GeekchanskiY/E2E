@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"finworker/internal/templates"
 )
 
-func (c *Controller) Wallet(ctx context.Context, walletId int) (*template.Template, map[string]any, error) {
+func (c *controller) Wallet(ctx context.Context, walletId int) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.user.controller", zap.String("event", "got request"))
 
 	data := utils.BuildDefaultDataMapFromContext(ctx)

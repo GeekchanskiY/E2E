@@ -13,7 +13,7 @@ func (h *Handler) CreateOperationGroup(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_operation_group.handler", zap.String("event", "got request"))
 	switch r.Method {
 	case http.MethodGet:
-		html, templateData, err := h.controller.CreateOperationGroup(r.Context())
+		html, templateData, err := h.controllers.Finance().CreateOperationGroup(r.Context())
 		if err != nil {
 
 			h.logger.Error("frontend.create_operation_group.handler", zap.Error(err))
@@ -30,7 +30,7 @@ func (h *Handler) CreateOperationGroup(w http.ResponseWriter, r *http.Request) {
 			walletId = 0
 		}
 
-		html, templateData, err := h.controller.CreateOperationGroupForm(r.Context(), models.OperationGroup{
+		html, templateData, err := h.controllers.Finance().CreateOperationGroupForm(r.Context(), models.OperationGroup{
 			Name:     name,
 			WalletId: walletId,
 		})

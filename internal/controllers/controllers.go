@@ -11,7 +11,7 @@ import (
 
 type Controllers struct {
 	users    *users.Controller
-	frontend *frontend.Controller
+	frontend frontend.Controllers
 }
 
 func New(logger *zap.Logger, cfg Config, repo *repositories.Repositories) *Controllers {
@@ -50,6 +50,6 @@ func (c *Controllers) GetUsers() *users.Controller {
 	return c.users
 }
 
-func (c *Controllers) GetFrontend() *frontend.Controller {
+func (c *Controllers) GetFrontend() frontend.Controllers {
 	return c.frontend
 }

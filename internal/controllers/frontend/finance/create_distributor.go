@@ -1,4 +1,4 @@
-package frontend
+package finance
 
 import (
 	"context"
@@ -12,10 +12,10 @@ import (
 	"go.uber.org/zap"
 )
 
-func (c *Controller) CreateOperationGroup(ctx context.Context) (*template.Template, map[string]any, error) {
-	c.logger.Debug("frontend.create_operation_group.controller", zap.String("event", "got request"))
+func (c *controller) CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error) {
+	c.logger.Debug("frontend.create_distributor.controller", zap.String("event", "got request"))
 
-	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateOperationGroupTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateDistributorTemplate)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -41,24 +41,24 @@ func (c *Controller) CreateOperationGroup(ctx context.Context) (*template.Templa
 	return html, data, nil
 }
 
-func (c *Controller) CreateOperationGroupForm(ctx context.Context, operationGroup models.OperationGroup) (*template.Template, map[string]any, error) {
-	c.logger.Debug("frontend.create_operation_group.controller.form", zap.String("event", "got request"))
+func (c *controller) CreateDistributorForm(ctx context.Context, distributor models.Distributor) (*template.Template, map[string]any, error) {
+	c.logger.Debug("frontend.create_distributor.controller.form", zap.String("event", "got request"))
 
-	err := operationGroup.Validate()
+	err := distributor.Validate()
 	if err != nil {
-		return c.CreateOperationGroupFormError(ctx, err)
+		return c.createDistributorFormError(ctx, err)
 	}
 
-	_, err = c.operationGroupsRepo.Create(ctx, &operationGroup)
+	_, err = c.distributorsRepo.Create(ctx, &distributor)
 	if err != nil {
-		return c.CreateOperationGroupFormError(ctx, err)
+		return c.createDistributorFormError(ctx, err)
 	}
 
 	return nil, nil, nil
 }
 
-func (c *Controller) CreateOperationGroupFormError(ctx context.Context, userErr error) (*template.Template, map[string]any, error) {
-	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateOperationGroupTemplate)
+func (c *controller) createDistributorFormError(ctx context.Context, userErr error) (*template.Template, map[string]any, error) {
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreateDistributorTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

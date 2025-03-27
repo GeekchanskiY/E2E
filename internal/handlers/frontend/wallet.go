@@ -18,7 +18,7 @@ func (h *Handler) Wallet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html, templateData, err := h.controller.Wallet(r.Context(), walletId)
+	html, templateData, err := h.controllers.Finance().Wallet(r.Context(), walletId)
 	if err != nil {
 		h.logger.Error("frontend.wallet", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

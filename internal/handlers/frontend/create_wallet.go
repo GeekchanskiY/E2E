@@ -12,7 +12,7 @@ func (h *Handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_wallet.handler", zap.String("event", "got request"))
 	switch r.Method {
 	case http.MethodGet:
-		html, templateData, err := h.controller.CreateWallet(r.Context())
+		html, templateData, err := h.controllers.Finance().CreateWallet(r.Context())
 		if err != nil {
 
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
@@ -33,7 +33,7 @@ func (h *Handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
 			isSalary = true
 		}
 
-		html, templateData, err := h.controller.CreateWalletForm(r.Context(), models.WalletExtended{
+		html, templateData, err := h.controllers.Finance().CreateWalletForm(r.Context(), models.WalletExtended{
 			Name:        name,
 			Description: description,
 			Permission:  permissionGroup,

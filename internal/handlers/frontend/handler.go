@@ -7,13 +7,13 @@ import (
 )
 
 type Handler struct {
-	logger     *zap.Logger
-	controller *frontend.Controller
+	logger      *zap.Logger
+	controllers frontend.Controllers
 }
 
-func NewHandler(logger *zap.Logger, controller *frontend.Controller) *Handler {
+func NewHandler(logger *zap.Logger, controllers frontend.Controllers) *Handler {
 	return &Handler{
-		logger:     logger,
-		controller: controller,
+		logger:      logger,
+		controllers: controllers,
 	}
 }

@@ -23,7 +23,7 @@ func (h *Handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.Method {
 	case http.MethodGet:
-		html, templateData, err := h.controller.CreateOperation(r.Context(), walletId)
+		html, templateData, err := h.controllers.Finance().CreateOperation(r.Context(), walletId)
 		if err != nil {
 
 			h.logger.Error("frontend.create_operation.handler", zap.Error(err))
@@ -55,7 +55,7 @@ func (h *Handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		html, templateData, err := h.controller.CreateOperationForm(r.Context(), models.Operation{
+		html, templateData, err := h.controllers.Finance().CreateOperationForm(r.Context(), models.Operation{
 			OperationGroupId: operationGroupId,
 			Time:             time.Now(),
 			IsMonthly:        false,
