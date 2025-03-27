@@ -1,21 +1,21 @@
-package frontend
+package base
 
 import (
-	"context"
 	"database/sql"
 	"errors"
 	"html/template"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
+	"go.uber.org/zap"
+	"golang.org/x/net/context"
+
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/templates"
 	"finworker/internal/utils"
-
-	"github.com/dgrijalva/jwt-go"
-	"go.uber.org/zap"
 )
 
-func (c *Controller) Login(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) Login(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.login.controller", zap.String("event", "got request"))
 
 	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.LoginTemplate)
@@ -28,7 +28,7 @@ func (c *Controller) Login(ctx context.Context) (*template.Template, map[string]
 	return html, data, nil
 }
 
-func (c *Controller) LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, string, error) {
+func (c *controller) LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, string, error) {
 	c.logger.Debug("frontend.login.controller.form", zap.String("event", "got request"))
 
 	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.LoginTemplate)
@@ -71,8 +71,4 @@ func (c *Controller) LoginForm(ctx context.Context, username, password string) (
 	}
 
 	return html, data, token, salt, nil
-}
-
-func (c *Controller) GenerateUserSalt(password string) (string, error) {
-	return utils.GenerateSaltFromPassword(password)
 }

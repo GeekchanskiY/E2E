@@ -9,7 +9,7 @@ import (
 func (h *Handler) FAQ(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.FAQ.handler", zap.String("event", "got request"))
 
-	html, templateData, err := h.controller.FAQ(r.Context())
+	html, templateData, err := h.controller.Base().FAQ(r.Context())
 	if err != nil {
 		h.logger.Error("frontend.FAQ", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)

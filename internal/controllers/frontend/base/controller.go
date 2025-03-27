@@ -1,9 +1,12 @@
-package frontend
+package base
 
 import (
+	"context"
 	"embed"
+	"html/template"
 
-	"finworker/internal/controllers/frontend/base"
+	"go.uber.org/zap"
+
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 	"finworker/internal/repositories/distributors"
@@ -14,14 +17,22 @@ import (
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
 	"finworker/internal/templates"
-
-	"go.uber.org/zap"
 )
 
-type Controller struct {
-	logger *zap.Logger
+type Controller interface {
+	FAQ(ctx context.Context) (*template.Template, map[string]any, error)
+	Index(ctx context.Context) (*template.Template, map[string]any, error)
+	Login(ctx context.Context) (*template.Template, map[string]any, error)
+	LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, string, error)
+	PageNotFound(ctx context.Context) (*template.Template, map[string]any, error)
+	Register(ctx context.Context) (*template.Template, map[string]any, error)
+	RegisterForm(ctx context.Context, username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday string) (*template.Template, map[string]any, string, string, error)
+	UIKit(ctx context.Context) (*template.Template, map[string]any, error)
+	User(ctx context.Context, username string) (*template.Template, map[string]any, error)
+}
 
-	base base.Controller
+type controller struct {
+	logger *zap.Logger
 
 	userRepo             *users.Repository
 	banksRepo            *banks.Repository
@@ -50,12 +61,9 @@ func New(
 	operationsRepo *operations.Repository,
 	operationGroupsRepo *operaton_groups.Repository,
 	secret string,
-) *Controller {
-	baseController := base.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
-	return &Controller{
+) Controller {
+	return &controller{
 		logger: logger,
-
-		base: baseController,
 
 		userRepo:             userRepo,
 		banksRepo:            banksRepo,
@@ -71,8 +79,4 @@ func New(
 
 		fs: templates.Fs,
 	}
-}
-
-func (c *Controller) Base() base.Controller {
-	return c.base
 }

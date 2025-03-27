@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"finworker/internal/templates"
 )
 
-func (c *Controller) Index(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) Index(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.index.controller", zap.String("event", "got request"))
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.IndexTemplate)
 	if err != nil {

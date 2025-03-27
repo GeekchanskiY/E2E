@@ -24,7 +24,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		html, templateData, err := h.controller.Login(r.Context())
+		html, templateData, err := h.controller.Base().Login(r.Context())
 		if err != nil {
 			h.logger.Error("frontend.login", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -57,7 +57,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		username := r.PostFormValue("username")
 		password := r.PostFormValue("password")
 
-		html, templateData, token, salt, err := h.controller.LoginForm(r.Context(), username, password)
+		html, templateData, token, salt, err := h.controller.Base().LoginForm(r.Context(), username, password)
 		if err != nil {
 			if html == nil {
 				h.logger.Error("frontend.login", zap.Error(err))

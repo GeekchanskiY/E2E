@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"finworker/internal/templates"
 )
 
-func (c *Controller) FAQ(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) FAQ(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.FAQ.controller", zap.String("event", "got request"))
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.FaqTemplate)
 	if err != nil {

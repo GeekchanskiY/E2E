@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"context"
@@ -18,7 +18,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (c *Controller) Register(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) Register(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.register.controller", zap.String("event", "got request"))
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
 	if err != nil {
@@ -30,7 +30,7 @@ func (c *Controller) Register(ctx context.Context) (*template.Template, map[stri
 	return html, data, nil
 }
 
-func (c *Controller) RegisterForm(ctx context.Context, username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday string) (*template.Template, map[string]any, string, string, error) {
+func (c *controller) RegisterForm(ctx context.Context, username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday string) (*template.Template, map[string]any, string, string, error) {
 	c.logger.Debug("frontend.register.controller", zap.String("event", "got request"))
 
 	var (

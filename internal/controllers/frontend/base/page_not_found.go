@@ -1,4 +1,4 @@
-package frontend
+package base
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"finworker/internal/templates"
 )
 
-func (c *Controller) PageNotFound(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) PageNotFound(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.page_not_found.controller", zap.String("event", "got request"))
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.PageNotFoundTemplate)
 	if err != nil {
