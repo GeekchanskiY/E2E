@@ -38,7 +38,7 @@ func (c *controller) CreateOperation(ctx context.Context, walletId int64) (*temp
 	}
 	data["operation_groups"] = operationGroups
 
-	wallet, err := c.walletsRepo.Get(ctx, int(walletId))
+	wallet, err := c.walletsRepo.Get(ctx, walletId)
 	if err != nil {
 		data["error"] = err.Error()
 		return html, data, err
@@ -69,9 +69,61 @@ func (c *controller) CreateOperationForm(ctx context.Context, operation models.O
 		return c.createOperationFormError(ctx, walletId, err)
 	}
 
+	summaryAmountMinus := float64(0)
+
 	if len(distributors) != 0 {
 		for _, d := range distributors {
 			amountToWallet := (operation.Amount / 100) * d.Percent
+			summaryAmountMinus += amountToWallet
+
+			targetWallet, err := c.walletsRepo.Get(ctx, d.TargetWalletId)
+			if err != nil {
+				c.logger.Error("frontend.create_operation.controller.get_wallet", zap.Error(err))
+
+				return c.createOperationFormError(ctx, walletId, err)
+			}
+
+			sourceWallet, err := c.walletsRepo.Get(ctx, d.SourceWalletId)
+			if err != nil {
+				c.logger.Error("frontend.create_operation.controller.get_wallet", zap.Error(err))
+
+				return c.createOperationFormError(ctx, walletId, err)
+			}
+
+			// Check wallet currency difference from internal database
+			if sourceWallet.Currency != targetWallet.Currency {
+				targetCurrencyState, sourceCurrencyState := new(models.CurrencyState), new(models.CurrencyState)
+
+				if targetWallet.Currency != models.CurrencyUSD {
+					targetCurrencyState, err = c.currencyStatesRepo.GetBankCurrencyState(ctx, targetWallet.Currency, targetWallet.BankId)
+					if err != nil {
+						c.logger.Error("frontend.create_operation.controller.get_currency_states", zap.Error(err))
+
+						return c.createOperationFormError(ctx, walletId, err)
+					}
+				} else {
+					targetCurrencyState = &models.CurrencyState{
+						BuyUsd:  1,
+						SellUsd: 1,
+					}
+				}
+
+				if sourceWallet.Currency != models.CurrencyUSD {
+					sourceCurrencyState, err = c.currencyStatesRepo.GetBankCurrencyState(ctx, sourceWallet.Currency, sourceWallet.BankId)
+					if err != nil {
+						c.logger.Error("frontend.create_operation.controller.get_currency_states", zap.Error(err))
+
+						return c.createOperationFormError(ctx, walletId, err)
+					}
+				} else {
+					sourceCurrencyState = &models.CurrencyState{
+						BuyUsd:  1,
+						SellUsd: 1,
+					}
+				}
+
+				amountToWallet = (amountToWallet * sourceCurrencyState.SellUsd) * targetCurrencyState.BuyUsd
+			}
 
 			operationGroup, err := c.operationGroupsRepo.GetOrCreateForWalletByName(ctx, d.TargetWalletId, "distributed")
 			if err != nil {
@@ -101,6 +153,7 @@ func (c *controller) CreateOperationForm(ctx context.Context, operation models.O
 		return c.createOperationFormError(ctx, walletId, err)
 	}
 
+	operation.Amount -= summaryAmountMinus
 	_, err = c.operationsRepo.Create(ctx, &operation)
 	if err != nil {
 		return c.createOperationFormError(ctx, walletId, err)
@@ -132,7 +185,7 @@ func (c *controller) createOperationFormError(ctx context.Context, walletId int6
 	}
 	data["operation_groups"] = operationGroups
 
-	wallet, err := c.walletsRepo.Get(ctx, int(walletId))
+	wallet, err := c.walletsRepo.Get(ctx, walletId)
 	if err != nil {
 		data["error"] = err.Error()
 		return html, data, err

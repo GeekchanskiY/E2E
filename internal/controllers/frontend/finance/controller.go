@@ -30,7 +30,7 @@ type Controller interface {
 	CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error)
 	CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error)
 	CreateDistributorForm(ctx context.Context, distributor models.Distributor) (*template.Template, map[string]any, error)
-	Wallet(ctx context.Context, walletId int) (*template.Template, map[string]any, error)
+	Wallet(ctx context.Context, walletId int64) (*template.Template, map[string]any, error)
 }
 
 type controller struct {
