@@ -37,6 +37,7 @@ func New(logger *zap.Logger, cfg Config, repo *repositories.Repositories) *Contr
 		repo.GetWallets(),
 		repo.GetOperations(),
 		repo.GetOperationGroups(),
+		repo.GetWork(),
 		cfg.GetSecret(),
 	)
 

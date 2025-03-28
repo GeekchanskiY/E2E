@@ -5,6 +5,7 @@ import (
 
 	"finworker/internal/controllers/frontend/base"
 	"finworker/internal/controllers/frontend/finance"
+	"finworker/internal/controllers/frontend/work"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 	"finworker/internal/repositories/distributors"
@@ -14,6 +15,7 @@ import (
 	"finworker/internal/repositories/user_permissions"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
+	"finworker/internal/repositories/works"
 	"finworker/internal/templates"
 
 	"go.uber.org/zap"
@@ -22,6 +24,7 @@ import (
 type Controllers interface {
 	Finance() finance.Controller
 	Base() base.Controller
+	Work() work.Controller
 }
 
 type controllers struct {
@@ -29,16 +32,7 @@ type controllers struct {
 
 	base    base.Controller
 	finance finance.Controller
-
-	userRepo             *users.Repository
-	banksRepo            *banks.Repository
-	distributorsRepo     *distributors.Repository
-	permissionGroupsRepo *permission_groups.Repository
-	currencyStatesRepo   *currency_states.Repository
-	userPermissionsRepo  *user_permissions.Repository
-	walletsRepo          *wallets.Repository
-	operationsRepo       *operations.Repository
-	operationGroupsRepo  *operaton_groups.Repository
+	work    work.Controller
 
 	secret string
 
@@ -56,25 +50,19 @@ func New(
 	walletsRepo *wallets.Repository,
 	operationsRepo *operations.Repository,
 	operationGroupsRepo *operaton_groups.Repository,
+	workRepo *works.Repository,
 	secret string,
 ) Controllers {
 	baseController := base.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
 	financeController := finance.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
+	workController := work.New(logger, userRepo, workRepo, secret)
+
 	return &controllers{
 		logger: logger,
 
 		base:    baseController,
 		finance: financeController,
-
-		userRepo:             userRepo,
-		banksRepo:            banksRepo,
-		distributorsRepo:     distributorsRepo,
-		permissionGroupsRepo: permissionGroupsRepo,
-		currencyStatesRepo:   currencyStatesRepo,
-		userPermissionsRepo:  userPermissionsRepo,
-		walletsRepo:          walletsRepo,
-		operationsRepo:       operationsRepo,
-		operationGroupsRepo:  operationGroupsRepo,
+		work:    workController,
 
 		secret: secret,
 
@@ -88,4 +76,8 @@ func (c *controllers) Base() base.Controller {
 
 func (c *controllers) Finance() finance.Controller {
 	return c.finance
+}
+
+func (c *controllers) Work() work.Controller {
+	return c.work
 }

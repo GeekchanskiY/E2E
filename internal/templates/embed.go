@@ -22,4 +22,6 @@ const (
 	UIKitTemplate                = "ui_kit.gohtml"
 	PageNotFoundTemplate         = "page_not_found.gohtml"
 	FaqTemplate                  = "faq.gohtml"
+	CreateWorkTemplate           = "create_work.gohtml"
+	WorkTimeTemplate             = "work_time.gohtml"
 )

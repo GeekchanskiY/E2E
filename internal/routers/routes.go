@@ -22,6 +22,8 @@ func (r *Router) addRoutes() {
 		addProtectedFinanceRoutes(r, m)
 
 		addProtectedUserRoutes(r, m)
+
+		addProtectedWorkRoutes(r, m)
 	})
 }
 
@@ -85,7 +87,16 @@ func addProtectedFinanceRoutes(r *Router, m chi.Router) {
 
 		m.Get("/wallet/{id}", r.handlers.GetFrontend().Finance().Wallet)
 	})
+}
 
+func addProtectedWorkRoutes(r *Router, m chi.Router) {
+	m.Route("/work", func(m chi.Router) {
+		m.Get("/", r.handlers.GetFrontend().Work().WorkTime)
+		m.Post("/", r.handlers.GetFrontend().Work().WorkTime)
+
+		m.Get("/create", r.handlers.GetFrontend().Work().CreateWork)
+		m.Post("/create", r.handlers.GetFrontend().Work().CreateWork)
+	})
 }
 
 func addProtectedUserRoutes(r *Router, m chi.Router) {

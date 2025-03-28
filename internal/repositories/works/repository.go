@@ -1,4 +1,4 @@
-package work
+package works
 
 import (
 	"github.com/jmoiron/sqlx"
