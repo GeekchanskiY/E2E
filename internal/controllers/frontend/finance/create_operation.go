@@ -3,6 +3,7 @@ package finance
 import (
 	"context"
 	"errors"
+	"fmt"
 	"html/template"
 	"time"
 
@@ -125,7 +126,31 @@ func (c *controller) CreateOperationForm(ctx context.Context, operation models.O
 					}
 				}
 
-				amountToWallet = (amountToWallet * sourceCurrencyState.SellUsd) * targetCurrencyState.BuyUsd
+				if sourceWallet.Currency == models.CurrencyUSD && targetWallet.Currency != models.CurrencyUSD {
+					if targetWallet.Currency != models.CurrencyUSD {
+						if targetCurrencyState.SellUsd == 0 {
+							return c.createOperationFormError(ctx, walletId, fmt.Errorf("cant get target currency SellUsd for %s", targetCurrencyState.CurrencyName))
+						}
+
+						amountToWallet = amountToWallet * targetCurrencyState.SellUsd
+					}
+				} else if targetWallet.Currency == models.CurrencyUSD && sourceWallet.Currency != models.CurrencyUSD {
+					if sourceCurrencyState.BuyUsd == 0 {
+						return c.createOperationFormError(ctx, walletId, fmt.Errorf("cant get target currency BuyUsd for %s", sourceCurrencyState.CurrencyName))
+					}
+
+					amountToWallet = amountToWallet * sourceCurrencyState.BuyUsd
+				} else {
+					if sourceCurrencyState.BuyUsd == 0 {
+						return c.createOperationFormError(ctx, walletId, fmt.Errorf("cant get source currency BuyUsd for %s", sourceCurrencyState.CurrencyName))
+					}
+
+					if targetCurrencyState.SellUsd == 0 {
+						return c.createOperationFormError(ctx, walletId, fmt.Errorf("cant get target currency SellUsd for %s", targetCurrencyState.CurrencyName))
+					}
+
+					amountToWallet = (amountToWallet * sourceCurrencyState.BuyUsd) * targetCurrencyState.SellUsd
+				}
 			}
 
 			if operationGroup, err = c.operationGroupsRepo.GetOrCreateForWalletByName(ctx, d.TargetWalletId, "distributed"); err != nil {
