@@ -52,6 +52,7 @@ func (c *controller) Index(ctx context.Context) (*template.Template, map[string]
 		"#define true false",
 		"Ой, что-то пошло не так. А нет, всё так",
 		"НЛО прилетело и опубликовало эту надпись здесь",
+		"Не соврал, а ударил пизде-джитсу",
 	}
 
 	data["text"] = randomText[rand.Intn(len(randomText))]
