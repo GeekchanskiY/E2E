@@ -7,7 +7,7 @@ import (
 )
 
 func (h *handler) PageNotFound(w http.ResponseWriter, r *http.Request) {
-	h.logger.Error("frontend.page_not_found", zap.String("route", r.RequestURI))
+	h.logger.Info("frontend.page_not_found", zap.String("route", r.RequestURI))
 
 	html, templateData, err := h.controller.PageNotFound(r.Context())
 	if err != nil {
