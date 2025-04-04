@@ -5,6 +5,7 @@ import (
 
 	"finworker/internal/controllers/frontend/base"
 	"finworker/internal/controllers/frontend/finance"
+	"finworker/internal/controllers/frontend/permissions"
 	"finworker/internal/controllers/frontend/work"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
@@ -25,14 +26,16 @@ type Controllers interface {
 	Finance() finance.Controller
 	Base() base.Controller
 	Work() work.Controller
+	Permissions() permissions.Controller
 }
 
 type controllers struct {
 	logger *zap.Logger
 
-	base    base.Controller
-	finance finance.Controller
-	work    work.Controller
+	base        base.Controller
+	finance     finance.Controller
+	work        work.Controller
+	permissions permissions.Controller
 
 	secret string
 
@@ -56,13 +59,15 @@ func New(
 	baseController := base.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
 	financeController := finance.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
 	workController := work.New(logger, userRepo, workRepo, secret)
+	permissionsController := permissions.New(logger, userRepo, permissionGroupsRepo)
 
 	return &controllers{
 		logger: logger,
 
-		base:    baseController,
-		finance: financeController,
-		work:    workController,
+		base:        baseController,
+		finance:     financeController,
+		work:        workController,
+		permissions: permissionsController,
 
 		secret: secret,
 
@@ -81,3 +86,5 @@ func (c *controllers) Finance() finance.Controller {
 func (c *controllers) Work() work.Controller {
 	return c.work
 }
+
+func (c *controllers) Permissions() permissions.Controller { return c.permissions }
