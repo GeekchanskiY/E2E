@@ -59,7 +59,7 @@ func New(
 	baseController := base.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
 	financeController := finance.New(logger, userRepo, banksRepo, distributorsRepo, permissionGroupsRepo, currencyStatesRepo, userPermissionsRepo, walletsRepo, operationsRepo, operationGroupsRepo, secret)
 	workController := work.New(logger, userRepo, workRepo, secret)
-	permissionsController := permissions.New(logger, userRepo, permissionGroupsRepo)
+	permissionsController := permissions.New(logger, userRepo, permissionGroupsRepo, userPermissionsRepo)
 
 	return &controllers{
 		logger: logger,
