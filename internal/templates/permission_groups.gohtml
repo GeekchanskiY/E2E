@@ -4,6 +4,36 @@
 
 {{ define "main" }}
     <main>
-        <span>nothing here</span>
+        <div class="container container-flex">
+            <table class="gc-table">
+                <caption>
+                    <div class="gc-table-caption">
+                        <span>Группы разрешений</span> <a class="gc-table-add" href="/permissions/create">+</a>
+                    </div>
+                </caption>
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Имя</th>
+                    <th>Уровень доступа</th>
+                    <th>Время создания</th>
+                    <th>Время обновления</th>
+                    <th>Количество пользователей</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range .permissions }}
+                    <tr>
+                        <td>{{ .Id }}</td>
+                        <td>{{ .Name }}</td>
+                        <td>{{ .Level }}</td>
+                        <td>{{ formatTime .CreatedAt }}</td>
+                        <td>{{ formatTime .UpdatedAt }}</td>
+                        <td>{{ .UsersCount }}</td>
+                    </tr>
+                {{ end }}
+                </tbody>
+            </table>
+        </div>
     </main>
 {{ end }}

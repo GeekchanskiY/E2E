@@ -19,6 +19,7 @@ type Controller interface {
 	AddUserForm(ctx context.Context, username string, level string, permissionGroupId int64) (*template.Template, map[string]any, error)
 	CreatePermissionGroup(ctx context.Context) (*template.Template, map[string]any, error)
 	CreatePermissionGroupForm(ctx context.Context, permissionGroup models.PermissionGroup) (*template.Template, map[string]any, error)
+	List(ctx context.Context) (*template.Template, map[string]any, error)
 }
 
 type controller struct {

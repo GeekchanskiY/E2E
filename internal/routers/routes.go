@@ -13,17 +13,15 @@ func (r *Router) addRoutes() {
 	r.addBaseRoutes()
 
 	r.addApiRoutes("/api/v1")
-
 	r.addUserRoutes()
 
 	r.mux.Group(func(m chi.Router) {
 		m.Use(middlewares.Protected(true))
 
 		addProtectedFinanceRoutes(r, m)
-
 		addProtectedUserRoutes(r, m)
-
 		addProtectedWorkRoutes(r, m)
+		addProtectedPermissionRoutes(r, m)
 	})
 }
 
@@ -101,4 +99,10 @@ func addProtectedWorkRoutes(r *Router, m chi.Router) {
 
 func addProtectedUserRoutes(r *Router, m chi.Router) {
 	m.Get("/me", r.handlers.GetFrontend().Base().Me)
+}
+
+func addProtectedPermissionRoutes(r *Router, m chi.Router) {
+	m.Route("/permissions", func(m chi.Router) {
+		m.Get("/", r.handlers.GetFrontend().Permissions().List)
+	})
 }
