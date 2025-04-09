@@ -13,7 +13,7 @@ import (
 func (c *controller) List(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.list.controller", zap.String("event", "got request"))
 
-	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.PermissionGroupsTemplate)
+	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.ListPermissionGroupsTemplate)
 	if err != nil {
 		return nil, nil, err
 	}

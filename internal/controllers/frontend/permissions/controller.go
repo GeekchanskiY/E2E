@@ -20,6 +20,7 @@ type Controller interface {
 	CreatePermissionGroup(ctx context.Context) (*template.Template, map[string]any, error)
 	CreatePermissionGroupForm(ctx context.Context, permissionGroup models.PermissionGroup) (*template.Template, map[string]any, error)
 	List(ctx context.Context) (*template.Template, map[string]any, error)
+	PermissionGroup(ctx context.Context, permissionGroupId int64) (*template.Template, map[string]any, error)
 }
 
 type controller struct {

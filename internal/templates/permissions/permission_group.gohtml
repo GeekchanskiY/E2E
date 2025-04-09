@@ -1,0 +1,44 @@
+{{ define "title"}}
+    Группа разрешений {{ .group.Name }}
+{{ end }}
+
+{{ define "main" }}
+    <main>
+        <div class="container container-flex">
+            <div class="gc-info-block">
+                <h2 class="gc-cool-text-1">{{ .group.Name }}</h2>
+                {{ if .wallet.IsSalary }} <span class="gc-cool-text-3">Зарплатный</span>{{ end }}
+            </div>
+            <div class="container-buttons">
+                <a class="gc-button-link" href="/permissions">Группы разрешений</a>
+                <!-- TODO: make this button disappear if no rights -->
+                <a class="gc-button-link" href="/page_not_found">Добавить пользователя</a>
+            </div>
+            <table class="gc-table">
+                <caption>Пользователи</caption>
+                <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        Уровень доступа
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {{ range .permissions }}
+                    <tr>
+                        <td>{{ .Id }}</td>
+                        <td>{{ .Username }}</td>
+                        <td>{{ .Level }}</td>
+                    </tr>
+                {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </main>
+{{ end }}

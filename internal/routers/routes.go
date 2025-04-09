@@ -104,5 +104,6 @@ func addProtectedUserRoutes(r *Router, m chi.Router) {
 func addProtectedPermissionRoutes(r *Router, m chi.Router) {
 	m.Route("/permissions", func(m chi.Router) {
 		m.Get("/", r.handlers.GetFrontend().Permissions().List)
+		m.Get("/group/{id}", r.handlers.GetFrontend().Permissions().PermissionGroup)
 	})
 }

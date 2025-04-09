@@ -38,6 +38,6 @@ const (
 
 	AddUserToPermissionGroupTemplate = "permissions/add_user_to_permission_group.gohtml"
 	CreatePermissionGroupTemplate    = "permissions/create_permission_group.gohtml"
-	PermissionGroupsTemplate         = "permissions/permission_groups.gohtml"
+	ListPermissionGroupsTemplate     = "permissions/permission_groups.gohtml"
 	PermissionGroupTemplate          = "permissions/permission_group.gohtml"
 )

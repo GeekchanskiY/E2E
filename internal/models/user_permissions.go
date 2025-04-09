@@ -25,3 +25,12 @@ type UserPermission struct {
 	Level             AccessLevel `db:"level"   json:"level"`
 	CreatedAt         time.Time   `db:"created_at" json:"created_at"`
 }
+
+type UserPermissionExtended struct {
+	Id                int64       `db:"id"  json:"id"`
+	PermissionGroupId int64       `db:"permission_group_id" json:"permission_group_id"`
+	UserId            int64       `db:"user_id"  json:"user_id"`
+	Username          string      `db:"username"  json:"username"`
+	Level             AccessLevel `db:"level"   json:"level"`
+	CreatedAt         time.Time   `db:"created_at" json:"created_at"`
+}

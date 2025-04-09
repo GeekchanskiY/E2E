@@ -24,7 +24,7 @@
                 <tbody>
                 {{ range .permissions }}
                     <tr>
-                        <td>{{ .Id }}</td>
+                        <td><a href="/permissions/group/{{ .Id }}">{{ .Id }}</a></td>
                         <td>{{ .Name }}</td>
                         <td>{{ .Level }}</td>
                         <td>{{ formatTime .CreatedAt }}</td>
