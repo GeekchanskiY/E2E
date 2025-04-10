@@ -7,7 +7,7 @@
         <div class="container container-flex">
             <div class="gc-info-block">
                 <h2 class="gc-cool-text-1">{{ .group.Name }}</h2>
-                {{ if .wallet.IsSalary }} <span class="gc-cool-text-3">Зарплатный</span>{{ end }}
+                <span class="gc-cool-text-3">Пользователи: {{ len .permissions }}</span>
             </div>
             <div class="container-buttons">
                 <a class="gc-button-link" href="/permissions">Группы разрешений</a>
