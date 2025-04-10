@@ -37,12 +37,12 @@ func (c *controller) AddUserForm(ctx context.Context, username string, level str
 	)
 
 	if user, err = c.userRepo.GetByUsername(ctx, username); err != nil {
-		return c.createPermissionGroupFormError(ctx, err)
+		return c.addUserFormError(ctx, err)
 	}
 
 	accessLevel = models.AccessLevel(level)
 	if !accessLevel.IsValid() {
-		return c.createPermissionGroupFormError(ctx, errors.New("invalid access level"))
+		return c.addUserFormError(ctx, errors.New("invalid access level"))
 	}
 
 	userPermission = new(models.UserPermission)

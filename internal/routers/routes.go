@@ -109,5 +109,8 @@ func addProtectedPermissionRoutes(r *Router, m chi.Router) {
 		m.Post("/create", r.handlers.GetFrontend().Permissions().CreatePermission)
 
 		m.Get("/group/{id}", r.handlers.GetFrontend().Permissions().PermissionGroup)
+
+		m.Get("/group/{id}/add", r.handlers.GetFrontend().Permissions().AddUser)
+		m.Post("/group/{id}/add", r.handlers.GetFrontend().Permissions().AddUser)
 	})
 }

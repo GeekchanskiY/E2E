@@ -12,6 +12,7 @@ type Handler interface {
 	CreatePermission(w http.ResponseWriter, r *http.Request)
 	List(w http.ResponseWriter, r *http.Request)
 	PermissionGroup(w http.ResponseWriter, r *http.Request)
+	AddUser(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {

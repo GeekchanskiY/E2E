@@ -4,6 +4,28 @@
 
 {{ define "main" }}
     <main>
-       <span>nothing here</span>
+        <div class="container">
+            <form class="gc-form" action="/permissions/group/{{ .permissionGroupId }}/add" method="post">
+                <div class="gc-form-header">
+                    Добавить пользователя в группу разрешений
+                </div>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Имя пользователя</span>
+                    <input class="gc-input-text" type="text" name="username">
+                </label>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Уровень доступа</span>
+                    <<select class="gc-input-text" name="level">
+                        <option value="full">Полный</option>
+                        <option value="read">Только на чтение</option>
+                    </select>
+                </label>
+
+                {{ if .error }}
+                    <span class="gc-form-error">{{ .error }}</span>
+                {{ end }}
+                <button type="submit" class="gc-input-button">Добавить</button>
+            </form>
+        </div>
     </main>
 {{ end }}
