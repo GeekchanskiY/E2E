@@ -21,6 +21,7 @@ type Controller interface {
 	CreatePermissionGroupForm(ctx context.Context, permissionGroup models.PermissionGroup) (*template.Template, map[string]any, error)
 	List(ctx context.Context) (*template.Template, map[string]any, error)
 	PermissionGroup(ctx context.Context, permissionGroupId int64) (*template.Template, map[string]any, error)
+	DeleteUser(ctx context.Context, username string, permissionGroupId int64) error
 }
 
 type controller struct {

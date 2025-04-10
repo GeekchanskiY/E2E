@@ -3,7 +3,6 @@ package user_permissions
 import (
 	"context"
 	"errors"
-	"time"
 
 	"finworker/internal/models"
 )
@@ -27,8 +26,8 @@ func (r *Repository) Create(ctx context.Context, permission *models.UserPermissi
 		return nil, errors.Join(err, rollbackErr)
 	}
 
-	q = `UPDATE permission_groups SET updated_at = $1 WHERE id = $2`
-	_, err = tx.ExecContext(ctx, q, time.Now(), permission.Id)
+	q = `UPDATE permission_groups SET updated_at = current_timestamp WHERE id = $2`
+	_, err = tx.ExecContext(ctx, q, permission.Id)
 	if err != nil {
 		rollbackErr := tx.Rollback()
 		return nil, errors.Join(err, rollbackErr)
