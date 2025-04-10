@@ -42,18 +42,12 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permi
 func (r *Repository) GetUserGroups(ctx context.Context, userId int64) (permissionGroups []*models.PermissionGroupWithRole, err error) {
 	q := `
 	SELECT
-    	permission_groups.id, permission_groups.name, permission_groups.created_at, permission_groups.updated_at, user_permission.level, count(all_users.id) as users_count
-	FROM permission_groups 
-    	JOIN user_permission ON permission_groups.id = user_permission.user_id
-		JOIN user_permission all_users on all_users.permission_group_id = permission_groups.id
-    WHERE
-        user_permission.user_id = $1
-	GROUP BY
-		permission_groups.id,
-		permission_groups.name,
-		permission_groups.created_at,
-		permission_groups.updated_at,
-		user_permission.level
+    permission_groups.id, permission_groups.name, permission_groups.created_at, permission_groups.updated_at, user_permission.level,
+    (select count(*) from user_permission where permission_group_id = permission_groups.id) as users_count
+	FROM permission_groups
+			 JOIN user_permission ON user_permission.permission_group_id = permission_groups.id
+	WHERE
+		user_permission.user_id = $1;
     `
 
 	rows, err := r.db.QueryxContext(ctx, q, userId)

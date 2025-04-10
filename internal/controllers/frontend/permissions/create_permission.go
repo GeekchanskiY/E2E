@@ -27,7 +27,18 @@ func (c *controller) CreatePermissionGroup(ctx context.Context) (*template.Templ
 func (c *controller) CreatePermissionGroupForm(ctx context.Context, permissionGroup models.PermissionGroup) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_permission_group.controller.form", zap.String("event", "got request"))
 
-	if _, err := c.permissionGroupRepo.Create(ctx, &permissionGroup); err != nil {
+	newPermissionGroup, err := c.permissionGroupRepo.Create(ctx, &permissionGroup)
+	if err != nil {
+		return c.createPermissionGroupFormError(ctx, err)
+	}
+
+	userId := ctx.Value("userId").(int64)
+
+	if _, err := c.userPermissionRepo.Create(ctx, &models.UserPermission{
+		PermissionGroupId: newPermissionGroup.Id,
+		UserId:            userId,
+		Level:             "owner",
+	}); err != nil {
 		return c.createPermissionGroupFormError(ctx, err)
 	}
 
