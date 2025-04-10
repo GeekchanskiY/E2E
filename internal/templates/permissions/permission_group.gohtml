@@ -27,6 +27,8 @@
                     <th>
                         Уровень доступа
                     </th>
+                    <th class="gc-th-blank">
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,6 +37,7 @@
                         <td>{{ .Id }}</td>
                         <td>{{ .Username }}</td>
                         <td>{{ .Level }}</td>
+                        <td class="gc-td-button"><img src="/static/icons/delete.svg" alt="delete"></td>
                     </tr>
                 {{ end }}
                 </tbody>

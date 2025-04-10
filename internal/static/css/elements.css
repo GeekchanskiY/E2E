@@ -161,11 +161,44 @@
     text-decoration: none;
 }
 
+.gc-table tbody tr, .gc-table thead tr {
+    height: 45px;
+}
+
 .gc-table thead tr th {
     border-bottom: 1px var(--neutral-blue) solid;
     padding: 10px;
     background-color: var(--dark0-soft);
     border-radius: var(--border-radius);
+}
+
+.gc-th-blank {
+    border-bottom: none!important;
+    background-color: transparent!important;
+    width: 45px;
+}
+
+.gc-td-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border-bottom: none!important;
+    background-color: var(--light0-soft);
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.gc-td-button:hover {
+    background-color: var(--light0-hard);
+}
+
+.gc-td-button img {
+    width: 24px;
+    height: 24px;
 }
 
 .gc-table tbody {
