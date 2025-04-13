@@ -31,15 +31,15 @@ type Repositories struct {
 
 func NewRepositories(db *sqlx.DB, log *zap.Logger) *Repositories {
 	return &Repositories{
-		distributors:     distributors.New(db),
-		operationGroups:  operaton_groups.New(db),
-		operations:       operations.New(db),
-		permissionGroups: permission_groups.New(db),
-		userPermissions:  user_permissions.New(db),
-		users:            users.New(db),
+		distributors:     distributors.New(db, log),
+		operationGroups:  operaton_groups.New(db, log),
+		operations:       operations.New(db, log),
+		permissionGroups: permission_groups.New(db, log),
+		userPermissions:  user_permissions.New(db, log),
+		users:            users.New(db, log),
 		wallets:          wallets.New(db, log),
-		banks:            banks.New(db),
-		currencyStates:   currency_states.New(db),
+		banks:            banks.New(db, log),
+		currencyStates:   currency_states.New(db, log),
 		work:             works.New(db, log),
 	}
 }

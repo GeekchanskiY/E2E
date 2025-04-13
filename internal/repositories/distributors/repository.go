@@ -2,14 +2,17 @@ package distributors
 
 import (
 	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 )
 
 type Repository struct {
-	db *sqlx.DB
+	db  *sqlx.DB
+	log *zap.Logger
 }
 
-func New(db *sqlx.DB) *Repository {
+func New(db *sqlx.DB, log *zap.Logger) *Repository {
 	return &Repository{
-		db: db,
+		log: log,
+		db:  db,
 	}
 }
