@@ -26,7 +26,7 @@ func (r *Router) addRoutes() {
 }
 
 func (r *Router) addBaseRoutes() {
-	r.mux.NotFound(r.handlers.GetFrontend().Base().PageNotFound)
+	r.mux.NotFound(r.baseHandler.PageNotFound)
 
 	r.mux.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -42,26 +42,26 @@ func (r *Router) addBaseRoutes() {
 		}
 	})
 
-	r.mux.Get("/", r.handlers.GetFrontend().Base().Index)
-	r.mux.Get("/ui_kit", r.handlers.GetFrontend().Base().UIKit)
-	r.mux.Get("/faq", r.handlers.GetFrontend().Base().FAQ)
+	r.mux.Get("/", r.baseHandler.Index)
+	r.mux.Get("/ui_kit", r.baseHandler.UIKit)
+	r.mux.Get("/faq", r.baseHandler.FAQ)
 }
 
 func (r *Router) addUserRoutes() {
-	r.mux.Get("/login", r.handlers.GetFrontend().Base().Login)
-	r.mux.Post("/login", r.handlers.GetFrontend().Base().Login)
-	r.mux.Get("/register", r.handlers.GetFrontend().Base().Register)
-	r.mux.Post("/register", r.handlers.GetFrontend().Base().Register)
-	r.mux.Get("/logout", r.handlers.GetFrontend().Base().Logout)
+	r.mux.Get("/login", r.baseHandler.Login)
+	r.mux.Post("/login", r.baseHandler.Login)
+	r.mux.Get("/register", r.baseHandler.Register)
+	r.mux.Post("/register", r.baseHandler.Register)
+	r.mux.Get("/logout", r.baseHandler.Logout)
 }
 
 func (r *Router) addApiRoutes(apiPrefix string) {
 	r.mux.Route(apiPrefix, func(m chi.Router) {
 		m.Route("/users", func(m chi.Router) {
-			m.Post("/register", r.handlers.GetUsers().Register)
+			m.Post("/register", r.usersHandler.Register)
 
 			m.Route("/{userId}", func(m chi.Router) {
-				m.Get("/", r.handlers.GetUsers().Get)
+				m.Get("/", r.usersHandler.Get)
 			})
 		})
 	})
@@ -69,48 +69,48 @@ func (r *Router) addApiRoutes(apiPrefix string) {
 
 func addProtectedFinanceRoutes(r *Router, m chi.Router) {
 	m.Route("/finance", func(m chi.Router) {
-		m.Get("/", r.handlers.GetFrontend().Finance().Finance)
+		m.Get("/", r.financeHandler.Finance)
 
-		m.Get("/create_wallet", r.handlers.GetFrontend().Finance().CreateWallet)
-		m.Post("/create_wallet", r.handlers.GetFrontend().Finance().CreateWallet)
+		m.Get("/create_wallet", r.financeHandler.CreateWallet)
+		m.Post("/create_wallet", r.financeHandler.CreateWallet)
 
-		m.Get("/create_distributor", r.handlers.GetFrontend().Finance().CreateDistributor)
-		m.Post("/create_distributor", r.handlers.GetFrontend().Finance().CreateDistributor)
+		m.Get("/create_distributor", r.financeHandler.CreateDistributor)
+		m.Post("/create_distributor", r.financeHandler.CreateDistributor)
 
-		m.Get("/create_operation_group", r.handlers.GetFrontend().Finance().CreateOperationGroup)
-		m.Post("/create_operation_group", r.handlers.GetFrontend().Finance().CreateOperationGroup)
+		m.Get("/create_operation_group", r.financeHandler.CreateOperationGroup)
+		m.Post("/create_operation_group", r.financeHandler.CreateOperationGroup)
 
-		m.Get("/create_operation/{walletId}", r.handlers.GetFrontend().Finance().CreateOperation)
-		m.Post("/create_operation/{walletId}", r.handlers.GetFrontend().Finance().CreateOperation)
+		m.Get("/create_operation/{walletId}", r.financeHandler.CreateOperation)
+		m.Post("/create_operation/{walletId}", r.financeHandler.CreateOperation)
 
-		m.Get("/wallet/{id}", r.handlers.GetFrontend().Finance().Wallet)
+		m.Get("/wallet/{id}", r.financeHandler.Wallet)
 	})
 }
 
 func addProtectedWorkRoutes(r *Router, m chi.Router) {
 	m.Route("/work", func(m chi.Router) {
-		m.Get("/", r.handlers.GetFrontend().Work().WorkTime)
-		m.Post("/", r.handlers.GetFrontend().Work().WorkTime)
+		m.Get("/", r.workHandler.WorkTime)
+		m.Post("/", r.workHandler.WorkTime)
 
-		m.Get("/create", r.handlers.GetFrontend().Work().CreateWork)
-		m.Post("/create", r.handlers.GetFrontend().Work().CreateWork)
+		m.Get("/create", r.workHandler.CreateWork)
+		m.Post("/create", r.workHandler.CreateWork)
 	})
 }
 
 func addProtectedUserRoutes(r *Router, m chi.Router) {
-	m.Get("/me", r.handlers.GetFrontend().Base().Me)
+	m.Get("/me", r.baseHandler.Me)
 }
 
 func addProtectedPermissionRoutes(r *Router, m chi.Router) {
 	m.Route("/permissions", func(m chi.Router) {
-		m.Get("/", r.handlers.GetFrontend().Permissions().List)
+		m.Get("/", r.permissionsHandler.List)
 
-		m.Get("/create", r.handlers.GetFrontend().Permissions().CreatePermission)
-		m.Post("/create", r.handlers.GetFrontend().Permissions().CreatePermission)
+		m.Get("/create", r.permissionsHandler.CreatePermission)
+		m.Post("/create", r.permissionsHandler.CreatePermission)
 
-		m.Get("/group/{id}", r.handlers.GetFrontend().Permissions().PermissionGroup)
+		m.Get("/group/{id}", r.permissionsHandler.PermissionGroup)
 
-		m.Get("/group/{id}/add", r.handlers.GetFrontend().Permissions().AddUser)
-		m.Post("/group/{id}/add", r.handlers.GetFrontend().Permissions().AddUser)
+		m.Get("/group/{id}/add", r.permissionsHandler.AddUser)
+		m.Post("/group/{id}/add", r.permissionsHandler.AddUser)
 	})
 }

@@ -2,10 +2,17 @@ package controllers
 
 import (
 	"go.uber.org/fx"
+
+	"finworker/internal/controllers/frontend"
+	"finworker/internal/controllers/users"
 )
 
-func NewModule() fx.Option {
+func Construct() fx.Option {
 	return fx.Options(
-		fx.Provide(New),
+		fx.Provide(
+			users.New,
+		),
+
+		frontend.Construct(),
 	)
 }

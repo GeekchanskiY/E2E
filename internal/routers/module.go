@@ -4,8 +4,14 @@ import (
 	"go.uber.org/fx"
 )
 
+const (
+	moduleName = "routers"
+)
+
 func NewModule() fx.Option {
-	return fx.Options(
+	return fx.Module(
+		moduleName,
+
 		fx.Provide(New),
 		fx.Invoke(Run),
 	)

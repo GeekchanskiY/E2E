@@ -2,19 +2,30 @@ package repositories
 
 import (
 	"go.uber.org/fx"
+
+	"finworker/internal/repositories/banks"
+	"finworker/internal/repositories/currency_states"
+	"finworker/internal/repositories/distributors"
+	"finworker/internal/repositories/operations"
+	"finworker/internal/repositories/operaton_groups"
+	"finworker/internal/repositories/permission_groups"
+	"finworker/internal/repositories/user_permissions"
+	"finworker/internal/repositories/users"
+	"finworker/internal/repositories/wallets"
+	"finworker/internal/repositories/works"
 )
 
-func Construct(repositories *Repositories) fx.Option {
-	return fx.Options(
-		fx.Provide(repositories.GetBanks()),
-		fx.Provide(repositories.GetUsers()),
-		fx.Provide(repositories.GetCurrencyStates()),
-		fx.Provide(repositories.GetDistributors()),
-		fx.Provide(repositories.GetOperations()),
-		fx.Provide(repositories.GetOperationGroups()),
-		fx.Provide(repositories.GetPermissionGroups()),
-		fx.Provide(repositories.GetWallets()),
-		fx.Provide(repositories.GetUserPermissions()),
-		fx.Provide(repositories.GetWork()),
+func Construct() fx.Option {
+	return fx.Provide(
+		distributors.New,
+		operaton_groups.New,
+		operations.New,
+		user_permissions.New,
+		permission_groups.New,
+		users.New,
+		wallets.New,
+		banks.New,
+		currency_states.New,
+		works.New,
 	)
 }

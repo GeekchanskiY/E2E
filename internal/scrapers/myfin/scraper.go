@@ -9,7 +9,6 @@ import (
 	"github.com/gocolly/colly"
 	"go.uber.org/zap"
 
-	"finworker/internal/repositories"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 )
@@ -24,14 +23,14 @@ type Scraper struct {
 	currencyStatesRepo *currency_states.Repository
 }
 
-func New(log *zap.Logger, repositories *repositories.Repositories) *Scraper {
+func New(log *zap.Logger, banksRepo *banks.Repository, currencyStatesRepo *currency_states.Repository) *Scraper {
 
 	return &Scraper{
 		ctx:    context.Background(),
 		logger: log,
 
-		banksRepo:          repositories.GetBanks(),
-		currencyStatesRepo: repositories.GetCurrencyStates(),
+		banksRepo:          banksRepo,
+		currencyStatesRepo: currencyStatesRepo,
 	}
 }
 

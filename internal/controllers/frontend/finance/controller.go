@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	"finworker/internal/models"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
@@ -62,7 +63,7 @@ func New(
 	walletsRepo *wallets.Repository,
 	operationsRepo *operations.Repository,
 	operationGroupsRepo *operaton_groups.Repository,
-	secret string,
+	cfg *config.Config,
 ) Controller {
 	return &controller{
 		logger: logger,
@@ -77,7 +78,7 @@ func New(
 		operationsRepo:       operationsRepo,
 		operationGroupsRepo:  operationGroupsRepo,
 
-		secret: secret,
+		secret: cfg.Secret,
 
 		fs: templates.Fs,
 	}
