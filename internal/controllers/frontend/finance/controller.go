@@ -23,13 +23,13 @@ import (
 type Controller interface {
 	Finance(ctx context.Context) (*template.Template, map[string]any, error)
 	CreateWallet(ctx context.Context) (*template.Template, map[string]any, error)
-	CreateWalletForm(ctx context.Context, walletData models.WalletExtended) (*template.Template, map[string]any, error)
+	CreateWalletForm(ctx context.Context, walletData *models.WalletExtended) (*template.Template, map[string]any, error)
 	CreateOperationGroup(ctx context.Context) (*template.Template, map[string]any, error)
-	CreateOperationGroupForm(ctx context.Context, operationGroup models.OperationGroup) (*template.Template, map[string]any, error)
+	CreateOperationGroupForm(ctx context.Context, operationGroup *models.OperationGroup) (*template.Template, map[string]any, error)
 	CreateOperation(ctx context.Context, walletId int64) (*template.Template, map[string]any, error)
-	CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error)
+	CreateOperationForm(ctx context.Context, operation *models.Operation, walletId int64) (*template.Template, map[string]any, error)
 	CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error)
-	CreateDistributorForm(ctx context.Context, distributor models.Distributor) (*template.Template, map[string]any, error)
+	CreateDistributorForm(ctx context.Context, distributor *models.Distributor) (*template.Template, map[string]any, error)
 	Wallet(ctx context.Context, walletId int64) (*template.Template, map[string]any, error)
 }
 

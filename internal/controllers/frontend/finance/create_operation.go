@@ -49,7 +49,7 @@ func (c *controller) CreateOperation(ctx context.Context, walletId int64) (*temp
 	return html, data, nil
 }
 
-func (c *controller) CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error) {
+func (c *controller) CreateOperationForm(ctx context.Context, operation *models.Operation, walletId int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_operation.controller.form", zap.String("event", "got request"))
 
 	var (
@@ -181,7 +181,7 @@ func (c *controller) CreateOperationForm(ctx context.Context, operation models.O
 		return c.createOperationFormError(ctx, walletId, err)
 	}
 
-	_, err = c.operationsRepo.Create(ctx, &operation)
+	_, err = c.operationsRepo.Create(ctx, operation)
 	if err != nil {
 		return c.createOperationFormError(ctx, walletId, err)
 	}

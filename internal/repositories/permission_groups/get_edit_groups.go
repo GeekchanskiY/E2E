@@ -10,7 +10,7 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permi
 	q := `SELECT
     	permission_groups.id, permission_groups.name, permission_groups.created_at, permission_groups.updated_at
 	FROM permission_groups 
-    	JOIN user_permission ON permission_groups.id = user_permission.user_id
+    	JOIN user_permission ON permission_groups.id = user_permission.permission_group_id
     WHERE
         user_permission.user_id = $1
     AND 
