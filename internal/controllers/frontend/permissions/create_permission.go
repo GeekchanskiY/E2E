@@ -24,21 +24,22 @@ func (c *controller) CreatePermissionGroup(ctx context.Context) (*template.Templ
 	return html, data, nil
 }
 
-func (c *controller) CreatePermissionGroupForm(ctx context.Context, permissionGroup models.PermissionGroup) (*template.Template, map[string]any, error) {
+func (c *controller) CreatePermissionGroupForm(ctx context.Context, permissionGroup *models.PermissionGroup) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_permission_group.controller.form", zap.String("event", "got request"))
 
-	newPermissionGroup, err := c.permissionGroupRepo.Create(ctx, &permissionGroup)
+	newPermissionGroup, err := c.permissionGroupRepo.Create(ctx, permissionGroup)
 	if err != nil {
 		return c.createPermissionGroupFormError(ctx, err)
 	}
 
 	userId := ctx.Value("userId").(int64)
 
-	if _, err := c.userPermissionRepo.Create(ctx, &models.UserPermission{
+	_, err = c.userPermissionRepo.Create(ctx, &models.UserPermission{
 		PermissionGroupId: newPermissionGroup.Id,
 		UserId:            userId,
 		Level:             "owner",
-	}); err != nil {
+	})
+	if err != nil {
 		return c.createPermissionGroupFormError(ctx, err)
 	}
 
