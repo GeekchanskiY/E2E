@@ -6,10 +6,10 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) CreateUserWork(ctx context.Context, wallet *models.UserWork) (*models.UserWork, error) {
-	if err := r.db.GetContext(ctx, &wallet.Id, `INSERT INTO user_work(name, hourly_rate, worker) VALUES (:name, :hourly_rate, :worker) returning id`, wallet); err != nil {
+func (r *Repository) CreateUserWork(ctx context.Context, work *models.UserWork) (*models.UserWork, error) {
+	if err := r.db.GetContext(ctx, &work.Id, `INSERT INTO user_work(name, hourly_rate, worker) VALUES ($1, $2, $3) returning id`, work.Name, work.HourlyRate, work.Worker); err != nil {
 		return nil, err
 	}
 
-	return wallet, nil
+	return work, nil
 }

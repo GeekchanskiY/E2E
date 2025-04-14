@@ -34,10 +34,10 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 
 		name = r.PostFormValue("name")
 
-		worker, err := strconv.ParseInt(r.Context().Value("userId").(string), 10, 64)
-		if err != nil {
+		worker, ok := r.Context().Value("userId").(int64)
+		if !ok {
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			http.Error(w, "cant get userid", http.StatusBadRequest)
 			return
 		}
 

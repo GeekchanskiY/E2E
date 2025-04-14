@@ -36,6 +36,10 @@ func (c *controller) CreateWork(ctx context.Context) (*template.Template, map[st
 func (c *controller) CreateWorkForm(ctx context.Context, work *models.UserWork) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.work_time.controller.form", zap.String("event", "got request"))
 
+	if _, err := c.workRepo.CreateUserWork(ctx, work); err != nil {
+		return c.createWorkFormError(ctx, err)
+	}
+
 	return nil, nil, nil
 }
 
