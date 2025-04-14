@@ -294,8 +294,14 @@
     color: var(--dark0-soft);
     text-decoration: none;
     border-radius: var(--border-radius);
-    border: 1px solid var(--light0-hard);
+    border: none;
+    cursor: pointer;
     background-color: var(--light0-soft);
+    transition: var(--transition);
+}
+
+.gc-button-link:hover {
+    background-color: var(--light0-hard);
 }
 
 .gc-cool-link{
@@ -404,4 +410,71 @@
     font-size: 16px;
     line-height: 1.5;
     color: var(--dark0-soft);
+}
+
+/*
+    Work time
+ */
+
+.work-time-block {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    padding: 10px;
+    border-radius: var(--border-radius);
+
+    background-color: var(--dark0-hard);
+}
+
+.work-time-clock {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    gap: 10px;
+
+    border: 1px solid var(--light0-soft);
+    border-radius: var(--border-radius);
+}
+
+.work-time-clock span {
+    display: inline-block;
+    padding: 5px;
+    background-color: var(--neutral-orange);
+    border-radius: var(--border-radius);
+}
+
+.work-time-data {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.work-time-button {
+    outline: none;
+    border: none;
+    background-color: var(--light0-soft);
+    border-radius: var(--border-radius);
+    padding: 3px 5px;
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.work-time-button:hover {
+    background-color: var(--light0-hard);
+}
+
+.work-time-delete {
+    background-color: var(--neutral-red);
+}
+
+.work-time-delete:hover {
+    background-color: var(--bright-red);
 }
