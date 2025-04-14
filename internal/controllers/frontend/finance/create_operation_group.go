@@ -41,7 +41,7 @@ func (c *controller) CreateOperationGroup(ctx context.Context) (*template.Templa
 	return html, data, nil
 }
 
-func (c *controller) CreateOperationGroupForm(ctx context.Context, operationGroup models.OperationGroup) (*template.Template, map[string]any, error) {
+func (c *controller) CreateOperationGroupForm(ctx context.Context, operationGroup *models.OperationGroup) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_operation_group.controller.form", zap.String("event", "got request"))
 
 	err := operationGroup.Validate()
@@ -49,7 +49,7 @@ func (c *controller) CreateOperationGroupForm(ctx context.Context, operationGrou
 		return c.createOperationGroupFormError(ctx, err)
 	}
 
-	_, err = c.operationGroupsRepo.Create(ctx, &operationGroup)
+	_, err = c.operationGroupsRepo.Create(ctx, operationGroup)
 	if err != nil {
 		return c.createOperationGroupFormError(ctx, err)
 	}

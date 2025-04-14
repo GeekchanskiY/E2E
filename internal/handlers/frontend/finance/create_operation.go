@@ -55,7 +55,7 @@ func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		html, templateData, err := h.controller.CreateOperationForm(r.Context(), models.Operation{
+		html, templateData, err := h.controller.CreateOperationForm(r.Context(), &models.Operation{
 			OperationGroupId: operationGroupId,
 			Time:             time.Now(),
 			IsMonthly:        false,

@@ -30,7 +30,7 @@ func (h *handler) CreateOperationGroup(w http.ResponseWriter, r *http.Request) {
 			walletId = 0
 		}
 
-		html, templateData, err := h.controller.CreateOperationGroupForm(r.Context(), models.OperationGroup{
+		html, templateData, err := h.controller.CreateOperationGroupForm(r.Context(), &models.OperationGroup{
 			Name:     name,
 			WalletId: walletId,
 		})

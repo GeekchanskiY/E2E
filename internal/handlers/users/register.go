@@ -18,7 +18,7 @@ import (
 //	@Success		201		{object}	users.RegisterResponse		"user registered"
 //	@Failure		400		{string}	string						"test"
 //	@Router			/users/register [post]
-func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	var req requests.RegisterRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {

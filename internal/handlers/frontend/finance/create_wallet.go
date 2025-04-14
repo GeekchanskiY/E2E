@@ -33,7 +33,7 @@ func (h *handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
 			isSalary = true
 		}
 
-		html, templateData, err := h.controller.CreateWalletForm(r.Context(), models.WalletExtended{
+		html, templateData, err := h.controller.CreateWalletForm(r.Context(), &models.WalletExtended{
 			Name:        name,
 			Description: description,
 			Permission:  permissionGroup,

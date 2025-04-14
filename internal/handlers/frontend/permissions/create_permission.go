@@ -24,7 +24,7 @@ func (h *handler) CreatePermission(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 
-		html, templateData, err := h.controller.CreatePermissionGroupForm(r.Context(), models.PermissionGroup{
+		html, templateData, err := h.controller.CreatePermissionGroupForm(r.Context(), &models.PermissionGroup{
 			Name: name,
 		})
 		if err != nil {

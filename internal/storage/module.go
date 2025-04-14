@@ -9,12 +9,14 @@ import (
 	_ "github.com/lib/pq"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
+
+	"finworker/internal/config"
 )
 
-func NewConn(lc fx.Lifecycle, config Config, logger *zap.Logger) *sqlx.DB {
+func NewConn(lc fx.Lifecycle, config *config.Config, logger *zap.Logger) *sqlx.DB {
 	dsn := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		config.User, config.Password, config.Host, config.Port, config.Name,
+		config.DbUser, config.DbPassword, config.DbHost, config.DbPort, config.DbName,
 	)
 	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {

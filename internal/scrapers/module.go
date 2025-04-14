@@ -6,9 +6,16 @@ import (
 	"finworker/internal/scrapers/myfin"
 )
 
+const (
+	moduleName = "scrapers"
+)
+
 func NewModule() fx.Option {
-	return fx.Options(
+	return fx.Module(
+		moduleName,
+
 		fx.Provide(myfin.New),
+
 		fx.Invoke(myfin.RunPeriodicScraping),
 	)
 }

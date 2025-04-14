@@ -39,7 +39,7 @@ func (h *handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 			percent = 0.0
 		}
 
-		html, templateData, err := h.controller.CreateDistributorForm(r.Context(), models.Distributor{
+		html, templateData, err := h.controller.CreateDistributorForm(r.Context(), &models.Distributor{
 			Name:           name,
 			SourceWalletId: sourceWallet,
 			TargetWalletId: targetWallet,

@@ -18,7 +18,7 @@ type Controller interface {
 	AddUser(ctx context.Context) (*template.Template, map[string]any, error)
 	AddUserForm(ctx context.Context, username string, level string, permissionGroupId int64) (*template.Template, map[string]any, error)
 	CreatePermissionGroup(ctx context.Context) (*template.Template, map[string]any, error)
-	CreatePermissionGroupForm(ctx context.Context, permissionGroup models.PermissionGroup) (*template.Template, map[string]any, error)
+	CreatePermissionGroupForm(ctx context.Context, permissionGroup *models.PermissionGroup) (*template.Template, map[string]any, error)
 	List(ctx context.Context) (*template.Template, map[string]any, error)
 	PermissionGroup(ctx context.Context, permissionGroupId int64) (*template.Template, map[string]any, error)
 	DeleteUser(ctx context.Context, username string, permissionGroupId int64) error

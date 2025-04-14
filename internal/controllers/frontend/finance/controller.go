@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	"finworker/internal/models"
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
@@ -23,13 +24,13 @@ import (
 type Controller interface {
 	Finance(ctx context.Context) (*template.Template, map[string]any, error)
 	CreateWallet(ctx context.Context) (*template.Template, map[string]any, error)
-	CreateWalletForm(ctx context.Context, walletData models.WalletExtended) (*template.Template, map[string]any, error)
+	CreateWalletForm(ctx context.Context, walletData *models.WalletExtended) (*template.Template, map[string]any, error)
 	CreateOperationGroup(ctx context.Context) (*template.Template, map[string]any, error)
-	CreateOperationGroupForm(ctx context.Context, operationGroup models.OperationGroup) (*template.Template, map[string]any, error)
+	CreateOperationGroupForm(ctx context.Context, operationGroup *models.OperationGroup) (*template.Template, map[string]any, error)
 	CreateOperation(ctx context.Context, walletId int64) (*template.Template, map[string]any, error)
-	CreateOperationForm(ctx context.Context, operation models.Operation, walletId int64) (*template.Template, map[string]any, error)
+	CreateOperationForm(ctx context.Context, operation *models.Operation, walletId int64) (*template.Template, map[string]any, error)
 	CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error)
-	CreateDistributorForm(ctx context.Context, distributor models.Distributor) (*template.Template, map[string]any, error)
+	CreateDistributorForm(ctx context.Context, distributor *models.Distributor) (*template.Template, map[string]any, error)
 	Wallet(ctx context.Context, walletId int64) (*template.Template, map[string]any, error)
 }
 
@@ -62,7 +63,7 @@ func New(
 	walletsRepo *wallets.Repository,
 	operationsRepo *operations.Repository,
 	operationGroupsRepo *operaton_groups.Repository,
-	secret string,
+	cfg *config.Config,
 ) Controller {
 	return &controller{
 		logger: logger,
@@ -77,7 +78,7 @@ func New(
 		operationsRepo:       operationsRepo,
 		operationGroupsRepo:  operationGroupsRepo,
 
-		secret: secret,
+		secret: cfg.Secret,
 
 		fs: templates.Fs,
 	}

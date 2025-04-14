@@ -51,7 +51,7 @@ func (c *controller) CreateWallet(ctx context.Context) (*template.Template, map[
 	return html, data, nil
 }
 
-func (c *controller) CreateWalletForm(ctx context.Context, walletData models.WalletExtended) (*template.Template, map[string]any, error) {
+func (c *controller) CreateWalletForm(ctx context.Context, walletData *models.WalletExtended) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_wallet.controller.form", zap.String("event", "got request"))
 
 	err := walletData.Validate()

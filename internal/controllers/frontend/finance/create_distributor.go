@@ -41,7 +41,7 @@ func (c *controller) CreateDistributor(ctx context.Context) (*template.Template,
 	return html, data, nil
 }
 
-func (c *controller) CreateDistributorForm(ctx context.Context, distributor models.Distributor) (*template.Template, map[string]any, error) {
+func (c *controller) CreateDistributorForm(ctx context.Context, distributor *models.Distributor) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_distributor.controller.form", zap.String("event", "got request"))
 
 	err := distributor.Validate()
@@ -49,7 +49,7 @@ func (c *controller) CreateDistributorForm(ctx context.Context, distributor mode
 		return c.createDistributorFormError(ctx, err)
 	}
 
-	_, err = c.distributorsRepo.Create(ctx, &distributor)
+	_, err = c.distributorsRepo.Create(ctx, distributor)
 	if err != nil {
 		return c.createDistributorFormError(ctx, err)
 	}

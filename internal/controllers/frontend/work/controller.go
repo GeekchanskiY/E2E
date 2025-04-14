@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	"finworker/internal/models"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/works"
@@ -37,7 +38,7 @@ func New(
 	userRepo *users.Repository,
 	workRepo *works.Repository,
 
-	secret string,
+	cfg *config.Config,
 ) Controller {
 	return &controller{
 		logger: logger,
@@ -45,7 +46,7 @@ func New(
 		userRepo: userRepo,
 		workRepo: workRepo,
 
-		secret: secret,
+		secret: cfg.Secret,
 
 		fs: templates.Fs,
 	}

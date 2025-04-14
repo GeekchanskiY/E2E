@@ -26,7 +26,7 @@ func (r *Repository) Create(ctx context.Context, permission *models.UserPermissi
 		return nil, errors.Join(err, rollbackErr)
 	}
 
-	q = `UPDATE permission_groups SET updated_at = current_timestamp WHERE id = $2`
+	q = `UPDATE permission_groups SET updated_at = current_timestamp WHERE id = $1`
 	_, err = tx.ExecContext(ctx, q, permission.Id)
 	if err != nil {
 		rollbackErr := tx.Rollback()

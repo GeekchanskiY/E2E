@@ -17,7 +17,7 @@ import (
 //	@Param			userId	path	int	true	"user id"
 //	@Success		200
 //	@Router			/users/{userId} [get]
-func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	userId := chi.URLParam(r, "userId")
 	if userId == "" {

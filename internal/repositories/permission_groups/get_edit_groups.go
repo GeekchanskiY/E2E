@@ -3,21 +3,28 @@ package permission_groups
 import (
 	"context"
 
+	"github.com/jmoiron/sqlx"
+
 	"finworker/internal/models"
 )
 
 func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permissionGroups []*models.PermissionGroup, err error) {
-	q := `SELECT
+	var (
+		q    string
+		rows *sqlx.Rows
+	)
+
+	q = `
+	select
     	permission_groups.id, permission_groups.name, permission_groups.created_at, permission_groups.updated_at
-	FROM permission_groups 
-    	JOIN user_permission ON permission_groups.id = user_permission.user_id
-    WHERE
+	from permission_groups 
+    	join user_permission on permission_groups.id = user_permission.permission_group_id
+    where
         user_permission.user_id = $1
-    AND 
+    and 
         (user_permission.level = 'owner' or user_permission.level = 'full')`
 
-	rows, err := r.db.QueryContext(ctx, q, userId)
-	if err != nil {
+	if rows, err = r.db.QueryxContext(ctx, q, userId); err != nil {
 		return nil, err
 	}
 
@@ -28,8 +35,8 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permi
 
 	for rows.Next() {
 		var permissionGroup models.PermissionGroup
-		err = rows.Scan(&permissionGroup.Id, &permissionGroup.Name, &permissionGroup.CreatedAt, &permissionGroup.UpdatedAt)
-		if err != nil {
+
+		if err = rows.Scan(&permissionGroup.Id, &permissionGroup.Name, &permissionGroup.CreatedAt, &permissionGroup.UpdatedAt); err != nil {
 			return nil, err
 		}
 
@@ -40,18 +47,27 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permi
 }
 
 func (r *Repository) GetUserGroups(ctx context.Context, userId int64) (permissionGroups []*models.PermissionGroupWithRole, err error) {
+	var (
+		rows *sqlx.Rows
+	)
+
 	q := `
-	SELECT
-    permission_groups.id, permission_groups.name, permission_groups.created_at, permission_groups.updated_at, user_permission.level,
-    (select count(*) from user_permission where permission_group_id = permission_groups.id) as users_count
-	FROM permission_groups
-			 JOIN user_permission ON user_permission.permission_group_id = permission_groups.id
-	WHERE
+	select
+    	permission_groups.id, permission_groups.name, permission_groups.created_at, permission_groups.updated_at, user_permission.level,
+    	(select 
+    	     count(*) 
+    	from 
+    	    user_permission 
+    	where 
+    	    permission_group_id = permission_groups.id
+    	) as users_count
+	from permission_groups
+		join user_permission on user_permission.permission_group_id = permission_groups.id
+	where
 		user_permission.user_id = $1;
     `
 
-	rows, err := r.db.QueryxContext(ctx, q, userId)
-	if err != nil {
+	if rows, err = r.db.QueryxContext(ctx, q, userId); err != nil {
 		return nil, err
 	}
 
