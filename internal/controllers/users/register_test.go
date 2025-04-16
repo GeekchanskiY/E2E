@@ -6,9 +6,17 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"finworker/internal/models"
 	"finworker/internal/models/requests/users"
-	"finworker/internal/repositories"
+	"finworker/internal/repositories/banks"
+	"finworker/internal/repositories/operation_groups"
+	"finworker/internal/repositories/operations"
+	"finworker/internal/repositories/permission_groups"
+	"finworker/internal/repositories/user_permissions"
+	userRepo "finworker/internal/repositories/users"
+	"finworker/internal/repositories/wallets"
 	"finworker/internal/storage"
 
 	"github.com/GeekchanskiY/migratigo"
@@ -55,17 +63,17 @@ func TestController_RegisterUser(t *testing.T) {
 		}
 	})
 
-	repos := repositories.NewRepositories(db, zap.NewNop())
+	logger := zap.NewNop()
 
 	controller := New(
-		zap.NewNop(),
-		repos.GetUsers(),
-		repos.GetPermissionGroups(),
-		repos.GetUserPermissions(),
-		repos.GetWallets(),
-		repos.GetBanks(),
-		repos.GetOperationGroups(),
-		repos.GetOperations(),
+		logger,
+		userRepo.New(db, logger),
+		permission_groups.New(db, logger),
+		user_permissions.New(db, logger),
+		wallets.New(db, logger),
+		banks.New(db, logger),
+		operation_groups.New(db, logger),
+		operations.New(db, logger),
 	)
 
 	const newUserName = "newUser"
@@ -84,27 +92,30 @@ func TestController_RegisterUser(t *testing.T) {
 			SalaryDate:        time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC),
 		})
 
-		assert.NoError(t, err)
+		require.NoError(t, err)
 		assert.NotNil(t, reps)
 
 		// Check new user creation
 		var newId int64
 		q := `select id from  users where username = $1`
 		err = db.QueryRow(q, newUserName).Scan(&newId)
-		assert.NoError(t, err)
+		require.NoError(t, err)
+
 		assert.Equal(t, int64(1), newId)
 
 		// Check new permission group creation
 		q = `select id from permission_groups where name = $1`
 		err = db.QueryRow(q, newUserName).Scan(&newId)
-		assert.NoError(t, err)
+		require.NoError(t, err)
+
 		assert.Equal(t, int64(1), newId)
 
 		// Check new user permission creation
 		var newLevel string
 		q = `select id, level from user_permission where user_id = 1 and permission_group_id = 1`
 		err = db.QueryRow(q).Scan(&newId, &newLevel)
-		assert.NoError(t, err)
+		require.NoError(t, err)
+
 		assert.Equal(t, int64(1), newId)
 		assert.Equal(t, newLevel, string(models.AccessLevelOwner))
 
@@ -113,22 +124,25 @@ func TestController_RegisterUser(t *testing.T) {
 		var newWalletIsSalary bool
 		q = `select id, name, is_salary from wallets where permission_group_id = 1`
 		err = db.QueryRow(q).Scan(&newId, &newWalletName, &newWalletIsSalary)
-		assert.NoError(t, err)
+		require.NoError(t, err)
+
 		assert.Equal(t, true, newWalletIsSalary)
 		assert.Equal(t, int64(1), newId)
 		assert.Equal(t, newUserName+"_salary", newWalletName)
 
 		q = `select id, name from operation_groups where wallet_id = 1`
 		err = db.QueryRow(q).Scan(&newId, &newWalletName)
-		assert.NoError(t, err)
+		require.NoError(t, err)
+
 		assert.Equal(t, int64(1), newId)
 		assert.Equal(t, newUserName+"_salary", newWalletName)
 
 		var operation models.Operation
 		q = `select id, amount, time, is_monthly from operations where operation_group_id = 1`
 		err = db.QueryRow(q).Scan(&operation.Id, &operation.Amount, &operation.Time, &operation.IsMonthly)
-		assert.NoError(t, err)
-		assert.Equal(t, 1, operation.Id)
+		require.NoError(t, err)
+
+		assert.Equal(t, int64(1), operation.Id)
 		assert.Equal(t, float64(2000), operation.Amount)
 		assert.Equal(t, true, operation.IsMonthly)
 		assert.Equal(t, time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC), operation.Time.UTC())
@@ -144,7 +158,7 @@ func TestController_RegisterUser(t *testing.T) {
 			Birthday:          time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC),
 			PreferredBankName: "priorbank",
 		})
-		assert.Error(t, err)
+		require.Error(t, err)
 
 		// Check that error is user already exists
 		var pgErr *pq.Error

@@ -6,8 +6,8 @@ import (
 	"finworker/internal/repositories/banks"
 	"finworker/internal/repositories/currency_states"
 	"finworker/internal/repositories/distributors"
+	"finworker/internal/repositories/operation_groups"
 	"finworker/internal/repositories/operations"
-	"finworker/internal/repositories/operaton_groups"
 	"finworker/internal/repositories/permission_groups"
 	"finworker/internal/repositories/user_permissions"
 	"finworker/internal/repositories/users"
@@ -18,7 +18,7 @@ import (
 func Construct() fx.Option {
 	return fx.Provide(
 		distributors.New,
-		operaton_groups.New,
+		operation_groups.New,
 		operations.New,
 		user_permissions.New,
 		permission_groups.New,

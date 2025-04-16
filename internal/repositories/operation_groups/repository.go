@@ -1,4 +1,4 @@
-package operaton_groups
+package operation_groups
 
 import (
 	"github.com/jmoiron/sqlx"
