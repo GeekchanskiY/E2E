@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"finworker/internal/app"
+	"finworker/internal/config"
 
 	_ "github.com/lib/pq"
 )
@@ -66,10 +66,10 @@ func main() {
 }
 
 func clearAllTables() {
-	config := app.NewConfig()
+	cfg := config.NewConfig()
 	dsn := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		config.Db.User, config.Db.Password, config.Db.Host, config.Db.Port, config.Db.Name,
+		cfg.DbUser, cfg.DbPassword, cfg.DbHost, cfg.DbPort, cfg.DbName,
 	)
 
 	db, err := sql.Open("postgres", dsn)
@@ -101,10 +101,10 @@ func clearAllTables() {
 }
 
 func dropAllTables() {
-	config := app.NewConfig()
+	cfg := config.NewConfig()
 	dsn := fmt.Sprintf(
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		config.Db.User, config.Db.Password, config.Db.Host, config.Db.Port, config.Db.Name,
+		cfg.DbUser, cfg.DbPassword, cfg.DbHost, cfg.DbPort, cfg.DbName,
 	)
 
 	db, err := sql.Open("postgres", dsn)
