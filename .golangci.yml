@@ -39,4 +39,7 @@ linters:
     - unused
     # - varcheck ! deprecated since v1.49.0; replaced by 'unused'
     #- whitespace
-  fast: false
+
+linters-settings:
+  stylecheck:
+    checks: ["-ST1003"]
