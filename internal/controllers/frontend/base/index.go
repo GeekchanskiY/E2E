@@ -3,7 +3,7 @@ package base
 import (
 	"context"
 	"html/template"
-	"math/rand"
+	"math/rand/v2"
 
 	"go.uber.org/zap"
 
@@ -55,6 +55,6 @@ func (c *controller) Index(ctx context.Context) (*template.Template, map[string]
 		"Не соврал, а ударил пизде-джитсу",
 	}
 
-	data["text"] = randomText[rand.Intn(len(randomText))]
+	data["text"] = randomText[rand.IntN(len(randomText))]
 	return html, data, nil
 }
