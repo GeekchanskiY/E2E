@@ -1,7 +1,7 @@
 BIN="./bin"
 SRC=$(shell find . -name "*.go")
 
-.PHONY: generate-openapi
+.PHONY: generate-openapi fmt lint
 
 default: all
 
