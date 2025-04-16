@@ -49,7 +49,7 @@ func (req *RegisterRequest) Validate() error {
 		errs = append(errs, errors.New("birthday is required"))
 	}
 
-	if time.Now().Sub(req.Birthday).Hours()/24/365.25 < 18 {
+	if time.Since(req.Birthday).Hours()/24/365.25 < 18 {
 		errs = append(errs, errors.New("birthday must be older than 18 years"))
 	}
 

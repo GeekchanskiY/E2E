@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/templates"
 )
@@ -21,7 +22,7 @@ func (c *controller) WorkTime(ctx context.Context) (*template.Template, map[stri
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value("user").(string)
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
 	if user == "" || !ok {
 		err = errors.New("user is empty")
 		data["error"] = err.Error()
@@ -32,8 +33,12 @@ func (c *controller) WorkTime(ctx context.Context) (*template.Template, map[stri
 	return html, data, nil
 }
 
-func (c *controller) WorkTimeForm(ctx context.Context, workId, userId int64) (*template.Template, map[string]any, error) {
+func (c *controller) WorkTimeForm(ctx context.Context, workID, userID int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.work_time.controller.form", zap.String("event", "got request"))
+
+	if _, err := c.workRepo.StartWorkTime(ctx, workID); err != nil {
+		return c.createWorkTimeFormError(ctx, err)
+	}
 
 	return nil, nil, nil
 }
@@ -46,7 +51,7 @@ func (c *controller) createWorkTimeFormError(ctx context.Context, userErr error)
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value("user").(string)
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
 	if user == "" || !ok {
 		err = errors.New("user is empty")
 		data["error"] = err.Error()

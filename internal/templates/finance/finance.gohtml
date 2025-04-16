@@ -14,7 +14,7 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Название</th>
                         <th>Валюта</th>
                         <th>Зарплатная?</th>
@@ -27,7 +27,7 @@
                 <tbody>
                     {{ range .wallets }}
                         <tr>
-                            <td><a href="/finance/wallet/{{.Id}}">{{.Id}}</a></td>
+                            <td><a href="/finance/wallet/{{.ID}}">{{.ID}}</a></td>
                             <td>{{ .Name }}</td>
                             <td>{{ .Currency }}</td>
                             <td>{{ if .IsSalary }} Да {{ else }} Нет {{ end }}</td>

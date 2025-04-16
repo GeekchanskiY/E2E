@@ -64,7 +64,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 				return
 			}
 			_, err = scraper.currencyStatesRepo.Create(ctx, &models.CurrencyState{
-				BankId:       bank.Id,
+				BankID:       bank.ID,
 				CurrencyName: currency.Name,
 				SourceName:   "INSNC", // alfabank app name
 				SellUsd:      currency.SellUsd,
@@ -76,7 +76,6 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 
 				return
 			}
-			break
 		case "Альфа Банк":
 			bank, err := scraper.banksRepo.GetByName(ctx, "alfabank")
 			if err != nil {
@@ -85,7 +84,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 				return
 			}
 			_, err = scraper.currencyStatesRepo.Create(ctx, &models.CurrencyState{
-				BankId:       bank.Id,
+				BankID:       bank.ID,
 				CurrencyName: currency.Name,
 				SourceName:   "BANK", // alfabank app name
 				SellUsd:      currency.SellUsd,
@@ -97,7 +96,6 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 
 				return
 			}
-			break
 		case "Приорбанк":
 			bank, err := scraper.banksRepo.GetByName(ctx, "priorbank")
 			if err != nil {
@@ -106,7 +104,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 				return
 			}
 			_, err = scraper.currencyStatesRepo.Create(ctx, &models.CurrencyState{
-				BankId:       bank.Id,
+				BankID:       bank.ID,
 				CurrencyName: currency.Name,
 				SourceName:   "BANK", // alfabank app name
 				SellUsd:      currency.SellUsd,
@@ -118,12 +116,9 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 
 				return
 			}
-			break
 		default:
 			scraper.logger.Debug("bank skipping", zap.String("bank", currency.BankName))
 
 		}
 	}
-
-	return
 }

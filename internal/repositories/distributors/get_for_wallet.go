@@ -3,10 +3,12 @@ package distributors
 import (
 	"context"
 
+	"go.uber.org/zap"
+
 	"finworker/internal/models"
 )
 
-func (repo *Repository) GetForWallet(ctx context.Context, walletId int64) ([]*models.DistributorExtended, error) {
+func (repo *Repository) GetForWallet(ctx context.Context, walletID int64) ([]*models.DistributorExtended, error) {
 	q := `SELECT 
     distributors.id, distributors.name, distributors.source_wallet_id, source.name, distributors.target_wallet_id, target.name, distributors.percent
 	FROM distributors
@@ -14,13 +16,14 @@ func (repo *Repository) GetForWallet(ctx context.Context, walletId int64) ([]*mo
 	join wallets as target on distributors.target_wallet_id = target.id
     WHERE source_wallet_id = $1`
 
-	rows, err := repo.db.QueryxContext(ctx, q, walletId)
+	rows, err := repo.db.QueryxContext(ctx, q, walletID)
 	if err != nil {
 		return nil, err
 	}
 	defer func() {
 		err = rows.Close()
 		if err != nil {
+			repo.log.Error("rows close error", zap.Error(err))
 		}
 	}()
 
@@ -29,11 +32,11 @@ func (repo *Repository) GetForWallet(ctx context.Context, walletId int64) ([]*mo
 		distributor := new(models.DistributorExtended)
 
 		err = rows.Scan(
-			&distributor.Id,
+			&distributor.ID,
 			&distributor.Name,
-			&distributor.SourceWalletId,
+			&distributor.SourceWalletID,
 			&distributor.SourceWalletName,
-			&distributor.TargetWalletId,
+			&distributor.TargetWalletID,
 			&distributor.TargetWalletName,
 			&distributor.Percent,
 		)

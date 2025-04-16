@@ -57,7 +57,7 @@ func (c *controller) LoginForm(ctx context.Context, username, password string) (
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user": user,
-		"id":   user.Id,
+		"id":   user.ID,
 		"time": time.Now(),
 	}).SignedString([]byte(c.secret))
 	if err != nil {

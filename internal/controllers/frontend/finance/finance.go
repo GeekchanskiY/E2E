@@ -4,6 +4,7 @@ import (
 	"context"
 	"html/template"
 
+	"finworker/internal/config"
 	"finworker/internal/controllers/frontend/utils"
 	"finworker/internal/templates"
 
@@ -19,7 +20,7 @@ func (c *controller) Finance(ctx context.Context) (*template.Template, map[strin
 
 	data := utils.BuildDefaultDataMapFromContext(ctx)
 
-	wallets, err := c.walletsRepo.GetByUsername(ctx, ctx.Value("user").(string))
+	wallets, err := c.walletsRepo.GetByUsername(ctx, ctx.Value(config.UsernameContextKey).(string))
 	if err != nil {
 		return nil, nil, err
 	}

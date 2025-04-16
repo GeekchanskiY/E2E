@@ -5,6 +5,7 @@ import (
 	"errors"
 	"html/template"
 
+	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
 	"finworker/internal/templates"
@@ -31,15 +32,15 @@ func (c *controller) CreateWallet(ctx context.Context) (*template.Template, map[
 
 	data["banks"] = banks
 
-	userId, ok := ctx.Value("userId").(int64)
-	if userId == 0 || !ok {
+	userID, ok := ctx.Value(config.UserIDContextKey).(int64)
+	if userID == 0 || !ok {
 		err = errors.New("userId is empty")
 		data["error"] = err.Error()
 
 		return html, data, err
 	}
 
-	userPermissionGroups, err := c.permissionGroupsRepo.GetUserEditGroups(ctx, userId)
+	userPermissionGroups, err := c.permissionGroupsRepo.GetUserEditGroups(ctx, userID)
 	if err != nil {
 		data["error"] = err.Error()
 
@@ -72,10 +73,10 @@ func (c *controller) CreateWalletForm(ctx context.Context, walletData *models.Wa
 	_, err = c.walletsRepo.Create(ctx, &models.Wallet{
 		Name:              walletData.Name,
 		Description:       walletData.Description,
-		PermissionGroupId: permissionGroup.Id,
+		PermissionGroupID: permissionGroup.ID,
 		Currency:          walletData.Currency,
 		IsSalary:          walletData.IsSalary,
-		BankId:            bank.Id,
+		BankID:            bank.ID,
 	})
 	if err != nil {
 		return c.createWalletFormError(ctx, err)
@@ -101,15 +102,15 @@ func (c *controller) createWalletFormError(ctx context.Context, userErr error) (
 
 	data["banks"] = banks
 
-	userId, ok := ctx.Value("userId").(int64)
-	if userId == 0 || !ok {
+	userID, ok := ctx.Value(config.UserIDContextKey).(int64)
+	if userID == 0 || !ok {
 		err = errors.New("userId is empty")
 		data["error"] = err.Error()
 
 		return html, data, err
 	}
 
-	userPermissionGroups, err := c.permissionGroupsRepo.GetUserEditGroups(ctx, userId)
+	userPermissionGroups, err := c.permissionGroupsRepo.GetUserEditGroups(ctx, userID)
 	if err != nil {
 		data["error"] = err.Error()
 

@@ -25,7 +25,7 @@ func (c *controller) AddUser(ctx context.Context) (*template.Template, map[strin
 	return html, data, nil
 }
 
-func (c *controller) AddUserForm(ctx context.Context, username string, level string, permissionGroupId int64) (*template.Template, map[string]any, error) {
+func (c *controller) AddUserForm(ctx context.Context, username string, level string, permissionGroupID int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.add_user_to_permission_group.controller.form", zap.String("event", "got request"))
 
 	var (
@@ -46,8 +46,8 @@ func (c *controller) AddUserForm(ctx context.Context, username string, level str
 	}
 
 	userPermission = new(models.UserPermission)
-	userPermission.UserId = user.Id
-	userPermission.PermissionGroupId = permissionGroupId
+	userPermission.UserID = user.ID
+	userPermission.PermissionGroupID = permissionGroupID
 	userPermission.Level = accessLevel
 
 	if _, err := c.userPermissionRepo.Create(ctx, userPermission); err != nil {
@@ -58,9 +58,9 @@ func (c *controller) AddUserForm(ctx context.Context, username string, level str
 }
 
 func (c *controller) addUserFormError(ctx context.Context, err error) (*template.Template, map[string]any, error) {
-	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.AddUserToPermissionGroupTemplate)
-	if err != nil {
-		return nil, nil, err
+	html, generateErr := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.AddUserToPermissionGroupTemplate)
+	if generateErr != nil {
+		return nil, nil, generateErr
 	}
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)

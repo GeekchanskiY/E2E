@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
 	"finworker/internal/templates"
@@ -22,7 +23,7 @@ func (c *controller) CreateWork(ctx context.Context) (*template.Template, map[st
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value("user").(string)
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
 	if user == "" || !ok {
 		err = errors.New("user is empty")
 		data["error"] = err.Error()
@@ -51,7 +52,7 @@ func (c *controller) createWorkFormError(ctx context.Context, userErr error) (*t
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value("user").(string)
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
 	if user == "" || !ok {
 		err = errors.New("user is empty")
 		data["error"] = err.Error()

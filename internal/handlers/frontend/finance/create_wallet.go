@@ -9,7 +9,7 @@ import (
 )
 
 func (h *handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
-	h.logger.Debug("frontend.create_wallet.handler", zap.String("event", "got request"))
+	h.logger.Debug("frontend.create_wallet.handler", zap.String("method", r.Method))
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateWallet(r.Context())
@@ -20,7 +20,11 @@ func (h *handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = html.ExecuteTemplate(w, "base", templateData)
+		if err = html.ExecuteTemplate(w, "base", templateData); err != nil {
+			h.logger.Error("frontend.create_wallet.controller", zap.Error(err))
+
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 		description := r.PostFormValue("description")
@@ -61,12 +65,7 @@ func (h *handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.Redirect(w, r, "/finance", http.StatusSeeOther)
-
-		return
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-
 	}
-
-	return
 }

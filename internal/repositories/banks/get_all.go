@@ -1,6 +1,8 @@
 package banks
 
 import (
+	"go.uber.org/zap"
+
 	"finworker/internal/models"
 )
 
@@ -15,13 +17,14 @@ func (r *Repository) GetAll() (banks []*models.Bank, err error) {
 
 	defer func() {
 		if err := rows.Close(); err != nil {
+			r.log.Error("rows close error", zap.Error(err))
 		}
 	}()
 
 	for rows.Next() {
 		var bank models.Bank
 
-		err = rows.Scan(&bank.Id, &bank.Name)
+		err = rows.Scan(&bank.ID, &bank.Name)
 		if err != nil {
 			return nil, err
 		}

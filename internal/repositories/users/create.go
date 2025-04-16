@@ -13,7 +13,7 @@ func (repo *Repository) Create(ctx context.Context, user *models.User) (*models.
 		return nil, err
 	}
 
-	err = namedStmt.GetContext(ctx, &user.Id, user)
+	err = namedStmt.GetContext(ctx, &user.ID, user)
 
 	return user, err
 }

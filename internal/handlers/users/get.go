@@ -19,21 +19,21 @@ import (
 //	@Router			/users/{userId} [get]
 func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	userId := chi.URLParam(r, "userId")
-	if userId == "" {
-		http.Error(w, "User Id is required", http.StatusBadRequest)
+	userID := chi.URLParam(r, "userId")
+	if userID == "" {
+		http.Error(w, "User ID is required", http.StatusBadRequest)
 
 		return
 	}
 
-	userIdInt, err := strconv.Atoi(userId)
+	userIDInt, err := strconv.Atoi(userID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
 		return
 	}
 
-	user, err := h.controller.GetUser(ctx, userIdInt)
+	user, err := h.controller.GetUser(ctx, userIDInt)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

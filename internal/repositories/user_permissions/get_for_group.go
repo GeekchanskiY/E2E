@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetForGroup(ctx context.Context, groupId int64) ([]*models.UserPermissionExtended, error) {
+func (r *Repository) GetForGroup(ctx context.Context, groupID int64) ([]*models.UserPermissionExtended, error) {
 	q := `
 	SELECT user_permission.id, permission_group_id, user_id, level, created_at, users.username
 	FROM user_permission
@@ -14,7 +14,7 @@ func (r *Repository) GetForGroup(ctx context.Context, groupId int64) ([]*models.
 	WHERE permission_group_id = $1
 	`
 
-	rows, err := r.db.QueryxContext(ctx, q, groupId)
+	rows, err := r.db.QueryxContext(ctx, q, groupID)
 	if err != nil {
 		return nil, err
 	}

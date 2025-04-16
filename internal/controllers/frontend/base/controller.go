@@ -9,9 +9,9 @@ import (
 
 	"finworker/internal/config"
 	"finworker/internal/repositories/banks"
-	"finworker/internal/repositories/currency_states"
+	"finworker/internal/repositories/currencyStates"
 	"finworker/internal/repositories/distributors"
-	"finworker/internal/repositories/operation_groups"
+	"finworker/internal/repositories/operationGroups"
 	"finworker/internal/repositories/operations"
 	"finworker/internal/repositories/permission_groups"
 	"finworker/internal/repositories/user_permissions"
@@ -39,11 +39,11 @@ type controller struct {
 	banksRepo            *banks.Repository
 	distributorsRepo     *distributors.Repository
 	permissionGroupsRepo *permission_groups.Repository
-	currencyStatesRepo   *currency_states.Repository
+	currencyStatesRepo   *currencyStates.Repository
 	userPermissionsRepo  *user_permissions.Repository
 	walletsRepo          *wallets.Repository
 	operationsRepo       *operations.Repository
-	operationGroupsRepo  *operation_groups.Repository
+	operationGroupsRepo  *operationGroups.Repository
 
 	secret string
 
@@ -56,11 +56,11 @@ func New(
 	banksRepo *banks.Repository,
 	distributorsRepo *distributors.Repository,
 	permissionGroupsRepo *permission_groups.Repository,
-	currencyStatesRepo *currency_states.Repository,
+	currencyStatesRepo *currencyStates.Repository,
 	userPermissionsRepo *user_permissions.Repository,
 	walletsRepo *wallets.Repository,
 	operationsRepo *operations.Repository,
-	operationGroupsRepo *operation_groups.Repository,
+	operationGroupsRepo *operationGroups.Repository,
 	cfg *config.Config,
 ) Controller {
 	return &controller{

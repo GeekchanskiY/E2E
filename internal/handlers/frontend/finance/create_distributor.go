@@ -21,7 +21,11 @@ func (h *handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = html.ExecuteTemplate(w, "base", templateData)
+		if err = html.ExecuteTemplate(w, "base", templateData); err != nil {
+			h.logger.Error("frontend.create_distributor.handler", zap.Error(err))
+
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 
@@ -41,8 +45,8 @@ func (h *handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 
 		html, templateData, err := h.controller.CreateDistributorForm(r.Context(), &models.Distributor{
 			Name:           name,
-			SourceWalletId: sourceWallet,
-			TargetWalletId: targetWallet,
+			SourceWalletID: sourceWallet,
+			TargetWalletID: targetWallet,
 			Percent:        percent,
 		})
 		if err != nil {

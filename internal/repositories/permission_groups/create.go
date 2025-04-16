@@ -13,7 +13,7 @@ func (r *Repository) Create(ctx context.Context, group *models.PermissionGroup) 
 		return nil, err
 	}
 
-	err = namedStmt.QueryRowxContext(ctx, group).Scan(&group.Id, &group.CreatedAt, &group.UpdatedAt)
+	err = namedStmt.QueryRowxContext(ctx, group).Scan(&group.ID, &group.CreatedAt, &group.UpdatedAt)
 
 	return group, err
 }

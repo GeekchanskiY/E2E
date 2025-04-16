@@ -5,8 +5,8 @@ import (
 	"errors"
 )
 
-func (r *Repository) EndWorkTime(ctx context.Context, workId int64) error {
-	res, err := r.db.ExecContext(ctx, `UPDATE work_time SET end_time = current_timestamp where id = $1`, workId)
+func (r *Repository) EndWorkTime(ctx context.Context, workID int64) error {
+	res, err := r.db.ExecContext(ctx, `UPDATE work_time SET end_time = current_timestamp where id = $1`, workID)
 	if err != nil {
 		return err
 	}

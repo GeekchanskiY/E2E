@@ -10,7 +10,7 @@ func (r *Repository) GetByName(ctx context.Context, name string) (*models.Permis
 	q := `SELECT id, name, created_at, updated_at FROM permission_groups WHERE name=$1`
 
 	group := models.PermissionGroup{}
-	if err := r.db.QueryRowxContext(ctx, q, name).Scan(&group.Id, &group.Name, &group.CreatedAt, &group.UpdatedAt); err != nil {
+	if err := r.db.QueryRowxContext(ctx, q, name).Scan(&group.ID, &group.Name, &group.CreatedAt, &group.UpdatedAt); err != nil {
 		return nil, err
 	}
 

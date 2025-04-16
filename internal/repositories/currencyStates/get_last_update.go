@@ -1,4 +1,4 @@
-package currency_states
+package currencyStates
 
 import (
 	"context"

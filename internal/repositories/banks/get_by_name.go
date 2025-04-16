@@ -10,7 +10,7 @@ func (r *Repository) GetByName(ctx context.Context, name string) (*models.Bank, 
 	q := `SELECT id, name FROM banks WHERE name=$1`
 
 	bank := new(models.Bank)
-	err := r.db.QueryRowxContext(ctx, q, name).Scan(&bank.Id, &bank.Name)
+	err := r.db.QueryRowxContext(ctx, q, name).Scan(&bank.ID, &bank.Name)
 
 	return bank, err
 }

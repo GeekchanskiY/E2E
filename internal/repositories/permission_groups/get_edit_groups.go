@@ -4,11 +4,12 @@ import (
 	"context"
 
 	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permissionGroups []*models.PermissionGroup, err error) {
+func (r *Repository) GetUserEditGroups(ctx context.Context, userID int64) (permissionGroups []*models.PermissionGroup, err error) {
 	var (
 		q    string
 		rows *sqlx.Rows
@@ -24,19 +25,20 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permi
     and 
         (user_permission.level = 'owner' or user_permission.level = 'full')`
 
-	if rows, err = r.db.QueryxContext(ctx, q, userId); err != nil {
+	if rows, err = r.db.QueryxContext(ctx, q, userID); err != nil {
 		return nil, err
 	}
 
 	defer func() {
 		if err := rows.Close(); err != nil {
+			r.log.Error("failed to close rows", zap.Error(err))
 		}
 	}()
 
 	for rows.Next() {
 		var permissionGroup models.PermissionGroup
 
-		if err = rows.Scan(&permissionGroup.Id, &permissionGroup.Name, &permissionGroup.CreatedAt, &permissionGroup.UpdatedAt); err != nil {
+		if err = rows.Scan(&permissionGroup.ID, &permissionGroup.Name, &permissionGroup.CreatedAt, &permissionGroup.UpdatedAt); err != nil {
 			return nil, err
 		}
 
@@ -46,7 +48,7 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userId int64) (permi
 	return permissionGroups, err
 }
 
-func (r *Repository) GetUserGroups(ctx context.Context, userId int64) (permissionGroups []*models.PermissionGroupWithRole, err error) {
+func (r *Repository) GetUserGroups(ctx context.Context, userID int64) (permissionGroups []*models.PermissionGroupWithRole, err error) {
 	var (
 		rows *sqlx.Rows
 	)
@@ -67,12 +69,13 @@ func (r *Repository) GetUserGroups(ctx context.Context, userId int64) (permissio
 		user_permission.user_id = $1;
     `
 
-	if rows, err = r.db.QueryxContext(ctx, q, userId); err != nil {
+	if rows, err = r.db.QueryxContext(ctx, q, userID); err != nil {
 		return nil, err
 	}
 
 	defer func() {
 		if err := rows.Close(); err != nil {
+			r.log.Error("failed to close rows", zap.Error(err))
 		}
 	}()
 

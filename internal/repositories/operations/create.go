@@ -14,7 +14,7 @@ func (r *Repository) Create(ctx context.Context, operation *models.Operation) (*
 		return nil, err
 	}
 
-	err = namedStmt.GetContext(ctx, &operation.Id, operation)
+	err = namedStmt.GetContext(ctx, &operation.ID, operation)
 
 	return operation, err
 }

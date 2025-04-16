@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"time"
 )
 
@@ -16,20 +15,20 @@ const (
 )
 
 type Wallet struct {
-	Id                int64     `db:"id"`
+	ID                int64     `db:"id"`
 	Name              string    `db:"name"`
 	Description       string    `db:"description"`
-	PermissionGroupId int64     `db:"permission_group_id"`
+	PermissionGroupID int64     `db:"permission_group_id"`
 	CreatedAt         time.Time `db:"created_at"`
 	Currency          Currency  `db:"currency"`
 	IsSalary          bool      `db:"is_salary"`
 
-	// BankId refers to internal bank id
-	BankId int64 `db:"bank_id" json:"bank_id"`
+	// BankID refers to internal bank id
+	BankID int64 `db:"bank_id" json:"bank_id"`
 }
 
 type WalletExtended struct {
-	Id          int64
+	ID          int64
 	Name        string
 	Description string
 	Permission  string
@@ -37,25 +36,25 @@ type WalletExtended struct {
 	Currency    Currency
 	IsSalary    bool
 
-	// BankId refers to internal bank id
+	// BankID refers to internal bank id
 	BankName string
 }
 
 func (w *WalletExtended) Validate() error {
 	if w.Name == "" {
-		return errors.New(fmt.Sprintf("name is required"))
+		return errors.New("name is required")
 	}
 
 	if w.Currency == "" {
-		return errors.New(fmt.Sprintf("currency is required"))
+		return errors.New("currency is required")
 	}
 
 	if w.Currency != CurrencyUSD && w.Currency != CurrencyEUR && w.Currency != CurrencyBYN && w.Currency != CurrencyRUB {
-		return errors.New(fmt.Sprintf("currency is invalid"))
+		return errors.New("currency is invalid")
 	}
 
 	if w.Permission == "" {
-		return errors.New(fmt.Sprintf("permission is required"))
+		return errors.New("permission is required")
 	}
 
 	return nil

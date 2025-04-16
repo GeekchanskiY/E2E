@@ -18,7 +18,7 @@ type Controller interface {
 	CreateWork(ctx context.Context) (*template.Template, map[string]any, error)
 	CreateWorkForm(ctx context.Context, workTime *models.UserWork) (*template.Template, map[string]any, error)
 	WorkTime(ctx context.Context) (*template.Template, map[string]any, error)
-	WorkTimeForm(ctx context.Context, workId, userId int64) (*template.Template, map[string]any, error)
+	WorkTimeForm(ctx context.Context, workID, userID int64) (*template.Template, map[string]any, error)
 }
 
 type controller struct {

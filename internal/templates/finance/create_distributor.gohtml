@@ -17,7 +17,7 @@
                     <span class="gc-form-label-text">Кошелек-источник</span>
                     <select class="gc-input-text" name="source_wallet">
                         {{ range .wallets }}
-                            <option value="{{ .Id }}">{{ .Name }}</option>
+                            <option value="{{ .ID }}">{{ .Name }}</option>
                         {{ end }}
                     </select>
                 </label>
@@ -25,7 +25,7 @@
                     <span class="gc-form-label-text">Кошелек-цель</span>
                     <select class="gc-input-text" name="target_wallet">
                         {{ range .wallets }}
-                            <option value="{{ .Id }}">{{ .Name }}</option>
+                            <option value="{{ .ID }}">{{ .Name }}</option>
                         {{ end }}
                     </select>
                 </label>

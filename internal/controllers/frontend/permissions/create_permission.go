@@ -6,6 +6,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
 	"finworker/internal/templates"
@@ -32,11 +33,11 @@ func (c *controller) CreatePermissionGroupForm(ctx context.Context, permissionGr
 		return c.createPermissionGroupFormError(ctx, err)
 	}
 
-	userId := ctx.Value("userId").(int64)
+	userID := ctx.Value(config.UserIDContextKey).(int64)
 
 	_, err = c.userPermissionRepo.Create(ctx, &models.UserPermission{
-		PermissionGroupId: newPermissionGroup.Id,
-		UserId:            userId,
+		PermissionGroupID: newPermissionGroup.ID,
+		UserID:            userID,
 		Level:             "owner",
 	})
 	if err != nil {
@@ -47,9 +48,9 @@ func (c *controller) CreatePermissionGroupForm(ctx context.Context, permissionGr
 }
 
 func (c *controller) createPermissionGroupFormError(ctx context.Context, err error) (*template.Template, map[string]any, error) {
-	html, err := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreatePermissionGroupTemplate)
-	if err != nil {
-		return nil, nil, err
+	html, generateErr := templateUtils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.CreatePermissionGroupTemplate)
+	if generateErr != nil {
+		return nil, nil, generateErr
 	}
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)

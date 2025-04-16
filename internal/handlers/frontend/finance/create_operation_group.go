@@ -21,18 +21,21 @@ func (h *handler) CreateOperationGroup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		err = html.ExecuteTemplate(w, "base", templateData)
+		if err = html.ExecuteTemplate(w, "base", templateData); err != nil {
+			h.logger.Error("frontend.create_operation_group.handler", zap.Error(err))
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 
-		walletId, err := strconv.ParseInt(r.PostFormValue("wallet"), 10, 64)
+		walletID, err := strconv.ParseInt(r.PostFormValue("wallet"), 10, 64)
 		if err != nil {
-			walletId = 0
+			walletID = 0
 		}
 
 		html, templateData, err := h.controller.CreateOperationGroupForm(r.Context(), &models.OperationGroup{
 			Name:     name,
-			WalletId: walletId,
+			WalletID: walletID,
 		})
 		if err != nil {
 			if html != nil {

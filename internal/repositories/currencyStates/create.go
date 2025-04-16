@@ -1,4 +1,4 @@
-package currency_states
+package currencyStates
 
 import (
 	"context"
@@ -14,7 +14,7 @@ func (r *Repository) Create(ctx context.Context, currencyState *models.CurrencyS
 		return nil, err
 	}
 
-	err = namedStmt.GetContext(ctx, &currencyState.Id, currencyState)
+	err = namedStmt.GetContext(ctx, &currencyState.ID, currencyState)
 
 	return currencyState, err
 }

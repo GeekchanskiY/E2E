@@ -5,9 +5,9 @@ import (
 )
 
 type OperationGroup struct {
-	Id       int64  `db:"id"`
+	ID       int64  `db:"id"`
 	Name     string `db:"name"`
-	WalletId int64  `db:"wallet_id"`
+	WalletID int64  `db:"wallet_id"`
 }
 
 func (o *OperationGroup) Validate() error {
@@ -15,7 +15,7 @@ func (o *OperationGroup) Validate() error {
 		return errors.New("name is required")
 	}
 
-	if o.WalletId == 0 {
+	if o.WalletID == 0 {
 		return errors.New("walletId is required")
 	}
 

@@ -14,7 +14,7 @@ func (r *Repository) Create(ctx context.Context, bank *models.Bank) (*models.Ban
 		return nil, err
 	}
 
-	err = namedStmt.GetContext(ctx, &bank.Id, &bank)
+	err = namedStmt.GetContext(ctx, &bank.ID, &bank)
 
 	return bank, err
 }

@@ -170,8 +170,8 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 	}
 
 	_, err = c.userPermissionsRepo.Create(ctx, &models.UserPermission{
-		PermissionGroupId: permissionGroup.Id,
-		UserId:            newUser.Id,
+		PermissionGroupID: permissionGroup.ID,
+		UserID:            newUser.ID,
 		Level:             models.AccessLevelOwner,
 	})
 	if err != nil {
@@ -181,9 +181,9 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 	wallet, err := c.walletsRepo.Create(ctx, &models.Wallet{
 		Name:              username + "_salary",
 		Description:       "Salary wallet",
-		PermissionGroupId: permissionGroup.Id,
+		PermissionGroupID: permissionGroup.ID,
 		Currency:          models.Currency(currency),
-		BankId:            dbBank.Id,
+		BankID:            dbBank.ID,
 		IsSalary:          true,
 	})
 	if err != nil {
@@ -195,7 +195,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 	if salaryInt != 0 {
 		operationGroup, err = c.operationGroupsRepo.Create(ctx, &models.OperationGroup{
 			Name:     username + "_salary",
-			WalletId: wallet.Id,
+			WalletID: wallet.ID,
 		})
 		if err != nil {
 			data["error"] = err.Error()
@@ -203,11 +203,11 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		}
 
 		_, err = c.operationsRepo.Create(ctx, &models.Operation{
-			OperationGroupId: operationGroup.Id,
+			OperationGroupID: operationGroup.ID,
 			Time:             time.Date(time.Now().Year(), time.Now().Month(), paydayInt, 0, 0, 0, 0, time.Local),
 			IsMonthly:        true,
 			Amount:           float64(salaryInt),
-			InitiatorId:      newUser.Id,
+			InitiatorID:      newUser.ID,
 		})
 		if err != nil {
 			data["error"] = err.Error()
@@ -218,7 +218,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user": newUser,
-		"id":   newUser.Id,
+		"id":   newUser.ID,
 		"time": time.Now(),
 	}).SignedString([]byte(c.secret))
 	if err != nil {

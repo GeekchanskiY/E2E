@@ -10,7 +10,8 @@ import (
 
 func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.register.handler", zap.String("event", "got request"))
-	if r.Method == http.MethodGet {
+	switch r.Method {
+	case http.MethodGet:
 		h.logger.Debug(
 			"frontend.register.handler",
 			zap.String("event", "got request"),
@@ -32,7 +33,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 		}
 
 		return
-	} else if r.Method == http.MethodPost {
+	case http.MethodPost:
 		h.logger.Debug(
 			"frontend.register.handler",
 			zap.String("event", "got request"),
@@ -63,7 +64,6 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-			return
 		}
 
 		if token == "" {
@@ -104,10 +104,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, &saltCookie)
 
 		http.Redirect(w, r, "/me", http.StatusSeeOther)
-
-		return
-	} else {
+	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
-
 }

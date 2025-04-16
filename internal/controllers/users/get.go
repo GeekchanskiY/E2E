@@ -6,8 +6,8 @@ import (
 	"finworker/internal/models"
 )
 
-func (c *Controller) GetUser(ctx context.Context, userId int) (*models.User, error) {
-	user, err := c.userRepo.Get(ctx, userId)
+func (c *Controller) GetUser(ctx context.Context, userID int) (*models.User, error) {
+	user, err := c.userRepo.Get(ctx, userID)
 	if err != nil {
 		return nil, err
 	}

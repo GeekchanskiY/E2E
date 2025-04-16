@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 
 	"finworker/internal/repositories/banks"
-	"finworker/internal/repositories/currency_states"
+	"finworker/internal/repositories/currencyStates"
 )
 
 const currencyURL = "https://myfin.by/currency/usd"
@@ -20,10 +20,10 @@ type Scraper struct {
 	logger *zap.Logger
 
 	banksRepo          *banks.Repository
-	currencyStatesRepo *currency_states.Repository
+	currencyStatesRepo *currencyStates.Repository
 }
 
-func New(log *zap.Logger, banksRepo *banks.Repository, currencyStatesRepo *currency_states.Repository) *Scraper {
+func New(log *zap.Logger, banksRepo *banks.Repository, currencyStatesRepo *currencyStates.Repository) *Scraper {
 
 	return &Scraper{
 		ctx:    context.Background(),

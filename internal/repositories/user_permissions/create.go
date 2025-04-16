@@ -20,14 +20,14 @@ func (r *Repository) Create(ctx context.Context, permission *models.UserPermissi
 		return nil, errors.Join(err, rollbackErr)
 	}
 
-	err = namedStmt.QueryRowxContext(ctx, permission).Scan(&permission.Id, &permission.CreatedAt)
+	err = namedStmt.QueryRowxContext(ctx, permission).Scan(&permission.ID, &permission.CreatedAt)
 	if err != nil {
 		rollbackErr := tx.Rollback()
 		return nil, errors.Join(err, rollbackErr)
 	}
 
 	q = `UPDATE permission_groups SET updated_at = current_timestamp WHERE id = $1`
-	_, err = tx.ExecContext(ctx, q, permission.Id)
+	_, err = tx.ExecContext(ctx, q, permission.ID)
 	if err != nil {
 		rollbackErr := tx.Rollback()
 		return nil, errors.Join(err, rollbackErr)

@@ -13,8 +13,8 @@ import (
 )
 
 func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
-	h.logger.Debug("frontend.create_operation.handler", zap.String("event", "got request"))
-	walletId, err := strconv.ParseInt(chi.URLParam(r, "walletId"), 10, 64)
+	h.logger.Debug("frontend.create_operation.handler", zap.String("method", r.Method))
+	walletID, err := strconv.ParseInt(chi.URLParam(r, "walletId"), 10, 64)
 	if err != nil {
 		h.logger.Error("frontend.create_operation.handler", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -23,7 +23,7 @@ func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.Method {
 	case http.MethodGet:
-		html, templateData, err := h.controller.CreateOperation(r.Context(), walletId)
+		html, templateData, err := h.controller.CreateOperation(r.Context(), walletID)
 		if err != nil {
 
 			h.logger.Error("frontend.create_operation.handler", zap.Error(err))
@@ -47,7 +47,7 @@ func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		operationGroupId, err := strconv.ParseInt(r.PostFormValue("operation_group"), 10, 64)
+		operationGroupID, err := strconv.ParseInt(r.PostFormValue("operation_group"), 10, 64)
 		if err != nil {
 			h.logger.Error("frontend.create_operation.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusBadRequest)
@@ -56,12 +56,12 @@ func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 		}
 
 		html, templateData, err := h.controller.CreateOperationForm(r.Context(), &models.Operation{
-			OperationGroupId: operationGroupId,
+			OperationGroupID: operationGroupID,
 			Time:             time.Now(),
 			IsMonthly:        false,
 			IsConfirmed:      true,
 			Amount:           amount,
-		}, walletId)
+		}, walletID)
 		if err != nil {
 			if html != nil {
 				err = html.ExecuteTemplate(w, "base", templateData)
@@ -81,7 +81,7 @@ func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		http.Redirect(w, r, fmt.Sprintf("/finance/wallet/%d", walletId), http.StatusSeeOther)
+		http.Redirect(w, r, fmt.Sprintf("/finance/wallet/%d", walletID), http.StatusSeeOther)
 
 		return
 	default:

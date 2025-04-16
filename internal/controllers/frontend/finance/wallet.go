@@ -11,12 +11,12 @@ import (
 	"finworker/internal/templates"
 )
 
-func (c *controller) Wallet(ctx context.Context, walletId int64) (*template.Template, map[string]any, error) {
+func (c *controller) Wallet(ctx context.Context, walletID int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.user.controller", zap.String("event", "got request"))
 
 	data := utils.BuildDefaultDataMapFromContext(ctx)
 
-	walletData, err := c.walletsRepo.Get(ctx, walletId)
+	walletData, err := c.walletsRepo.Get(ctx, walletID)
 	if err != nil {
 		c.logger.Error("frontend.wallet.controller", zap.Error(err))
 		return nil, nil, err
@@ -24,7 +24,7 @@ func (c *controller) Wallet(ctx context.Context, walletId int64) (*template.Temp
 
 	data["wallet"] = walletData
 
-	distributors, err := c.distributorsRepo.GetForWallet(ctx, walletData.Id)
+	distributors, err := c.distributorsRepo.GetForWallet(ctx, walletData.ID)
 	if err != nil {
 		c.logger.Error("frontend.wallet.controller", zap.Error(err))
 		return nil, nil, err
@@ -32,7 +32,7 @@ func (c *controller) Wallet(ctx context.Context, walletId int64) (*template.Temp
 
 	data["distributors"] = distributors
 
-	operationGroups, err := c.operationGroupsRepo.GetByWallet(ctx, walletData.Id)
+	operationGroups, err := c.operationGroupsRepo.GetByWallet(ctx, walletData.ID)
 	if err != nil {
 		c.logger.Error("frontend.wallet.controller", zap.Error(err))
 		return nil, nil, err
@@ -40,7 +40,7 @@ func (c *controller) Wallet(ctx context.Context, walletId int64) (*template.Temp
 
 	data["operationGroups"] = operationGroups
 
-	operations, err := c.operationsRepo.GetForWallet(ctx, walletData.Id)
+	operations, err := c.operationsRepo.GetForWallet(ctx, walletData.ID)
 	if err != nil {
 		c.logger.Error("frontend.wallet.controller", zap.Error(err))
 		return nil, nil, err

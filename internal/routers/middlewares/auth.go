@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
+
+	"finworker/internal/config"
 )
 
 func Auth(secret string) func(next http.Handler) http.Handler {
@@ -36,8 +38,8 @@ func Auth(secret string) func(next http.Handler) http.Handler {
 				return
 			}
 
-			ctx := context.WithValue(req.Context(), "user", username["username"])
-			ctx = context.WithValue(ctx, "userId", int64(userId))
+			ctx := context.WithValue(req.Context(), config.UsernameContextKey, username["username"])
+			ctx = context.WithValue(ctx, config.UserIDContextKey, int64(userId))
 			next.ServeHTTP(w, req.WithContext(ctx))
 		})
 	}

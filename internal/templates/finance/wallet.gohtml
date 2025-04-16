@@ -16,7 +16,7 @@
             <div class="container-buttons">
                 <a class="gc-button-link" href="/finance">Вернуться к финансам</a>
                 <a class="gc-button-link" href="/finance/create_distributor">Создать дистрибьютора</a>
-                <a class="gc-button-link" href="/finance/create_operation/{{ .wallet.Id }}">Добавить операцию</a>
+                <a class="gc-button-link" href="/finance/create_operation/{{ .wallet.ID }}">Добавить операцию</a>
             </div>
             <table class="gc-table">
                 <caption><a class="gc-cool-link" href="/faq#distributors">Дистрибьюторы</a> кошелька {{ .wallet.Name }}</caption>
@@ -33,7 +33,7 @@
                 <tbody>
                     {{ range .distributors }}
                         <tr>
-                            <td><a href="/finance/wallet/{{ .TargetWalletId }}">{{ .TargetWalletName }}</a></td>
+                            <td><a href="/finance/wallet/{{ .TargetWalletID }}">{{ .TargetWalletName }}</a></td>
                             <td>{{ formatFloat .Percent }}</td>
                         </tr>
                     {{ end }}
@@ -44,7 +44,7 @@
                 <thead>
                 <tr>
                     <th>
-                        Id
+                        ID
                     </th>
                     <th>
                         Группа операций
@@ -63,7 +63,7 @@
                 <tbody>
                 {{ range .operations }}
                     <tr>
-                        <td>{{ .Id }}</td>
+                        <td>{{ .ID }}</td>
                         <td>{{ .OperationGroupName }}</td>
                         <td>{{ formatFloat .Amount }}</td>
                         <td>{{ formatTime .Time }}</td>

@@ -18,7 +18,7 @@ func (repo *Repository) Create(ctx context.Context, distributor *models.Distribu
 		return nil, err
 	}
 
-	err = namedStmt.QueryRowxContext(ctx, distributor).Scan(&distributor.Id)
+	err = namedStmt.QueryRowxContext(ctx, distributor).Scan(&distributor.ID)
 
 	return distributor, err
 }

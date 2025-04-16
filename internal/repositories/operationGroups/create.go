@@ -1,4 +1,4 @@
-package operation_groups
+package operationGroups
 
 import (
 	"context"
@@ -14,7 +14,7 @@ func (r *Repository) Create(ctx context.Context, operationGroup *models.Operatio
 		return nil, err
 	}
 
-	err = namedStmt.GetContext(ctx, &operationGroup.Id, operationGroup)
+	err = namedStmt.GetContext(ctx, &operationGroup.ID, operationGroup)
 
 	return operationGroup, err
 }

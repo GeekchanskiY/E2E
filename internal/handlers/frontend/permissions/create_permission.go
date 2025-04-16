@@ -14,13 +14,20 @@ func (h *handler) CreatePermission(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreatePermissionGroup(r.Context())
 		if err != nil {
-
 			h.logger.Error("frontend.create_permission.handler", zap.Error(err))
+
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
-		err = html.ExecuteTemplate(w, "base", templateData)
+		if err = html.ExecuteTemplate(w, "base", templateData); err != nil {
+			h.logger.Error("frontend.create_permission.handler", zap.Error(err))
+
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+			return
+		}
 	case http.MethodPost:
 		name := r.PostFormValue("name")
 
@@ -47,12 +54,8 @@ func (h *handler) CreatePermission(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.Redirect(w, r, "/permissions", http.StatusSeeOther)
-
-		return
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 
 	}
-
-	return
 }

@@ -263,7 +263,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "bank_id": {
-                    "description": "BankId refers to internal bank id",
+                    "description": "BankID refers to internal bank id",
                     "type": "integer"
                 },
                 "createdAt": {

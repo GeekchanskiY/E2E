@@ -20,21 +20,28 @@ func (h *handler) AddUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		permissionGroupId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+		permissionGroupID, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 		if err != nil {
 			h.logger.Error("frontend.add_user.handler", zap.Error(err))
+
 			http.Error(w, err.Error(), http.StatusBadRequest)
 
 			return
 		}
 
-		templateData["permissionGroupId"] = permissionGroupId
+		templateData["permissionGroupId"] = permissionGroupID
 
-		err = html.ExecuteTemplate(w, "base", templateData)
+		if err = html.ExecuteTemplate(w, "base", templateData); err != nil {
+			h.logger.Error("frontend.add_user.handler", zap.Error(err))
+
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+			return
+		}
 	case http.MethodPost:
 		username := r.PostFormValue("username")
 		level := r.PostFormValue("level")
-		permissionGroupId, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+		permissionGroupID, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 		if err != nil {
 			h.logger.Error("frontend.add_user.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusBadRequest)
@@ -42,7 +49,7 @@ func (h *handler) AddUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		html, templateData, err := h.controller.AddUserForm(r.Context(), username, level, permissionGroupId)
+		html, templateData, err := h.controller.AddUserForm(r.Context(), username, level, permissionGroupID)
 		if err != nil {
 			if html != nil {
 				err = html.ExecuteTemplate(w, "base", templateData)
@@ -63,12 +70,8 @@ func (h *handler) AddUser(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.Redirect(w, r, "/permissions", http.StatusSeeOther)
-
-		return
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 
 	}
-
-	return
 }

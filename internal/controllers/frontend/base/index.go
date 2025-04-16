@@ -2,8 +2,9 @@ package base
 
 import (
 	"context"
+	"crypto/rand"
 	"html/template"
-	"math/rand/v2"
+	"math/big"
 
 	"go.uber.org/zap"
 
@@ -55,6 +56,11 @@ func (c *controller) Index(ctx context.Context) (*template.Template, map[string]
 		"Не соврал, а ударил пизде-джитсу",
 	}
 
-	data["text"] = randomText[rand.IntN(len(randomText))]
+	randomIndex, err := rand.Int(rand.Reader, big.NewInt(int64(len(randomText))))
+	if err != nil {
+		return nil, nil, err
+	}
+
+	data["text"] = randomText[randomIndex.Int64()]
 	return html, data, nil
 }

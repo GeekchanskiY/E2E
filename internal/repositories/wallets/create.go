@@ -18,7 +18,7 @@ func (repo *Repository) Create(ctx context.Context, wallet *models.Wallet) (*mod
 		return nil, err
 	}
 
-	err = namedStmt.QueryRowxContext(ctx, wallet).Scan(&wallet.Id, &wallet.CreatedAt)
+	err = namedStmt.QueryRowxContext(ctx, wallet).Scan(&wallet.ID, &wallet.CreatedAt)
 
 	return wallet, err
 }

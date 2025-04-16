@@ -1,4 +1,4 @@
-package operation_groups
+package currencyStates
 
 import (
 	"github.com/jmoiron/sqlx"

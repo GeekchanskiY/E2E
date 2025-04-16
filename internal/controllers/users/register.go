@@ -47,8 +47,8 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 	}
 
 	userPermission, err := c.userPermissionRepo.Create(ctx, &models.UserPermission{
-		PermissionGroupId: permissionGroup.Id,
-		UserId:            newUser.Id,
+		PermissionGroupID: permissionGroup.ID,
+		UserID:            newUser.ID,
 		Level:             models.AccessLevelOwner,
 	})
 	if err != nil {
@@ -58,9 +58,9 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 	wallet, err := c.walletRepo.Create(ctx, &models.Wallet{
 		Name:              req.Username + "_salary",
 		Description:       "Salary wallet",
-		PermissionGroupId: permissionGroup.Id,
+		PermissionGroupID: permissionGroup.ID,
 		Currency:          models.Currency(req.SalaryCurrency),
-		BankId:            bank.Id,
+		BankID:            bank.ID,
 		IsSalary:          true,
 	})
 	if err != nil {
@@ -72,18 +72,18 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 	if req.Salary != 0 {
 		operationGroup, err = c.operationGroupRepo.Create(ctx, &models.OperationGroup{
 			Name:     req.Username + "_salary",
-			WalletId: wallet.Id,
+			WalletID: wallet.ID,
 		})
 		if err != nil {
 			return nil, err
 		}
 
 		operation, err = c.operationsRepo.Create(ctx, &models.Operation{
-			OperationGroupId: operationGroup.Id,
+			OperationGroupID: operationGroup.ID,
 			Time:             req.SalaryDate,
 			IsMonthly:        true,
 			Amount:           req.Salary,
-			InitiatorId:      newUser.Id,
+			InitiatorID:      newUser.ID,
 		})
 		if err != nil {
 			return nil, err

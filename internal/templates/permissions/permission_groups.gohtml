@@ -13,7 +13,7 @@
                 </caption>
                 <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>ID</th>
                     <th>Имя</th>
                     <th>Уровень доступа</th>
                     <th>Время создания</th>
@@ -24,7 +24,7 @@
                 <tbody>
                 {{ range .permissions }}
                     <tr>
-                        <td><a href="/permissions/group/{{ .Id }}">{{ .Id }}</a></td>
+                        <td><a href="/permissions/group/{{ .ID }}">{{ .ID }}</a></td>
                         <td>{{ .Name }}</td>
                         <td>{{ .Level }}</td>
                         <td>{{ formatTime .CreatedAt }}</td>

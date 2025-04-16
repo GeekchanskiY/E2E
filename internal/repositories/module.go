@@ -4,9 +4,9 @@ import (
 	"go.uber.org/fx"
 
 	"finworker/internal/repositories/banks"
-	"finworker/internal/repositories/currency_states"
+	"finworker/internal/repositories/currencyStates"
 	"finworker/internal/repositories/distributors"
-	"finworker/internal/repositories/operation_groups"
+	"finworker/internal/repositories/operationGroups"
 	"finworker/internal/repositories/operations"
 	"finworker/internal/repositories/permission_groups"
 	"finworker/internal/repositories/user_permissions"
@@ -18,14 +18,14 @@ import (
 func Construct() fx.Option {
 	return fx.Provide(
 		distributors.New,
-		operation_groups.New,
+		operationGroups.New,
 		operations.New,
 		user_permissions.New,
 		permission_groups.New,
 		users.New,
 		wallets.New,
 		banks.New,
-		currency_states.New,
+		currencyStates.New,
 		works.New,
 	)
 }

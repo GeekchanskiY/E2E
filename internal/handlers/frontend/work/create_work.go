@@ -7,6 +7,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"finworker/internal/config"
 	"finworker/internal/models"
 )
 
@@ -16,13 +17,20 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateWork(r.Context())
 		if err != nil {
-
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
+
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
-		err = html.ExecuteTemplate(w, "base", templateData)
+		if err = html.ExecuteTemplate(w, "base", templateData); err != nil {
+			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
+
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+			return
+		}
 	case http.MethodPost:
 		var (
 			name             string
@@ -34,7 +42,7 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 
 		name = r.PostFormValue("name")
 
-		worker, ok := r.Context().Value("userId").(int64)
+		worker, ok := r.Context().Value(config.UserIDContextKey).(int64)
 		if !ok {
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
 			http.Error(w, "cant get userid", http.StatusBadRequest)
@@ -77,12 +85,8 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.Redirect(w, r, "/work", http.StatusSeeOther)
-
-		return
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 
 	}
-
-	return
 }

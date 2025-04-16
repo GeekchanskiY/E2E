@@ -41,7 +41,7 @@ func (repo *Repository) GetByUsername(ctx context.Context, username string) ([]m
 		var wallet models.WalletExtended
 
 		err = rows.Scan(
-			&wallet.Id,
+			&wallet.ID,
 			&wallet.Name,
 			&wallet.Description,
 			&wallet.Permission,

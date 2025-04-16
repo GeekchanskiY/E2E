@@ -5,7 +5,7 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <form class="gc-form" action="/finance/create_operation/{{ .wallet.Id }}" method="post">
+            <form class="gc-form" action="/finance/create_operation/{{ .wallet.ID }}" method="post">
                 <div class="gc-form-header">
                     Создать операцию для {{ .wallet.Name }} ({{ .wallet.Currency }})
                 </div>
@@ -17,7 +17,7 @@
                     <span class="gc-form-label-text">Группа операций <a class="gc-table-add" href="/finance/create_operation_group">+</a></span>
                     <select class="gc-input-text" name="operation_group">
                         {{ range .operation_groups }}
-                            <option value="{{ .Id }}">{{ .Name }}</option>
+                            <option value="{{ .ID }}">{{ .Name }}</option>
                         {{ end }}
                     </select>
                 </label>

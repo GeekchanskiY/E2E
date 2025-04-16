@@ -2,7 +2,7 @@ package users
 
 import (
 	"finworker/internal/repositories/banks"
-	"finworker/internal/repositories/operation_groups"
+	"finworker/internal/repositories/operationGroups"
 	"finworker/internal/repositories/operations"
 	"finworker/internal/repositories/permission_groups"
 	"finworker/internal/repositories/user_permissions"
@@ -19,7 +19,7 @@ type Controller struct {
 	userPermissionRepo  *user_permissions.Repository
 	walletRepo          *wallets.Repository
 	bankRepo            *banks.Repository
-	operationGroupRepo  *operation_groups.Repository
+	operationGroupRepo  *operationGroups.Repository
 	operationsRepo      *operations.Repository
 }
 
@@ -30,7 +30,7 @@ func New(
 	userPermissionRepo *user_permissions.Repository,
 	walletRepo *wallets.Repository,
 	bankRepo *banks.Repository,
-	operationGroupRepo *operation_groups.Repository,
+	operationGroupRepo *operationGroups.Repository,
 	operationsRepo *operations.Repository,
 ) *Controller {
 	return &Controller{

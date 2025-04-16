@@ -12,7 +12,7 @@ import (
 func (r *Router) addRoutes() {
 	r.addBaseRoutes()
 
-	r.addApiRoutes("/api/v1")
+	r.addAPIRoutes("/api/v1")
 	r.addUserRoutes()
 
 	r.mux.Group(func(m chi.Router) {
@@ -55,7 +55,7 @@ func (r *Router) addUserRoutes() {
 	r.mux.Get("/logout", r.baseHandler.Logout)
 }
 
-func (r *Router) addApiRoutes(apiPrefix string) {
+func (r *Router) addAPIRoutes(apiPrefix string) {
 	r.mux.Route(apiPrefix, func(m chi.Router) {
 		m.Route("/users", func(m chi.Router) {
 			m.Post("/register", r.usersHandler.Register)

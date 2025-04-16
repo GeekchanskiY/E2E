@@ -5,6 +5,7 @@ import (
 	"errors"
 	"html/template"
 
+	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
 	"finworker/internal/templates"
@@ -22,7 +23,7 @@ func (c *controller) CreateOperationGroup(ctx context.Context) (*template.Templa
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value("user").(string)
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
 	if user == "" || !ok {
 		err = errors.New("user is empty")
 		data["error"] = err.Error()
@@ -65,7 +66,7 @@ func (c *controller) createOperationGroupFormError(ctx context.Context, userErr 
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value("user").(string)
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
 	if user == "" || !ok {
 		err = errors.New("user is empty")
 		data["error"] = err.Error()
