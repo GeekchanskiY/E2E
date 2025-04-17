@@ -15,6 +15,25 @@ import (
 	"go.uber.org/zap"
 )
 
+func (c *controller) prepareOperationData(ctx context.Context, walletID int64, data map[string]any) (map[string]any, error) {
+	operationGroups, err := c.operationGroupsRepo.GetByWallet(ctx, walletID)
+	if err != nil {
+		data["error"] = err.Error()
+		return data, err
+	}
+
+	data["operation_groups"] = operationGroups
+
+	wallet, err := c.walletsRepo.Get(ctx, walletID)
+	if err != nil {
+		data["error"] = err.Error()
+		return data, err
+	}
+	data["wallet"] = wallet
+
+	return data, err
+}
+
 func (c *controller) CreateOperation(ctx context.Context, walletID int64) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_operation.controller", zap.String("event", "got request"))
 
@@ -25,19 +44,9 @@ func (c *controller) CreateOperation(ctx context.Context, walletID int64) (*temp
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	operationGroups, err := c.operationGroupsRepo.GetByWallet(ctx, walletID)
-	if err != nil {
-		data["error"] = err.Error()
+	if data, err = c.prepareOperationData(ctx, walletID, data); err != nil {
 		return html, data, err
 	}
-	data["operation_groups"] = operationGroups
-
-	wallet, err := c.walletsRepo.Get(ctx, walletID)
-	if err != nil {
-		data["error"] = err.Error()
-		return html, data, err
-	}
-	data["wallet"] = wallet
 
 	return html, data, nil
 }
@@ -203,19 +212,9 @@ func (c *controller) createOperationFormError(ctx context.Context, walletID int6
 		return html, data, err
 	}
 
-	operationGroups, err := c.operationGroupsRepo.GetByWallet(ctx, walletID)
-	if err != nil {
-		data["error"] = err.Error()
+	if data, err = c.prepareOperationData(ctx, walletID, data); err != nil {
 		return html, data, err
 	}
-	data["operation_groups"] = operationGroups
-
-	wallet, err := c.walletsRepo.Get(ctx, walletID)
-	if err != nil {
-		data["error"] = err.Error()
-		return html, data, err
-	}
-	data["wallet"] = wallet
 
 	data["error"] = userErr.Error()
 

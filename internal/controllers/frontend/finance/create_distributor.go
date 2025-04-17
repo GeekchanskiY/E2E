@@ -13,6 +13,28 @@ import (
 	"go.uber.org/zap"
 )
 
+func (c *controller) prepareDistributorData(ctx context.Context, data map[string]any) (map[string]any, error) {
+	var err error
+
+	user, ok := ctx.Value(config.UsernameContextKey).(string)
+	if !ok {
+		err = errors.New("user is empty")
+		data["error"] = err.Error()
+
+		return data, err
+	}
+
+	wallets, err := c.walletsRepo.GetByUsername(ctx, user)
+	if err != nil {
+		data["error"] = err.Error()
+
+		return data, err
+	}
+	data["wallets"] = wallets
+
+	return data, nil
+}
+
 func (c *controller) CreateDistributor(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.create_distributor.controller", zap.String("event", "got request"))
 
@@ -23,21 +45,10 @@ func (c *controller) CreateDistributor(ctx context.Context) (*template.Template,
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value(config.UsernameContextKey).(string)
-	if user == "" || !ok {
-		err = errors.New("user is empty")
-		data["error"] = err.Error()
-
-		return html, data, err
-	}
-
-	wallets, err := c.walletsRepo.GetByUsername(ctx, user)
+	data, err = c.prepareDistributorData(ctx, data)
 	if err != nil {
-		data["error"] = err.Error()
-
 		return html, data, err
 	}
-	data["wallets"] = wallets
 
 	return html, data, nil
 }
@@ -66,21 +77,10 @@ func (c *controller) createDistributorFormError(ctx context.Context, userErr err
 
 	data := templateUtils.BuildDefaultDataMapFromContext(ctx)
 
-	user, ok := ctx.Value(config.UsernameContextKey).(string)
-	if user == "" || !ok {
-		err = errors.New("user is empty")
-		data["error"] = err.Error()
-
-		return html, data, err
-	}
-
-	wallets, err := c.walletsRepo.GetByUsername(ctx, user)
+	data, err = c.prepareDistributorData(ctx, data)
 	if err != nil {
-		data["error"] = err.Error()
-
 		return html, data, err
 	}
-	data["wallets"] = wallets
 
 	data["error"] = userErr.Error()
 
