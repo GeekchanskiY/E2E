@@ -22,6 +22,7 @@ func (r *Repository) Delete(ctx context.Context, username string, permissionGrou
 	}
 
 	q = `UPDATE permission_groups SET updated_at = current_timestamp WHERE id = $2`
+
 	_, err = tx.ExecContext(ctx, q, permissionGroupID)
 	if err != nil {
 		rollbackErr := tx.Rollback()

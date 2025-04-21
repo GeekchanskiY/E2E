@@ -18,6 +18,7 @@ func (r *Repository) GetForGroup(ctx context.Context, groupID int64) ([]*models.
 	if err != nil {
 		return nil, err
 	}
+
 	defer func() {
 		err = rows.Close()
 		if err != nil {
@@ -26,6 +27,7 @@ func (r *Repository) GetForGroup(ctx context.Context, groupID int64) ([]*models.
 	}()
 
 	userPermissions := make([]*models.UserPermissionExtended, 0)
+
 	for rows.Next() {
 		userPermission := new(models.UserPermissionExtended)
 		if err := rows.StructScan(&userPermission); err != nil {

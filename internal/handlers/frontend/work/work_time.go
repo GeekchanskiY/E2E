@@ -11,6 +11,7 @@ import (
 
 func (h *handler) WorkTime(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_wallet.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.WorkTime(r.Context())
@@ -40,6 +41,7 @@ func (h *handler) WorkTime(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusBadRequest)
+
 			return
 		}
 
@@ -47,6 +49,7 @@ func (h *handler) WorkTime(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusBadRequest)
+
 			return
 		}
 
@@ -73,6 +76,5 @@ func (h *handler) WorkTime(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/work", http.StatusSeeOther)
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-
 	}
 }

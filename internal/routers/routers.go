@@ -35,6 +35,7 @@ func New(
 	usersHandler users.Handler,
 ) *Router {
 	mux := chi.NewRouter()
+
 	return &Router{
 		logger:             logger,
 		baseHandler:        baseHandler,

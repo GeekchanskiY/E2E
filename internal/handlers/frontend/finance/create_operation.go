@@ -14,6 +14,7 @@ import (
 
 func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_operation.handler", zap.String("method", r.Method))
+
 	walletID, err := strconv.ParseInt(chi.URLParam(r, "walletId"), 10, 64)
 	if err != nil {
 		h.logger.Error("frontend.create_operation.handler", zap.Error(err))
@@ -21,13 +22,14 @@ func (h *handler) CreateOperation(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateOperation(r.Context(), walletID)
 		if err != nil {
-
 			h.logger.Error("frontend.create_operation.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 

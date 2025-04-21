@@ -13,6 +13,7 @@ import (
 
 func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_wallet.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateWork(r.Context())
@@ -46,6 +47,7 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 		if !ok {
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
 			http.Error(w, "cant get userid", http.StatusBadRequest)
+
 			return
 		}
 
@@ -54,6 +56,7 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 			Float64: hourlyRateSource,
 			Valid:   true,
 		}
+
 		if err != nil {
 			hourlyRate = sql.NullFloat64{
 				Valid: false,
@@ -87,6 +90,5 @@ func (h *handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/work", http.StatusSeeOther)
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-
 	}
 }

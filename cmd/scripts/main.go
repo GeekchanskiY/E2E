@@ -30,6 +30,7 @@ func main() {
 	switch userInput {
 	case 1:
 		fmt.Println(`Are you sure you want to clear all data? y/n`)
+
 		_, err = fmt.Scanf("%s", &confirm)
 		if err != nil {
 			panic(err)
@@ -45,6 +46,7 @@ func main() {
 		clearAllTables()
 	case 2:
 		fmt.Println(`Are you sure you want to drop all tables? y/n`)
+
 		_, err = fmt.Scanf("%s", &confirm)
 		if err != nil {
 			panic(err)
@@ -76,6 +78,7 @@ func clearAllTables() {
 	if err != nil {
 		panic(err)
 	}
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			panic(err)
@@ -111,6 +114,7 @@ func dropAllTables() {
 	if err != nil {
 		panic(err)
 	}
+
 	defer func() {
 		if err := db.Close(); err != nil {
 			panic(err)

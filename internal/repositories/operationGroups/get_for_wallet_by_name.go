@@ -10,15 +10,16 @@ import (
 
 func (r *Repository) GetOrCreateForWalletByName(ctx context.Context, walletID int64, name string) (*models.OperationGroup, error) {
 	var (
+		q              string
 		operationGroup = new(models.OperationGroup)
 
 		err error
 	)
 
-	q := `SELECT id, name, wallet_id FROM operation_groups where wallet_id = $1 and  name = $2`
+	q = `SELECT id, name, wallet_id FROM operation_groups where wallet_id = $1 and  name = $2`
+
 	err = r.db.QueryRowxContext(ctx, q, walletID, name).StructScan(operationGroup)
 	if err == nil {
-
 		return operationGroup, err
 	}
 

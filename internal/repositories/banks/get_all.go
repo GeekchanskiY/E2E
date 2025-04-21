@@ -7,7 +7,6 @@ import (
 )
 
 func (r *Repository) GetAll() (banks []*models.Bank, err error) {
-
 	q := `SELECT id, name FROM banks`
 
 	rows, err := r.db.Query(q)

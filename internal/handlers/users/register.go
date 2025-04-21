@@ -20,6 +20,7 @@ import (
 //	@Router			/users/register [post]
 func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	var req requests.RegisterRequest
+
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -33,6 +34,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+
 	err = json.NewEncoder(w).Encode(resp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

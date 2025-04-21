@@ -37,6 +37,7 @@ func (c *controller) CreateOperationGroup(ctx context.Context) (*template.Templa
 
 		return html, data, err
 	}
+
 	data["wallets"] = wallets
 
 	return html, data, nil
@@ -80,6 +81,7 @@ func (c *controller) createOperationGroupFormError(ctx context.Context, userErr 
 
 		return html, data, err
 	}
+
 	data["wallets"] = wallets
 
 	data["error"] = userErr.Error()

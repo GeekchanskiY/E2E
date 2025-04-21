@@ -11,13 +11,14 @@ import (
 
 func (h *handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_distributor.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateDistributor(r.Context())
 		if err != nil {
-
 			h.logger.Error("frontend.create_distributor.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
@@ -33,6 +34,7 @@ func (h *handler) CreateDistributor(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			sourceWallet = 0
 		}
+
 		targetWallet, err := strconv.ParseInt(r.PostFormValue("target_wallet"), 10, 64)
 		if err != nil {
 			targetWallet = 0

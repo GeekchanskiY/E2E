@@ -13,6 +13,7 @@ func (h *handler) Index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.index", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 
@@ -20,6 +21,7 @@ func (h *handler) Index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.index", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 }

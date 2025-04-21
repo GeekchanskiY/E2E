@@ -19,6 +19,7 @@ import (
 //	@Router			/users/{userId} [get]
 func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
+
 	userID := chi.URLParam(r, "userId")
 	if userID == "" {
 		http.Error(w, "User ID is required", http.StatusBadRequest)
@@ -40,6 +41,7 @@ func (h *handler) Get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+
 	err = json.NewEncoder(w).Encode(user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

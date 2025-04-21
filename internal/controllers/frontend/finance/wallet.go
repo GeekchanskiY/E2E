@@ -52,6 +52,7 @@ func (c *controller) Wallet(ctx context.Context, walletID int64) (*template.Temp
 	for _, operation := range operations {
 		balance += operation.Amount
 	}
+
 	balance = math.Round(balance*100) / 100
 	data["balance"] = balance
 

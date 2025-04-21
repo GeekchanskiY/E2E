@@ -33,10 +33,12 @@ func NewConfig() *Config {
 	}
 
 	loader := confita.NewLoader()
+
 	err = loader.Load(context.Background(), &cfg)
 	if err != nil {
 		panic(err)
 	}
+
 	return &cfg
 }
 func GetLogger(cfg *Config) *zap.Logger {

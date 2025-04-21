@@ -13,7 +13,7 @@ fmt:
 
 lint:
 	$(info ******************** running lint tools ********************)
-	golangci-lint run -v
+	golangci-lint run -v --fix
 
 generate-openapi:
 	$(info ******************** generating docs ********************)

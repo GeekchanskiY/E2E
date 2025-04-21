@@ -17,6 +17,7 @@ func RunPeriodicScraping(scraper *Scraper) error {
 	ctx := context.Background()
 
 	errChan := make(chan error)
+
 	lastUpdateTime, err := scraper.currencyStatesRepo.GetLastUpdate(ctx)
 	if err != nil {
 		return err
@@ -63,6 +64,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 
 				return
 			}
+
 			_, err = scraper.currencyStatesRepo.Create(ctx, &models.CurrencyState{
 				BankID:       bank.ID,
 				CurrencyName: currency.Name,
@@ -83,6 +85,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 
 				return
 			}
+
 			_, err = scraper.currencyStatesRepo.Create(ctx, &models.CurrencyState{
 				BankID:       bank.ID,
 				CurrencyName: currency.Name,
@@ -103,6 +106,7 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 
 				return
 			}
+
 			_, err = scraper.currencyStatesRepo.Create(ctx, &models.CurrencyState{
 				BankID:       bank.ID,
 				CurrencyName: currency.Name,
@@ -118,7 +122,6 @@ func runScraping(ctx context.Context, errChan chan error, scraper *Scraper) {
 			}
 		default:
 			scraper.logger.Debug("bank skipping", zap.String("bank", currency.BankName))
-
 		}
 	}
 }

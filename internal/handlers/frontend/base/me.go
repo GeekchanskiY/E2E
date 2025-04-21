@@ -15,6 +15,7 @@ func (h *handler) Me(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.me", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 
@@ -22,6 +23,7 @@ func (h *handler) Me(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.me", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 }

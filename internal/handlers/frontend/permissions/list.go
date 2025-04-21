@@ -8,6 +8,7 @@ import (
 
 func (h *handler) List(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.list.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.List(r.Context())

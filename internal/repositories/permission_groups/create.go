@@ -8,6 +8,7 @@ import (
 
 func (r *Repository) Create(ctx context.Context, group *models.PermissionGroup) (*models.PermissionGroup, error) {
 	q := `INSERT INTO permission_groups(name) VALUES (:name) returning id, created_at, updated_at`
+
 	namedStmt, err := r.db.PrepareNamed(q)
 	if err != nil {
 		return nil, err

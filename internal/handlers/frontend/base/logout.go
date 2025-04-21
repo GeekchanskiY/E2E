@@ -41,5 +41,4 @@ func (h *handler) Logout(w http.ResponseWriter, r *http.Request) {
 	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
-
 }

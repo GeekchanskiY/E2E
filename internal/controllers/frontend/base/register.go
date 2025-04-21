@@ -20,6 +20,7 @@ import (
 
 func (c *controller) Register(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.register.controller", zap.String("event", "got request"))
+
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
 	if err != nil {
 		return nil, nil, err
@@ -41,6 +42,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 	if err != nil {
 		return nil, nil, "", "", err
 	}
+
 	data := utils.BuildDefaultDataMapFromContext(ctx)
 
 	if username == "" {
@@ -128,10 +130,12 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		if errors.Is(err, sql.ErrNoRows) {
 			err = errors.New("bank does not exist")
 			data["error"] = err.Error()
+
 			return html, data, "", "", err
 		}
 
 		data["error"] = err.Error()
+
 		return html, data, "", "", err
 	}
 
@@ -213,7 +217,6 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 			data["error"] = err.Error()
 			return html, data, "", "", err
 		}
-
 	}
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -225,6 +228,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		data["error"] = err.Error()
 		return html, data, "", "", err
 	}
+
 	salt, err := utils2.GenerateSaltFromPassword(password)
 	if err != nil {
 		data["error"] = err.Error()
