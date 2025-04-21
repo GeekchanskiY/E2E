@@ -38,113 +38,65 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		err error
 	)
 
-	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
-	if err != nil {
-		return nil, nil, "", "", err
-	}
-
-	data := utils.BuildDefaultDataMapFromContext(ctx)
-
 	if username == "" {
-		err = errors.New("username is required")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("username is required"))
 	}
 
 	if password == "" {
-		err = errors.New("password is required")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("password is required"))
 	}
 
 	if password != repeatPassword {
-		err = errors.New("password does not match")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("password does not match"))
 	}
 
 	if gender != "male" && gender != "female" {
-		err = errors.New("gender is invalid")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("gender is invalid"))
 	}
 
 	birthdayDate, err := time.Parse(time.DateOnly, birthday)
 	if err != nil {
-		err = errors.New("birthday is invalid")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("birthday is invalid"))
 	}
 
 	if bank == "" {
-		err = errors.New("bank is required")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("bank is required"))
 	}
 
 	if salary == "" {
-		err = errors.New("salary is required")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("salary is required"))
 	}
 
 	salaryInt, err := strconv.Atoi(salary)
 	if err != nil {
-		err = errors.New("salary is invalid")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("salary is invalid"))
 	}
 
 	if currency == "" {
-		err = errors.New("currency is required")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("currency is required"))
 	}
 
 	if payday == "" {
-		err = errors.New("payday is required")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("payday is required"))
 	}
 
 	paydayInt, err := strconv.Atoi(payday)
 	if err != nil {
-		err = errors.New("payday is invalid")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, errors.New("payday is invalid"))
 	}
 
 	dbBank, err := c.banksRepo.GetByName(ctx, bank)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			err = errors.New("bank does not exist")
-			data["error"] = err.Error()
-
-			return html, data, "", "", err
+			return c.registerFormError(ctx, errors.New("bank does not exist"))
 		}
 
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	hashedPassword, err := utils2.HashPassword(password)
 	if err != nil {
-		err = errors.New("failed to hash password")
-		data["error"] = err.Error()
-
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	newUser := &models.User{
@@ -157,8 +109,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 
 	newUser, err = c.userRepo.Create(ctx, newUser)
 	if err != nil {
-		data["error"] = err.Error()
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	// sets password to empty to avoid sending password hash
@@ -169,8 +120,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		Name: username + "_group",
 	})
 	if err != nil {
-		data["error"] = err.Error()
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	_, err = c.userPermissionsRepo.Create(ctx, &models.UserPermission{
@@ -179,7 +129,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		Level:             models.AccessLevelOwner,
 	})
 	if err != nil {
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	wallet, err := c.walletsRepo.Create(ctx, &models.Wallet{
@@ -191,7 +141,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		IsSalary:          true,
 	})
 	if err != nil {
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	var operationGroup *models.OperationGroup
@@ -202,8 +152,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 			WalletID: wallet.ID,
 		})
 		if err != nil {
-			data["error"] = err.Error()
-			return html, data, "", "", err
+			return c.registerFormError(ctx, err)
 		}
 
 		_, err = c.operationsRepo.Create(ctx, &models.Operation{
@@ -214,8 +163,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 			InitiatorID:      newUser.ID,
 		})
 		if err != nil {
-			data["error"] = err.Error()
-			return html, data, "", "", err
+			return c.registerFormError(ctx, err)
 		}
 	}
 
@@ -225,15 +173,25 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 		"time": time.Now(),
 	}).SignedString([]byte(c.secret))
 	if err != nil {
-		data["error"] = err.Error()
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
 	salt, err := utils2.GenerateSaltFromPassword(password)
 	if err != nil {
-		data["error"] = err.Error()
-		return html, data, "", "", err
+		return c.registerFormError(ctx, err)
 	}
 
-	return html, data, token, salt, nil
+	return nil, nil, token, salt, nil
+}
+
+func (c *controller) registerFormError(ctx context.Context, userErr error) (*template.Template, map[string]any, string, string, error) {
+	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.RegisterTemplate)
+	if err != nil {
+		return nil, nil, "", "", err
+	}
+
+	data := utils.BuildDefaultDataMapFromContext(ctx)
+	data["error"] = userErr.Error()
+
+	return html, data, "", "", err
 }
