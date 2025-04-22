@@ -231,11 +231,20 @@
     align-items: center;
     justify-content: center;
 
-    gap: 20px;
+    padding: var(--space-small);
+    gap: var(--space-extra-small);
     color: var(--light0-soft);
 }
 
-.index-title a {
+.index-bottom-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-small);
+    margin-top: var(--space-small);
+}
+
+.index-bottom-links a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -248,15 +257,17 @@
     padding: 5px 10px;
 }
 
-.index-title a img{
+.index-bottom-links a img{
     width: 32px;
     height: 32px;
 }
 
 .index-services {
+    display: flex;
     margin-top: 20px;
     width: 80%;
-    display: flex;
+    flex-wrap: wrap;
+
     flex-direction: row;
     gap: 20px;
     align-items: center;

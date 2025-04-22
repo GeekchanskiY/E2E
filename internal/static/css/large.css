@@ -1,0 +1,6 @@
+main {
+    width: 90%;
+    margin-left: 5%;
+
+    border: 3px solid var(--dark0-soft);
+}

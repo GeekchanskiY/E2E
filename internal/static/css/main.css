@@ -46,6 +46,10 @@
     --border-radius: 3px;
     --transition: 0.2s;
 
+    --space-extra-small: 10px;
+    --space-small: 30px;
+    --space-large: 50px;
+
     /* Material ui shadow*/
     --transition-shadow: all 0.3s cubic-bezier(.25,.8,.25,1);
     --shadow-down: 0 1px 3px rgba(255,255,255,0.12), 0 1px 2px rgba(255,255,255,0.24);
@@ -58,7 +62,7 @@
 }
 
 body {
-    background-color: var(--dark0);
+    background-color: var(--dark0-hard);
     color: var(--light0-soft);
 }
 
@@ -97,8 +101,11 @@ body {
 /* main */
 
 main {
+    min-height: calc(100vh - 47px);
     padding-top: 20px;
     padding-bottom: 20px;
+    background-color: var(--dark0);
+    border-radius: 15px;
 }
 
 .page-not-found {
