@@ -13,6 +13,7 @@ func (h *handler) PageNotFound(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.page_not_found", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 
@@ -20,6 +21,7 @@ func (h *handler) PageNotFound(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.page_not_found", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 }

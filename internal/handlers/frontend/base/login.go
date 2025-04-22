@@ -30,6 +30,7 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			h.logger.Error("frontend.login", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
@@ -37,6 +38,7 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			h.logger.Error("frontend.login", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 	case http.MethodPost:
@@ -51,6 +53,7 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 			h.logger.Error("frontend.login", zap.Error(err))
 
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
@@ -62,6 +65,7 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 			if html == nil {
 				h.logger.Error("frontend.login", zap.Error(err))
 				http.Error(w, err.Error(), http.StatusInternalServerError)
+
 				return
 			}
 
@@ -69,8 +73,10 @@ func (h *handler) Login(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				h.logger.Error("frontend.login", zap.Error(err))
 				http.Error(w, err.Error(), http.StatusInternalServerError)
+
 				return
 			}
+
 			return
 		}
 

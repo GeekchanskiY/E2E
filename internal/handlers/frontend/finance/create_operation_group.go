@@ -11,13 +11,14 @@ import (
 
 func (h *handler) CreateOperationGroup(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_operation_group.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateOperationGroup(r.Context())
 		if err != nil {
-
 			h.logger.Error("frontend.create_operation_group.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 

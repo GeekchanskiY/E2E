@@ -20,6 +20,7 @@ func (repo *Repository) GetForWallet(ctx context.Context, walletID int64) ([]*mo
 	if err != nil {
 		return nil, err
 	}
+
 	defer func() {
 		err = rows.Close()
 		if err != nil {
@@ -28,6 +29,7 @@ func (repo *Repository) GetForWallet(ctx context.Context, walletID int64) ([]*mo
 	}()
 
 	var distributors = make([]*models.DistributorExtended, 0)
+
 	for rows.Next() {
 		distributor := new(models.DistributorExtended)
 
@@ -47,5 +49,6 @@ func (repo *Repository) GetForWallet(ctx context.Context, walletID int64) ([]*mo
 
 		distributors = append(distributors, distributor)
 	}
+
 	return distributors, err
 }

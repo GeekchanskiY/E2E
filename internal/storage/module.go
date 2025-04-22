@@ -18,14 +18,17 @@ func NewConn(lc fx.Lifecycle, config *config.Config, logger *zap.Logger) *sqlx.D
 		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		config.DbUser, config.DbPassword, config.DbHost, config.DbPort, config.DbName,
 	)
+
 	db, err := sqlx.Connect("postgres", dsn)
 	if err != nil {
 		panic(err)
 	}
+
 	connector, err := migratigo.New(db.DB, Migrations, "migrations", logger)
 	if err != nil {
 		panic(err)
 	}
+
 	err = connector.RunMigrations(false)
 	if err != nil {
 		panic(err)
@@ -45,7 +48,8 @@ func NewConn(lc fx.Lifecycle, config *config.Config, logger *zap.Logger) *sqlx.D
 		},
 	})
 
-	fmt.Println("connected to database")
+	logger.Info("connected to database")
+
 	return db
 }
 

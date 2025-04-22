@@ -19,5 +19,6 @@ func (r *Repository) EndWorkTime(ctx context.Context, workID int64) error {
 	if rowsAffected == 0 {
 		return errors.New("no active work time")
 	}
+
 	return nil
 }

@@ -9,7 +9,6 @@ import (
 )
 
 func (r *Repository) GetByWallet(ctx context.Context, walletID int64) (operationGroups []*models.OperationGroup, err error) {
-
 	q := `SELECT id, name, wallet_id FROM operation_groups where wallet_id = $1`
 
 	rows, err := r.db.QueryxContext(ctx, q, walletID)

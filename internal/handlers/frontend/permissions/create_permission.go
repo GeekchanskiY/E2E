@@ -10,6 +10,7 @@ import (
 
 func (h *handler) CreatePermission(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_permission.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreatePermissionGroup(r.Context())
@@ -56,6 +57,5 @@ func (h *handler) CreatePermission(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/permissions", http.StatusSeeOther)
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-
 	}
 }

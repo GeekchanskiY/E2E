@@ -10,13 +10,14 @@ import (
 
 func (h *handler) CreateWallet(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.create_wallet.handler", zap.String("method", r.Method))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.CreateWallet(r.Context())
 		if err != nil {
-
 			h.logger.Error("frontend.create_wallet.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 

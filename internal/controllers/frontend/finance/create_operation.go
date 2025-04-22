@@ -29,6 +29,7 @@ func (c *controller) prepareOperationData(ctx context.Context, walletID int64, d
 		data["error"] = err.Error()
 		return data, err
 	}
+
 	data["wallet"] = wallet
 
 	return data, err

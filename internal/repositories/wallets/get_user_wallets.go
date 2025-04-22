@@ -29,6 +29,7 @@ func (repo *Repository) GetByUsername(ctx context.Context, username string) ([]m
 	if err != nil {
 		return nil, err
 	}
+
 	defer func() {
 		err = rows.Close()
 		if err != nil {
@@ -37,6 +38,7 @@ func (repo *Repository) GetByUsername(ctx context.Context, username string) ([]m
 	}()
 
 	var wallets = make([]models.WalletExtended, 0)
+
 	for rows.Next() {
 		var wallet models.WalletExtended
 
@@ -57,5 +59,6 @@ func (repo *Repository) GetByUsername(ctx context.Context, username string) ([]m
 
 		wallets = append(wallets, wallet)
 	}
+
 	return wallets, err
 }

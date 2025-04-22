@@ -10,13 +10,14 @@ import (
 
 func (h *handler) AddUser(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.add_user.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		html, templateData, err := h.controller.AddUser(r.Context())
 		if err != nil {
-
 			h.logger.Error("frontend.add_user.handler", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
@@ -41,6 +42,7 @@ func (h *handler) AddUser(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		username := r.PostFormValue("username")
 		level := r.PostFormValue("level")
+
 		permissionGroupID, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 		if err != nil {
 			h.logger.Error("frontend.add_user.handler", zap.Error(err))
@@ -72,6 +74,5 @@ func (h *handler) AddUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/permissions", http.StatusSeeOther)
 	default:
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-
 	}
 }

@@ -10,6 +10,7 @@ import (
 
 func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.register.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		h.logger.Debug(
@@ -22,6 +23,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			h.logger.Error("frontend.register", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
@@ -29,6 +31,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			h.logger.Error("frontend.register", zap.Error(err))
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+
 			return
 		}
 
@@ -39,6 +42,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 			zap.String("event", "got request"),
 			zap.String("method", "POST"),
 		)
+
 		username := r.PostFormValue("username")
 		name := r.PostFormValue("name")
 		password := r.PostFormValue("password")
@@ -55,6 +59,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 			if html == nil {
 				h.logger.Error("frontend.register", zap.Error(err))
 				http.Error(w, err.Error(), http.StatusInternalServerError)
+
 				return
 			}
 
@@ -62,6 +67,7 @@ func (h *handler) Register(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				h.logger.Error("frontend.register", zap.Error(err))
 				http.Error(w, err.Error(), http.StatusInternalServerError)
+
 				return
 			}
 		}

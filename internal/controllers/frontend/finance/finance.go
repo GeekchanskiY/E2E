@@ -13,6 +13,7 @@ import (
 
 func (c *controller) Finance(ctx context.Context) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.finance.controller", zap.String("event", "got request"))
+
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.FinanceTemplate)
 	if err != nil {
 		return nil, nil, err
@@ -24,6 +25,7 @@ func (c *controller) Finance(ctx context.Context) (*template.Template, map[strin
 	if err != nil {
 		return nil, nil, err
 	}
+
 	data["wallets"] = wallets
 
 	return html, data, nil

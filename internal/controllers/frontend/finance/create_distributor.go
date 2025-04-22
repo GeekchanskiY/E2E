@@ -30,6 +30,7 @@ func (c *controller) prepareDistributorData(ctx context.Context, data map[string
 
 		return data, err
 	}
+
 	data["wallets"] = wallets
 
 	return data, nil

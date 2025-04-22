@@ -15,6 +15,7 @@ func (h *handler) Wallet(w http.ResponseWriter, r *http.Request) {
 	if walletID == 0 || err != nil {
 		h.logger.Error("frontend.wallet.handler: walletId is empty", zap.Error(err))
 		http.Error(w, "walletId is empty", http.StatusBadRequest)
+
 		return
 	}
 
@@ -22,6 +23,7 @@ func (h *handler) Wallet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.wallet", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 
@@ -29,6 +31,7 @@ func (h *handler) Wallet(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		h.logger.Error("frontend.wallet", zap.Error(err))
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
 }

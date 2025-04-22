@@ -46,6 +46,7 @@ func (c *controller) LoginForm(ctx context.Context, username, password string) (
 		}
 
 		data["error"] = err.Error()
+
 		return html, data, "", "", err
 	}
 
@@ -64,6 +65,7 @@ func (c *controller) LoginForm(ctx context.Context, username, password string) (
 		data["error"] = err.Error()
 		return html, data, "", "", err
 	}
+
 	salt, err := utils.GenerateSaltFromPassword(password)
 	if err != nil {
 		data["error"] = err.Error()

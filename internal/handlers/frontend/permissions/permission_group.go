@@ -10,6 +10,7 @@ import (
 
 func (h *handler) PermissionGroup(w http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("frontend.permission_group.handler", zap.String("event", "got request"))
+
 	switch r.Method {
 	case http.MethodGet:
 		permissionGroupID, err := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)

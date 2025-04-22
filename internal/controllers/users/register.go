@@ -68,7 +68,9 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 	}
 
 	var operationGroup *models.OperationGroup
+
 	var operation *models.Operation
+
 	if req.Salary != 0 {
 		operationGroup, err = c.operationGroupRepo.Create(ctx, &models.OperationGroup{
 			Name:     req.Username + "_salary",
@@ -88,7 +90,6 @@ func (c *Controller) RegisterUser(ctx context.Context, req requests.RegisterRequ
 		if err != nil {
 			return nil, err
 		}
-
 	}
 
 	return &responses.RegisterResponse{

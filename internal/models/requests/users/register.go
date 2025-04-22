@@ -62,6 +62,7 @@ func (req *RegisterRequest) Validate() error {
 	}
 
 	uppercaseFound := false
+
 	for _, s := range req.Password {
 		if unicode.IsUpper(s) {
 			uppercaseFound = true

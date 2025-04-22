@@ -81,6 +81,7 @@ func (r *Repository) GetUserGroups(ctx context.Context, userID int64) (permissio
 
 	for rows.Next() {
 		permissionsGroup := new(models.PermissionGroupWithRole)
+
 		err = rows.StructScan(permissionsGroup)
 		if err != nil {
 			return nil, err

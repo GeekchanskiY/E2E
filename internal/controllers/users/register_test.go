@@ -46,16 +46,16 @@ func TestController_RegisterUser(t *testing.T) {
 	}
 
 	connStr, err := pgContainer.ConnectionString(ctx, "sslmode=disable")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	db, err := sqlx.Connect("postgres", connStr)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	connector, err := migratigo.New(db.DB, storage.Migrations, "migrations", zap.NewNop())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	err = connector.RunMigrations(false)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	t.Cleanup(func() {
 		if err := pgContainer.Terminate(ctx); err != nil {
@@ -79,7 +79,6 @@ func TestController_RegisterUser(t *testing.T) {
 	const newUserName = "newUser"
 
 	t.Run("success", func(t *testing.T) {
-
 		reps, err := controller.RegisterUser(ctx, users.RegisterRequest{
 			Username:          newUserName,
 			Password:          "testPassword1234!",
@@ -97,6 +96,7 @@ func TestController_RegisterUser(t *testing.T) {
 
 		// Check new user creation
 		var newID int64
+
 		q := `select id from  users where username = $1`
 		err = db.QueryRow(q, newUserName).Scan(&newID)
 		require.NoError(t, err)
@@ -112,6 +112,7 @@ func TestController_RegisterUser(t *testing.T) {
 
 		// Check new user permission creation
 		var newLevel string
+
 		q = `select id, level from user_permission where user_id = 1 and permission_group_id = 1`
 		err = db.QueryRow(q).Scan(&newID, &newLevel)
 		require.NoError(t, err)
@@ -121,12 +122,14 @@ func TestController_RegisterUser(t *testing.T) {
 
 		// Check new wallet creation
 		var newWalletName string
+
 		var newWalletIsSalary bool
+
 		q = `select id, name, is_salary from wallets where permission_group_id = 1`
 		err = db.QueryRow(q).Scan(&newID, &newWalletName, &newWalletIsSalary)
 		require.NoError(t, err)
 
-		assert.Equal(t, true, newWalletIsSalary)
+		assert.True(t, newWalletIsSalary)
 		assert.Equal(t, int64(1), newID)
 		assert.Equal(t, newUserName+"_salary", newWalletName)
 
@@ -138,15 +141,15 @@ func TestController_RegisterUser(t *testing.T) {
 		assert.Equal(t, newUserName+"_salary", newWalletName)
 
 		var operation models.Operation
+
 		q = `select id, amount, time, is_monthly from operations where operation_group_id = 1`
 		err = db.QueryRow(q).Scan(&operation.ID, &operation.Amount, &operation.Time, &operation.IsMonthly)
 		require.NoError(t, err)
 
 		assert.Equal(t, int64(1), operation.ID)
-		assert.Equal(t, float64(2000), operation.Amount)
-		assert.Equal(t, true, operation.IsMonthly)
+		assert.InDelta(t, float64(2000), operation.Amount, 0)
+		assert.True(t, operation.IsMonthly)
 		assert.Equal(t, time.Date(2000, time.January, 1, 0, 0, 0, 0, time.UTC), operation.Time.UTC())
-
 	})
 
 	t.Run("invalid user", func(t *testing.T) {
