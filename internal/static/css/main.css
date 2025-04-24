@@ -46,7 +46,7 @@
     --border-radius: 3px;
     --transition: 0.2s;
 
-    --header-height: 47px;
+    --header-height: 48px;
 
     --space-extra-small: 10px;
     --space-small: 30px;
@@ -107,7 +107,8 @@ main {
     padding: var(--space-large);
     background-color: var(--dark0);
     border-radius: var(--border-radius);
-    margin-bottom: var(--header-height);
+    margin-top: calc(var(--header-height) / 2);
+    margin-bottom: calc(var(--header-height) / 2);
 }
 
 .page-not-found {
@@ -133,6 +134,7 @@ main {
 header {
     display: flex;
     justify-content: space-between;
+    background-color: var(--dark0-soft);
 
     width: 100%;
     padding: 10px 30px;

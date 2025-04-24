@@ -73,7 +73,14 @@
     background-color: var(--light0-soft);
     border: 1px solid var(--light0);
     border-radius: var(--border-radius);
+    cursor: pointer;
     padding: 5px 10px;
+
+    transition: var(--transition);
+}
+
+.gc-input-button:hover {
+    background-color: var(--light0-hard);
 }
 
 .gc-input-checkbox{
@@ -255,6 +262,12 @@
     text-decoration: none;
     border-radius: var(--border-radius);
     padding: 5px 10px;
+
+    transition: var(--transition);
+}
+
+.index-bottom-links a:hover {
+    background-color: var(--light0-hard);
 }
 
 .index-bottom-links a img{
@@ -282,11 +295,17 @@
 
     padding: 10px;
     color: var(--light0-soft);
-    background-color: var(--dark0-soft);
+    background-color: var(--dark0);
     text-decoration: none;
 
     border: 1px solid var(--light0-soft);
     border-radius: var(--border-radius);
+
+    transition: var(--transition);
+}
+
+.image-link-block:hover {
+    background-color: var(--dark0-soft);
 }
 
 .image-link-block img {
