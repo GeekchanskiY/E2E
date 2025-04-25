@@ -15,19 +15,91 @@
                     <input class="gc-input-text" type="text" name="amount">
                 </label>
                 <label class="gc-form-label">
-                    <span class="gc-form-label-text">Группа операций <a class="gc-table-add" href="#">+</a></span>
+                    <span>TODO: переделать на кастомный</span>
+                    <span class="gc-form-label-text">Выбор <a class="gc-table-add" href="#">+</a></span>
                     <select class="gc-input-text" name="operation_group">
-                        <option value="test1">операция 1</option>
-                        <option value="test2">операция 2</option>
+                        <option value="test1">опция 1</option>
+                        <option value="test2">опция 2</option>
                     </select>
                 </label>
                 <label class="gc-form-label">
-                    <span class="gc-form-label-text">Чекбокс</span>
+                    <span class="gc-form-label-text">Чекбокс; TODO: переделать на кастомный</span>
                     <input class="gc-input-checkbox" type="checkbox" name="is_salary">
                 </label>
-                <span class="gc-form-error">Ошибка</span>
+                <div class="gc-form-divider">
+                    <span class="gc-form-divider-label">Разделитель</span>
+                </div>
+                <label class="gc-form-label">
+                    <span class="gc-form-label-text">Дата; TODO: переделать на кастомный</span>
+                    <input class="gc-input-text" type="date" name="date" value="2000-01-01">
+                </label>
+                <span class="gc-form-error">Ошибка; TODO: переделать на кастомный, может быть попап</span>
                 <button type="submit" class="gc-input-button">Создать</button>
             </form>
+
+            <div class="splitter"></div>
+
+            <div class="index-services">
+                <a class="image-link-block" href="#">
+                    <img src="/static/img/cat-sheriff.png" alt="permissions" style="background-color: var(--neutral-yellow);">
+                    <span>Разрешения</span>
+                </a>
+                <a class="image-link-block" href="#">
+                    <img src="/static/img/money.png" alt="finance" style="background-color: var(--neutral-purple);">
+                    <span>Финансы</span>
+                </a>
+                <a class="image-link-block" href="#">
+                    <img src="/static/img/cat-draw.png" alt="finance" style="background-color: var(--neutral-blue);">
+                    <span>UI-KIT</span>
+                </a>
+            </div>
+
+            <div class="splitter"></div>
+
+            <table class="gc-table">
+                <caption>Таблица</caption>
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Текст
+                        </th>
+                        <th>
+                            Текст
+                        </th>
+                        <th class="gc-th-blank">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Admin</td>
+                        <td>owner</td>
+                        <td class="gc-td-button"><img src="/static/icons/delete.svg" alt="delete"></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>User1</td>
+                        <td>read</td>
+                        <td class="gc-td-button"><img src="/static/icons/delete.svg" alt="delete"></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>User2</td>
+                        <td>rw</td>
+                        <td class="gc-td-button"><img src="/static/icons/delete.svg" alt="delete"></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>User3</td>
+                        <td>rw</td>
+                        <td class="gc-td-button"><img src="/static/icons/delete.svg" alt="delete"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 {{ end }}
