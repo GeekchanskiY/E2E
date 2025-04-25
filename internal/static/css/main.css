@@ -49,6 +49,7 @@
     --header-height: 48px;
     --row-height: 45px;
 
+    --space-min: 3px;
     --space-extra-small: 10px;
     --space-small: 30px;
     --space-large: 50px;
@@ -66,7 +67,7 @@
 }
 
 body {
-    background: linear-gradient(var(--dark0-hard), var(--dark0));
+    background-color: var(--dark0-hard);
     color: var(--light0-soft);
 }
 
@@ -88,9 +89,9 @@ body {
 
 .container-flex{
     display: flex;
-    padding: 20px;
+    padding: var(--space-small);
     flex-direction: column;
-    gap: 20px;
+    gap: var(--space-small);
 }
 
 .container-buttons {
@@ -105,12 +106,10 @@ body {
 /* main */
 
 main {
-    min-height: calc(100vh - var(--header-height) - var(--header-height)); /* 100% - header - bottom spacing */
+    min-height: calc(100vh - var(--header-height) - var(--header-height) - var(--space-small)); /* 100% - header - bottom spacing */
     margin-top: calc(var(--header-height) / 2);
-    margin-bottom: calc(var(--header-height) / 2);
     padding: var(--space-large);
     border-radius: var(--border-radius);
-    background-color: var(--dark0);
 }
 
 .splitter {
@@ -141,8 +140,7 @@ main {
 header {
     display: flex;
     width: 100%;
-    padding: 10px 30px;
-    background-color: var(--dark0-soft);
+    padding: var(--space-extra-small) var(--space-extra-large);
     justify-content: space-between;
 }
 
@@ -163,4 +161,34 @@ header {
 
 .header-link:hover {
     color: var(--light0);
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--space-extra-large);
+    gap: var(--space-min);
+    width: 100%;
+    height: var(--space-small);
+}
+
+.copyright {
+    display: inline-block;
+    font-size: small;
+    width: 100%;
+    text-align: center;
+}
+
+.policies {
+    display: flex;
+    width: 100%;
+    gap: var(--space-small);
+    align-items: center;
+    justify-content: center;
+}
+
+.policies a {
+    color: var(--light0-soft);
+    text-decoration: none;
+    font-size: small;
 }
