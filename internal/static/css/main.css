@@ -77,85 +77,86 @@ body {
 
 .container {
     display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
 
-    width: 100%;
+    flex-direction: column;
 }
 
 .container-flex{
     display: flex;
-    flex-direction: column;
     padding: 20px;
+    flex-direction: column;
     gap: 20px;
 }
 
 .container-buttons {
     display: flex;
     width: 100%;
+    padding: 20px;
     justify-content: center;
     gap: 30px;
     align-items: center;
-    padding: 20px;
 }
 
 /* main */
 
 main {
     min-height: calc(100vh - var(--header-height) - var(--header-height)); /* 100% - header - bottom spacing */
-    padding: var(--space-large);
-    background-color: var(--dark0);
-    border-radius: var(--border-radius);
     margin-top: calc(var(--header-height) / 2);
     margin-bottom: calc(var(--header-height) / 2);
+    padding: var(--space-large);
+    border-radius: var(--border-radius);
+    background-color: var(--dark0);
+}
+
+.splitter {
+    margin-top: var(--space-large);
+    margin-bottom: var(--space-large);
 }
 
 .page-not-found {
     display: flex;
+    color: var(--light0-soft);
+    font-size: xxx-large;
     flex-direction: row;
     gap: 20px;
-    font-size: xxx-large;
-    color: var(--light0-soft);
     justify-content: center;
     align-items: center;
 }
 
 .page-not-found-home-link {
     display: inline-block;
-    text-decoration: underline;
-    color: var(--light0-soft);
     width: 100%;
+    color: var(--light0-soft);
     text-align: center;
+    text-decoration: underline;
 }
 
 /* header */
 
 header {
     display: flex;
-    justify-content: space-between;
-    background-color: var(--dark0-soft);
-
     width: 100%;
     padding: 10px 30px;
+    background-color: var(--dark0-soft);
+    justify-content: space-between;
 }
 
 .header-container{
     display: flex;
-    gap: 20px;
-
-
-    width: max-content;
-    padding-left: 20px;
+    width:max-content;
     padding-right: 20px;
+    padding-left: 20px;
+    gap: 20px;
 }
 
 .header-link {
-    text-decoration: none;
-    font-size: large;
     color: var(--gray);
-
+    font-size: large;
     transition: var(--transition);
+    text-decoration: none;
 }
 
 .header-link:hover {
