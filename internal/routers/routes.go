@@ -11,6 +11,7 @@ import (
 
 func (r *Router) addRoutes() {
 	r.addBaseRoutes()
+	r.addMediaRoutes()
 
 	r.addAPIRoutes("/api/v1")
 	r.addUserRoutes()
@@ -45,6 +46,10 @@ func (r *Router) addBaseRoutes() {
 	r.mux.Get("/", r.baseHandler.Index)
 	r.mux.Get("/ui_kit", r.baseHandler.UIKit)
 	r.mux.Get("/faq", r.baseHandler.FAQ)
+}
+
+func (r *Router) addMediaRoutes() {
+	r.mux.Post("/media", r.mediaHandler.Upload)
 }
 
 func (r *Router) addUserRoutes() {

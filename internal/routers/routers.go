@@ -9,6 +9,7 @@ import (
 	"finworker/internal/handlers/frontend/finance"
 	"finworker/internal/handlers/frontend/permissions"
 	"finworker/internal/handlers/frontend/work"
+	"finworker/internal/handlers/media"
 	"finworker/internal/handlers/users"
 )
 
@@ -19,6 +20,7 @@ type Router struct {
 	permissionsHandler permissions.Handler
 	workHandler        work.Handler
 	usersHandler       users.Handler
+	mediaHandler       media.Handler
 
 	config *config.Config
 
@@ -33,17 +35,20 @@ func New(
 	permissionsHandler permissions.Handler,
 	workHandler work.Handler,
 	usersHandler users.Handler,
+	mediaHandler media.Handler,
 ) *Router {
 	mux := chi.NewRouter()
 
 	return &Router{
-		logger:             logger,
+		logger: logger,
+		config: config,
+		mux:    mux,
+
 		baseHandler:        baseHandler,
 		financeHandler:     financeHandler,
 		permissionsHandler: permissionsHandler,
 		workHandler:        workHandler,
 		usersHandler:       usersHandler,
-		config:             config,
-		mux:                mux,
+		mediaHandler:       mediaHandler,
 	}
 }
