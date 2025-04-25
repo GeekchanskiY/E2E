@@ -1,5 +1,7 @@
+/* Base */
+
 :root {
-    /* colors are taken from gruvbox */
+    /* Colorscheme: gruvbox (https://github.com/morhetz/gruvbox) */
     --dark0-hard: #1d2021;
     --dark0: #282828;
     --dark0-soft: #32302f;
@@ -77,7 +79,7 @@ body {
     height: 50px;
 }
 
-/* containers */
+/* Containers */
 
 .container {
     display: flex;
@@ -104,10 +106,10 @@ body {
     align-items: center;
 }
 
-/* main */
+/* Main */
 
 main {
-    min-height: calc(100vh - var(--header-height) - var(--header-height) - var(--space-small)); /* 100% - header - bottom spacing */
+    min-height: calc(100vh - var(--header-height) - var(--header-height) - var(--space-small) - var(--space-medium)); /* 100% - header - bottom spacing */
     margin-top: calc(var(--header-height) / 4);
     margin-bottom: calc(var(--header-height) / 4);
     padding-top: var(--space-large);
@@ -137,7 +139,7 @@ main {
     text-decoration: underline;
 }
 
-/* header */
+/* Header */
 
 header {
     display: flex;
@@ -165,10 +167,13 @@ header {
     color: var(--light0);
 }
 
+/* Footer */
+
 footer {
     display: flex;
     flex-direction: column;
     padding: 0 var(--space-extra-large);
+    margin-top: var(--space-medium);
     gap: var(--space-min);
     width: 100%;
     height: var(--space-small);

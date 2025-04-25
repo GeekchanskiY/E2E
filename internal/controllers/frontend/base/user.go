@@ -23,7 +23,7 @@ func (c *controller) User(ctx context.Context, username string) (*template.Templ
 		return nil, nil, err
 	}
 
-	data["userId"] = userData.ID
+	data["userID"] = userData.ID
 	data["userGender"] = userData.Gender
 	data["userBirthday"] = userData.Birthday
 
