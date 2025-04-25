@@ -12,10 +12,9 @@
                 </div>
                 <label class="gc-form-label">
                     <span class="gc-form-label-text">Текст</span>
-                    <input class="gc-input-text" type="text" name="amount">
+                    <input class="gc-input-text" type="text" name="text" placeholder="sample text">
                 </label>
                 <label class="gc-form-label">
-                    <span>TODO: переделать на кастомный</span>
                     <span class="gc-form-label-text">Выбор <a class="gc-table-add" href="#">+</a></span>
                     <select class="gc-input-text" name="operation_group">
                         <option value="test1">опция 1</option>
@@ -23,17 +22,31 @@
                     </select>
                 </label>
                 <label class="gc-form-label">
-                    <span class="gc-form-label-text">Чекбокс; TODO: переделать на кастомный</span>
+                    <span class="gc-form-label-text">Чекбокс</span>
                     <input class="gc-input-checkbox" type="checkbox" name="is_salary">
                 </label>
+                <div class="gc-form-group-container">
+                    <span class="gc-form-label-text">Группа</span>
+                    <div class="gc-form-group">
+                        <label>
+                            <input class="gc-input-text" type="number" name="salary" placeholder="<UNK>">
+                        </label>
+                        <label class="gc-form-label">
+                            <select class="gc-input-text" name="currency">
+                                <option value="USD">USD</option>
+                                <option value="BYN">BYN</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
                 <div class="gc-form-divider">
                     <span class="gc-form-divider-label">Разделитель</span>
                 </div>
                 <label class="gc-form-label">
-                    <span class="gc-form-label-text">Дата; TODO: переделать на кастомный</span>
+                    <span class="gc-form-label-text">Дата</span>
                     <input class="gc-input-text" type="date" name="date" value="2000-01-01">
                 </label>
-                <span class="gc-form-error">Ошибка; TODO: переделать на кастомный, может быть попап</span>
+                <span class="gc-form-error">Ошибка</span>
                 <button type="submit" class="gc-input-button">Создать</button>
             </form>
 

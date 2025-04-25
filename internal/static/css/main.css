@@ -52,6 +52,7 @@
     --space-min: 3px;
     --space-extra-small: 10px;
     --space-small: 30px;
+    --space-medium: 36px;
     --space-large: 50px;
     --space-extra-large: 100px;
 
@@ -107,8 +108,9 @@ body {
 
 main {
     min-height: calc(100vh - var(--header-height) - var(--header-height) - var(--space-small)); /* 100% - header - bottom spacing */
-    margin-top: calc(var(--header-height) / 2);
-    padding: var(--space-large);
+    margin-top: calc(var(--header-height) / 4);
+    margin-bottom: calc(var(--header-height) / 4);
+    padding-top: var(--space-large);
     border-radius: var(--border-radius);
 }
 

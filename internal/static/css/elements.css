@@ -1,5 +1,6 @@
 .gc-form {
     display: flex;
+    width: 30%;
     padding: 0 var(--space-extra-large) var(--space-small) var(--space-extra-large);
     border-radius: var(--border-radius);
     background-color: var(--dark0-soft);
@@ -9,11 +10,18 @@
 
 .gc-form-header {
     width: 100%;
+    padding-bottom: var(--space-min);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
-    background-color: var(--dark0-hard);
+    background-color: var(--dark0);
     color: var(--light0-soft);
     font-size: x-large;
+    font-weight: 600;
     text-align: center;
+
+    border-left: 1px solid var(--neutral-aqua);
+    border-right: 1px solid var(--neutral-aqua);
+    border-bottom: 1px solid var(--neutral-aqua);
+    border-top: none;
 }
 
 .gc-form-group-container {
@@ -24,42 +32,46 @@
 .gc-form-group {
     display: flex;
     flex-direction: row;
-    gap: var(--space-small);
+    gap: var(--space-extra-small);
     justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .gc-form-divider {
     width: 100%;
-    margin-top: var(--space-small);
-    border-bottom: 1px var(--light0-soft) solid;
+    margin-top: var(--space-extra-small);
+    border-bottom: 1px var(--neutral-aqua) solid;
     text-align: center;
 }
 
 .gc-form-divider-label {
     color: var(--light0-soft);
     font-size: large;
+    font-weight: 600;
 }
 
 .gc-form-label {
     display: flex;
     flex-direction: column;
-    gap: var(--space-extra-small);
+    gap: var(--space-min);
 }
 
 .gc-form-label-text {
     color: var(--light0-soft);
+    font-size: medium;
+    font-weight: 500;
 }
 
 .gc-input-text {
+    height: var(--space-medium);
     padding: 5px 10px;
-    border-top: none;
-    border-right: none;
-    border-bottom: 1px solid var(--light0);
-    border-left: none;
+    border: 1px solid var(--light0);
     border-radius: var(--border-radius);
     outline: none;
     background-color: var(--dark0-soft);
     color: var(--light0);
+    font-weight: 400;
 }
 
 .gc-input-text[type=date]::-webkit-calendar-picker-indicator {
