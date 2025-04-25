@@ -115,7 +115,7 @@ func (c *controller) RegisterForm(ctx context.Context, username, name, password,
 	// sets password to empty to avoid sending password hash
 	newUser.Password = ""
 
-	// creating permission group for user
+	// creating a permission group for user
 	permissionGroup, err := c.permissionGroupsRepo.Create(ctx, &models.PermissionGroup{
 		Name: username + "_group",
 	})
