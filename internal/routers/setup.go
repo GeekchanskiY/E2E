@@ -11,5 +11,6 @@ func (r *Router) setup() {
 	r.mux.Use(middleware.Recoverer)
 	r.mux.Use(middleware.RealIP)
 	r.mux.Use(middleware.RequestID)
+	r.mux.Use(middlewares.Log(r.logger))
 	r.mux.Use(middlewares.Auth(r.config.Secret))
 }
