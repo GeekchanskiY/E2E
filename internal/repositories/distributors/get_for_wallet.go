@@ -8,7 +8,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (repo *Repository) GetForWallet(ctx context.Context, walletID int64) ([]*models.DistributorExtended, error) {
+func (repo *repository) GetForWallet(ctx context.Context, walletID int64) ([]*models.DistributorExtended, error) {
 	q := `SELECT 
     distributors.id, distributors.name, distributors.source_wallet_id, source.name, distributors.target_wallet_id, target.name, distributors.percent
 	FROM distributors
