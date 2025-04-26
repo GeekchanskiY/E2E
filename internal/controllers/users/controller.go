@@ -15,7 +15,7 @@ import (
 type Controller struct {
 	logger              *zap.Logger
 	userRepo            *users.Repository
-	permissionGroupRepo *permission_groups.Repository
+	permissionGroupRepo permission_groups.Repository
 	userPermissionRepo  *user_permissions.Repository
 	walletRepo          *wallets.Repository
 	bankRepo            *banks.Repository
@@ -26,7 +26,7 @@ type Controller struct {
 func New(
 	logger *zap.Logger,
 	userRepo *users.Repository,
-	permissionGroupRepo *permission_groups.Repository,
+	permissionGroupRepo permission_groups.Repository,
 	userPermissionRepo *user_permissions.Repository,
 	walletRepo *wallets.Repository,
 	bankRepo *banks.Repository,

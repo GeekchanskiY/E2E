@@ -39,7 +39,7 @@ type controller struct {
 	userRepo             *users.Repository
 	banksRepo            *banks.Repository
 	distributorsRepo     *distributors.Repository
-	permissionGroupsRepo *permission_groups.Repository
+	permissionGroupsRepo permission_groups.Repository
 	currencyStatesRepo   *currencyStates.Repository
 	userPermissionsRepo  *user_permissions.Repository
 	walletsRepo          *wallets.Repository
@@ -57,7 +57,7 @@ func New(
 	userRepo *users.Repository,
 	banksRepo *banks.Repository,
 	distributorsRepo *distributors.Repository,
-	permissionGroupsRepo *permission_groups.Repository,
+	permissionGroupsRepo permission_groups.Repository,
 	currencyStatesRepo *currencyStates.Repository,
 	userPermissionsRepo *user_permissions.Repository,
 	walletsRepo *wallets.Repository,
