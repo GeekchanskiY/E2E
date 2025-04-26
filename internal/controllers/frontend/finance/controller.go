@@ -37,7 +37,7 @@ type Controller interface {
 type controller struct {
 	logger *zap.Logger
 
-	userRepo             *users.Repository
+	userRepo             users.Repository
 	banksRepo            banks.Repository
 	distributorsRepo     distributors.Repository
 	permissionGroupsRepo permission_groups.Repository
@@ -54,7 +54,7 @@ type controller struct {
 
 func New(
 	logger *zap.Logger,
-	userRepo *users.Repository,
+	userRepo users.Repository,
 	banksRepo banks.Repository,
 	distributorsRepo distributors.Repository,
 	permissionGroupsRepo permission_groups.Repository,

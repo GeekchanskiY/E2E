@@ -24,7 +24,7 @@ type Controller interface {
 type controller struct {
 	logger *zap.Logger
 
-	userRepo *users.Repository
+	userRepo users.Repository
 	workRepo *works.Repository
 
 	secret string
@@ -35,7 +35,7 @@ type controller struct {
 func New(
 	logger *zap.Logger,
 
-	userRepo *users.Repository,
+	userRepo users.Repository,
 	workRepo *works.Repository,
 
 	cfg *config.Config,
