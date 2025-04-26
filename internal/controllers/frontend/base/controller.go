@@ -44,7 +44,7 @@ type controller struct {
 	userPermissionsRepo  *user_permissions.Repository
 	walletsRepo          *wallets.Repository
 	operationsRepo       *operations.Repository
-	operationGroupsRepo  *operationGroups.Repository
+	operationGroupsRepo  operationGroups.Repository
 	registryRepo         registry.Repository
 
 	secret string
@@ -62,7 +62,7 @@ func New(
 	userPermissionsRepo *user_permissions.Repository,
 	walletsRepo *wallets.Repository,
 	operationsRepo *operations.Repository,
-	operationGroupsRepo *operationGroups.Repository,
+	operationGroupsRepo operationGroups.Repository,
 	registryRepo registry.Repository,
 	cfg *config.Config,
 ) Controller {

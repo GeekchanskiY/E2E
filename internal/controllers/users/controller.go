@@ -19,7 +19,7 @@ type Controller struct {
 	userPermissionRepo  *user_permissions.Repository
 	walletRepo          *wallets.Repository
 	bankRepo            banks.Repository
-	operationGroupRepo  *operationGroups.Repository
+	operationGroupRepo  operationGroups.Repository
 	operationsRepo      *operations.Repository
 }
 
@@ -30,7 +30,7 @@ func New(
 	userPermissionRepo *user_permissions.Repository,
 	walletRepo *wallets.Repository,
 	bankRepo banks.Repository,
-	operationGroupRepo *operationGroups.Repository,
+	operationGroupRepo operationGroups.Repository,
 	operationsRepo *operations.Repository,
 ) *Controller {
 	return &Controller{
