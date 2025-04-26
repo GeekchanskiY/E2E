@@ -6,7 +6,6 @@ import (
 	"github.com/heetch/confita"
 	"github.com/joho/godotenv"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
 type Config struct {
@@ -35,6 +34,7 @@ func NewConfig() *Config {
 	}
 
 	cfg := new(Config)
+	cfg.Logger = logger
 
 	if err = godotenv.Load(); err != nil {
 		logger.Fatal("error loading .env file", zap.Error(err))
@@ -46,16 +46,9 @@ func NewConfig() *Config {
 		logger.Fatal("error loading config", zap.Error(err))
 	}
 
-	logger = logger.WithOptions(zap.Hooks(func(entry zapcore.Entry) error {
-		// TODO: add registry hook here
-
-		return nil
-	}))
-
-	cfg.Logger = logger
-
 	return cfg
 }
+
 func GetLogger(cfg *Config) *zap.Logger {
 	return cfg.Logger
 }

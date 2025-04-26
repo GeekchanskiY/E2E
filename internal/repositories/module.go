@@ -9,6 +9,7 @@ import (
 	"finworker/internal/repositories/operationGroups"
 	"finworker/internal/repositories/operations"
 	"finworker/internal/repositories/permission_groups"
+	"finworker/internal/repositories/registry"
 	"finworker/internal/repositories/user_permissions"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
@@ -26,6 +27,7 @@ func Construct() fx.Option {
 		wallets.New,
 		banks.New,
 		currencyStates.New,
+		registry.New,
 		works.New,
 	)
 }

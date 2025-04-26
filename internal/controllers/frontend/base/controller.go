@@ -14,6 +14,7 @@ import (
 	"finworker/internal/repositories/operationGroups"
 	"finworker/internal/repositories/operations"
 	"finworker/internal/repositories/permission_groups"
+	"finworker/internal/repositories/registry"
 	"finworker/internal/repositories/user_permissions"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/wallets"
@@ -22,7 +23,7 @@ import (
 
 type Controller interface {
 	FAQ(ctx context.Context) (*template.Template, map[string]any, error)
-	Index(ctx context.Context) (*template.Template, map[string]any, error)
+	Index(ctx context.Context, ip string) (*template.Template, map[string]any, error)
 	Login(ctx context.Context) (*template.Template, map[string]any, error)
 	LoginForm(ctx context.Context, username, password string) (*template.Template, map[string]any, string, string, error)
 	PageNotFound(ctx context.Context) (*template.Template, map[string]any, error)
@@ -44,6 +45,7 @@ type controller struct {
 	walletsRepo          *wallets.Repository
 	operationsRepo       *operations.Repository
 	operationGroupsRepo  *operationGroups.Repository
+	registryRepo         registry.Repository
 
 	secret string
 
@@ -61,6 +63,7 @@ func New(
 	walletsRepo *wallets.Repository,
 	operationsRepo *operations.Repository,
 	operationGroupsRepo *operationGroups.Repository,
+	registryRepo registry.Repository,
 	cfg *config.Config,
 ) Controller {
 	return &controller{
@@ -75,6 +78,7 @@ func New(
 		walletsRepo:          walletsRepo,
 		operationsRepo:       operationsRepo,
 		operationGroupsRepo:  operationGroupsRepo,
+		registryRepo:         registryRepo,
 
 		secret: cfg.Secret,
 
