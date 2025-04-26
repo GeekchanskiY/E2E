@@ -20,10 +20,10 @@ type Scraper struct {
 	logger *zap.Logger
 
 	banksRepo          banks.Repository
-	currencyStatesRepo *currencyStates.Repository
+	currencyStatesRepo currencyStates.Repository
 }
 
-func New(log *zap.Logger, banksRepo banks.Repository, currencyStatesRepo *currencyStates.Repository) *Scraper {
+func New(log *zap.Logger, banksRepo banks.Repository, currencyStatesRepo currencyStates.Repository) *Scraper {
 	return &Scraper{
 		ctx:    context.Background(),
 		logger: log,
