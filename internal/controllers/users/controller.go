@@ -17,7 +17,7 @@ type Controller struct {
 	userRepo            users.Repository
 	permissionGroupRepo permission_groups.Repository
 	userPermissionRepo  user_permissions.Repository
-	walletRepo          *wallets.Repository
+	walletRepo          wallets.Repository
 	bankRepo            banks.Repository
 	operationGroupRepo  operationGroups.Repository
 	operationsRepo      operations.Repository
@@ -28,7 +28,7 @@ func New(
 	userRepo users.Repository,
 	permissionGroupRepo permission_groups.Repository,
 	userPermissionRepo user_permissions.Repository,
-	walletRepo *wallets.Repository,
+	walletRepo wallets.Repository,
 	bankRepo banks.Repository,
 	operationGroupRepo operationGroups.Repository,
 	operationsRepo operations.Repository,

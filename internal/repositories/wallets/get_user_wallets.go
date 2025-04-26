@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (repo *Repository) GetByUsername(ctx context.Context, username string) ([]models.WalletExtended, error) {
+func (repo *repository) GetByUsername(ctx context.Context, username string) ([]models.WalletExtended, error) {
 	q := `SELECT 
     wallets.id, 
     wallets.name, 
