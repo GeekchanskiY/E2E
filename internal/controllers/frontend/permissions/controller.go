@@ -29,7 +29,7 @@ type controller struct {
 
 	userRepo            *users.Repository
 	permissionGroupRepo permission_groups.Repository
-	userPermissionRepo  *user_permissions.Repository
+	userPermissionRepo  user_permissions.Repository
 
 	fs embed.FS
 }
@@ -39,7 +39,7 @@ func New(
 
 	userRepo *users.Repository,
 	permissionGroupRepo permission_groups.Repository,
-	userPermissionRepo *user_permissions.Repository,
+	userPermissionRepo user_permissions.Repository,
 ) Controller {
 	return &controller{
 		logger: logger,

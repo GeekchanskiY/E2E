@@ -7,7 +7,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) Create(ctx context.Context, permission *models.UserPermission) (*models.UserPermission, error) {
+func (r *repository) Create(ctx context.Context, permission *models.UserPermission) (*models.UserPermission, error) {
 	tx, err := r.db.BeginTxx(context.Background(), nil)
 	if err != nil {
 		return nil, err
