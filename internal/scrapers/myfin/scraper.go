@@ -19,11 +19,11 @@ type Scraper struct {
 	ctx    context.Context
 	logger *zap.Logger
 
-	banksRepo          *banks.Repository
+	banksRepo          banks.Repository
 	currencyStatesRepo *currencyStates.Repository
 }
 
-func New(log *zap.Logger, banksRepo *banks.Repository, currencyStatesRepo *currencyStates.Repository) *Scraper {
+func New(log *zap.Logger, banksRepo banks.Repository, currencyStatesRepo *currencyStates.Repository) *Scraper {
 	return &Scraper{
 		ctx:    context.Background(),
 		logger: log,
