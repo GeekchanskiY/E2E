@@ -3,16 +3,19 @@ package base
 import (
 	"context"
 	"crypto/rand"
+	"fmt"
 	"html/template"
 	"math/big"
+	"time"
 
 	"go.uber.org/zap"
 
 	"finworker/internal/controllers/frontend/utils"
+	"finworker/internal/models"
 	"finworker/internal/templates"
 )
 
-func (c *controller) Index(ctx context.Context) (*template.Template, map[string]any, error) {
+func (c *controller) Index(ctx context.Context, ip string) (*template.Template, map[string]any, error) {
 	c.logger.Debug("frontend.index.controller", zap.String("event", "got request"))
 
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.IndexTemplate)
@@ -55,6 +58,7 @@ func (c *controller) Index(ctx context.Context) (*template.Template, map[string]
 		"Ой, что-то пошло не так. А нет, всё так",
 		"НЛО прилетело и опубликовало эту надпись здесь",
 		"Не соврал, а ударил пизде-джитсу",
+		"А я тебя по IP вычислю! " + ip,
 	}
 
 	randomIndex, err := rand.Int(rand.Reader, big.NewInt(int64(len(randomText))))
@@ -63,6 +67,13 @@ func (c *controller) Index(ctx context.Context) (*template.Template, map[string]
 	}
 
 	data["text"] = randomText[randomIndex.Int64()]
+
+	_, err = c.registryRepo.Push(ctx, &models.Event{
+		Name:    "request",
+		Event:   models.RegistryLog,
+		Content: fmt.Sprintf("index; IP: [%s]", ip),
+		Time:    time.Time{},
+	})
 
 	return html, data, nil
 }

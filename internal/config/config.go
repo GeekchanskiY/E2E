@@ -22,25 +22,33 @@ type Config struct {
 }
 
 func NewConfig() *Config {
-	logger, _ := zap.NewDevelopment()
-	cfg := Config{
-		Logger: logger,
-	}
+	var (
+		logger *zap.Logger
+		loader *confita.Loader
 
-	err := godotenv.Load()
-	if err != nil {
-		logger.Fatal("Error loading .env file")
-	}
+		err error
+	)
 
-	loader := confita.NewLoader()
-
-	err = loader.Load(context.Background(), &cfg)
-	if err != nil {
+	if logger, err = zap.NewDevelopment(); err != nil {
 		panic(err)
 	}
 
-	return &cfg
+	cfg := new(Config)
+	cfg.Logger = logger
+
+	if err = godotenv.Load(); err != nil {
+		logger.Fatal("error loading .env file", zap.Error(err))
+	}
+
+	loader = confita.NewLoader()
+
+	if err = loader.Load(context.Background(), cfg); err != nil {
+		logger.Fatal("error loading config", zap.Error(err))
+	}
+
+	return cfg
 }
+
 func GetLogger(cfg *Config) *zap.Logger {
 	return cfg.Logger
 }

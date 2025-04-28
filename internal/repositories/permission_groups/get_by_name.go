@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetByName(ctx context.Context, name string) (*models.PermissionGroup, error) {
+func (r *repository) GetByName(ctx context.Context, name string) (*models.PermissionGroup, error) {
 	q := `SELECT id, name, created_at, updated_at FROM permission_groups WHERE name=$1`
 
 	group := models.PermissionGroup{}

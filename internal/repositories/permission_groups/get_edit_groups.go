@@ -9,7 +9,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetUserEditGroups(ctx context.Context, userID int64) (permissionGroups []*models.PermissionGroup, err error) {
+func (r *repository) GetUserEditGroups(ctx context.Context, userID int64) (permissionGroups []*models.PermissionGroup, err error) {
 	var (
 		q    string
 		rows *sqlx.Rows
@@ -48,7 +48,7 @@ func (r *Repository) GetUserEditGroups(ctx context.Context, userID int64) (permi
 	return permissionGroups, err
 }
 
-func (r *Repository) GetUserGroups(ctx context.Context, userID int64) (permissionGroups []*models.PermissionGroupWithRole, err error) {
+func (r *repository) GetUserGroups(ctx context.Context, userID int64) (permissionGroups []*models.PermissionGroupWithRole, err error) {
 	var (
 		rows *sqlx.Rows
 	)

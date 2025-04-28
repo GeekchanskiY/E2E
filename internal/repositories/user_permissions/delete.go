@@ -5,7 +5,7 @@ import (
 	"errors"
 )
 
-func (r *Repository) Delete(ctx context.Context, username string, permissionGroupID int64) error {
+func (r *repository) Delete(ctx context.Context, username string, permissionGroupID int64) error {
 	tx, err := r.db.BeginTxx(context.Background(), nil)
 	if err != nil {
 		return err

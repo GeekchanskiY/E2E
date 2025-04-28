@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) Create(ctx context.Context, bank *models.Bank) (*models.Bank, error) {
+func (r *repository) Create(ctx context.Context, bank *models.Bank) (*models.Bank, error) {
 	q := `INSERT INTO banks(name) VALUES (:name) returning id`
 
 	namedStmt, err := r.db.PrepareNamed(q)

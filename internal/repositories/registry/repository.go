@@ -1,4 +1,4 @@
-package banks
+package registry
 
 import (
 	"context"
@@ -10,15 +10,13 @@ import (
 )
 
 type Repository interface {
-	Create(ctx context.Context, bank *models.Bank) (*models.Bank, error)
-	GetAll() (banks []*models.Bank, err error)
-	GetByID(id int64) (*models.Bank, error)
-	GetByName(ctx context.Context, name string) (*models.Bank, error)
+	Push(ctx context.Context, event *models.Event) (*models.Event, error)
 }
 
 type repository struct {
 	log *zap.Logger
-	db  *sqlx.DB
+
+	db *sqlx.DB
 }
 
 func New(db *sqlx.DB, log *zap.Logger) Repository {

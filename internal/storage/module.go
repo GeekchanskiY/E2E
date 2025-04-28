@@ -39,16 +39,14 @@ func NewConn(lc fx.Lifecycle, config *config.Config, logger *zap.Logger) *sqlx.D
 			if err := db.Ping(); err != nil {
 				return err
 			}
-			fmt.Println("connected to database")
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			fmt.Println("closing database connection")
 			return db.Close()
 		},
 	})
 
-	logger.Info("connected to database")
+	logger.Info("connected to database", zap.String("host", config.DbHost))
 
 	return db
 }

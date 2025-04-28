@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetByName(ctx context.Context, name string) (*models.Bank, error) {
+func (r *repository) GetByName(ctx context.Context, name string) (*models.Bank, error) {
 	q := `SELECT id, name FROM banks WHERE name=$1`
 
 	bank := new(models.Bank)

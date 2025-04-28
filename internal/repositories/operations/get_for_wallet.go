@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetForWallet(ctx context.Context, id int64) ([]*models.OperationExtended, error) {
+func (r *repository) GetForWallet(ctx context.Context, id int64) ([]*models.OperationExtended, error) {
 	q := `select 
     	o.id, o.operation_group_id, o.amount, o.time, o.is_monthly, o.is_confirmed, o.initiator_id, 
 		og.name as operation_group_name,

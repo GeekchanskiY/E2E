@@ -27,9 +27,9 @@ type Controller interface {
 type controller struct {
 	logger *zap.Logger
 
-	userRepo            *users.Repository
-	permissionGroupRepo *permission_groups.Repository
-	userPermissionRepo  *user_permissions.Repository
+	userRepo            users.Repository
+	permissionGroupRepo permission_groups.Repository
+	userPermissionRepo  user_permissions.Repository
 
 	fs embed.FS
 }
@@ -37,9 +37,9 @@ type controller struct {
 func New(
 	logger *zap.Logger,
 
-	userRepo *users.Repository,
-	permissionGroupRepo *permission_groups.Repository,
-	userPermissionRepo *user_permissions.Repository,
+	userRepo users.Repository,
+	permissionGroupRepo permission_groups.Repository,
+	userPermissionRepo user_permissions.Repository,
 ) Controller {
 	return &controller{
 		logger: logger,

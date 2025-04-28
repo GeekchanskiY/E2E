@@ -8,7 +8,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetOrCreateForWalletByName(ctx context.Context, walletID int64, name string) (*models.OperationGroup, error) {
+func (r *repository) GetOrCreateForWalletByName(ctx context.Context, walletID int64, name string) (*models.OperationGroup, error) {
 	var (
 		q              string
 		operationGroup = new(models.OperationGroup)

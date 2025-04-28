@@ -37,15 +37,15 @@ type Controller interface {
 type controller struct {
 	logger *zap.Logger
 
-	userRepo             *users.Repository
-	banksRepo            *banks.Repository
-	distributorsRepo     *distributors.Repository
-	permissionGroupsRepo *permission_groups.Repository
-	currencyStatesRepo   *currencyStates.Repository
-	userPermissionsRepo  *user_permissions.Repository
-	walletsRepo          *wallets.Repository
-	operationsRepo       *operations.Repository
-	operationGroupsRepo  *operationGroups.Repository
+	userRepo             users.Repository
+	banksRepo            banks.Repository
+	distributorsRepo     distributors.Repository
+	permissionGroupsRepo permission_groups.Repository
+	currencyStatesRepo   currencyStates.Repository
+	userPermissionsRepo  user_permissions.Repository
+	walletsRepo          wallets.Repository
+	operationsRepo       operations.Repository
+	operationGroupsRepo  operationGroups.Repository
 
 	secret string
 
@@ -54,15 +54,15 @@ type controller struct {
 
 func New(
 	logger *zap.Logger,
-	userRepo *users.Repository,
-	banksRepo *banks.Repository,
-	distributorsRepo *distributors.Repository,
-	permissionGroupsRepo *permission_groups.Repository,
-	currencyStatesRepo *currencyStates.Repository,
-	userPermissionsRepo *user_permissions.Repository,
-	walletsRepo *wallets.Repository,
-	operationsRepo *operations.Repository,
-	operationGroupsRepo *operationGroups.Repository,
+	userRepo users.Repository,
+	banksRepo banks.Repository,
+	distributorsRepo distributors.Repository,
+	permissionGroupsRepo permission_groups.Repository,
+	currencyStatesRepo currencyStates.Repository,
+	userPermissionsRepo user_permissions.Repository,
+	walletsRepo wallets.Repository,
+	operationsRepo operations.Repository,
+	operationGroupsRepo operationGroups.Repository,
 	cfg *config.Config,
 ) Controller {
 	return &controller{

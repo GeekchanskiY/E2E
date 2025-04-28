@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (r *Repository) GetAll() (banks []*models.Bank, err error) {
+func (r *repository) GetAll() (banks []*models.Bank, err error) {
 	q := `SELECT id, name FROM banks`
 
 	rows, err := r.db.Query(q)

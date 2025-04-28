@@ -6,7 +6,7 @@ import (
 	"finworker/internal/models"
 )
 
-func (repo *Repository) Create(ctx context.Context, wallet *models.Wallet) (*models.Wallet, error) {
+func (repo *repository) Create(ctx context.Context, wallet *models.Wallet) (*models.Wallet, error) {
 	q := `
 		INSERT INTO 
     	wallets (name, description, permission_group_id, currency, is_salary, bank_id) 
