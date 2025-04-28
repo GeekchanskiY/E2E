@@ -509,3 +509,42 @@ td, th {
 .work-time-delete:hover {
     background-color: var(--bright-red);
 }
+
+/* Index animations */
+
+.index-anim {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    z-index: -1;
+}
+
+.index-anim svg {
+    width: var(--space-medium);
+    height: var(--space-medium);
+
+    position:absolute;
+
+    animation: orbit 5s forwards infinite, glitch 5s infinite;
+    animation-timing-function: linear;
+}
+
+#index-anim-1{
+    top: 5vh;
+    left: 1vw;
+}
+
+@-webkit-keyframes orbit {
+    from {  -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   {  -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
+@keyframes glitch {
+    50% {
+        scale: 2;
+        filter: blur(10px);
+    }
+}
