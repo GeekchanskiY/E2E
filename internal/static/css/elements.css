@@ -12,18 +12,14 @@
 
 .gc-form-header {
     width: 100%;
+    margin-top: calc(-1 * var(--space-extra-small));
     padding-bottom: var(--space-min);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    background-color: var(--dark0);
+    border-radius: var(--border-radius);
+    background-color: var(--dark0-soft);
     color: var(--light0-soft);
     font-size: x-large;
     font-weight: 600;
     text-align: center;
-
-    border-left: 1px solid var(--neutral-aqua);
-    border-right: 1px solid var(--neutral-aqua);
-    border-bottom: 1px solid var(--neutral-aqua);
-    border-top: none;
 }
 
 .gc-form-group-container {
@@ -136,18 +132,20 @@
 /* Table */
 
 .gc-table {
+    display: block;
     width: 80%;
-    border-collapse: collapse;
+    border-collapse: separate;
     table-layout: fixed;
-    /* TODO: add spacing */
+    border-spacing: var(--space-min) var(--space-extra-small);
+    overflow: auto;
 }
 
 td, th {
-    overflow-wrap: anywhere;
+    /* overflow-wrap: anywhere; */
 }
 
 .gc-table-add {
-    display: flex;
+    display: inline-flex;
     width: 25px;
     height: 25px;
     border-radius: var(--border-radius);
@@ -166,20 +164,20 @@ td, th {
 
 
 .gc-table-caption {
-    display: table-caption;
-    margin-bottom: 10px;
+    display: flex;
+    width: 100%;
+    margin-bottom: var(--space-extra-small);
     border-bottom: 1px var(--neutral-aqua) solid;
     color: var(--light0-hard);
     font-size: x-large;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-small);
 }
 
 .gc-table-caption span {
     display: inline-flex;
-    width: 100%;
-    align-items: center;
-    gap: var(--space-extra-small);
     justify-content: center;
-    padding: 0 var(--space-large);
 }
 
 .gc-table-caption span a {

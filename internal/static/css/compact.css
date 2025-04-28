@@ -13,3 +13,12 @@ main {
 .gc-form{
     width: 80%;
 }
+
+.gc-table{
+    width: 100%;
+}
+
+.gc-table-caption {
+    justify-content: start;
+    padding-left: var(--space-small);
+}
