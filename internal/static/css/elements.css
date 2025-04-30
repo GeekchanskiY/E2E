@@ -533,18 +533,34 @@ td, th {
 }
 
 #index-anim-1{
-    top: 5vh;
-    left: 1vw;
+    margin-top: 5vh;
+    margin-left: 1vw;
 }
 
-@-webkit-keyframes orbit {
-    from {  -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
-    to   {  -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+#index-anim-2 {
+    margin-top: 15vh;
+    margin-left: calc(100vw - var(--space-medium) - 1vw);
+}
+
+@keyframes orbit {
+    from {  transform: rotate(0deg) translateX(50px) rotate(0deg); }
+    to   {  transform: rotate(360deg) translateX(50px) rotate(-360deg); }
 }
 
 @keyframes glitch {
+    0% {
+        filter: blur(0px);
+    }
+    25% {
+        filter: blur(5px);
+    }
     50% {
-        scale: 2;
         filter: blur(10px);
+    }
+    75% {
+        filter: blur(5px);
+    }
+    100% {
+        filter: blur(0px);
     }
 }
