@@ -2,12 +2,13 @@
     --space-extra-small: 8px;
     --space-small: 8px;
     --space-large: 20px;
-    --space-extra-large: 20px;
+    --space-extra-large: 24px;
 }
 
 main {
     width: 100%;
     margin: 0;
+    padding-top: var(--space-extra-large);
 }
 
 .gc-form{
