@@ -4,6 +4,7 @@ import (
 	"context"
 	"embed"
 	"html/template"
+	"mime/multipart"
 
 	"go.uber.org/zap"
 
@@ -21,6 +22,11 @@ import (
 	"finworker/templates"
 )
 
+const (
+	mediaPath  = "media"
+	avatarPath = "avatars"
+)
+
 type Controller interface {
 	FAQ(ctx context.Context) (*template.Template, map[string]any, error)
 	Index(ctx context.Context, ip string) (*template.Template, map[string]any, error)
@@ -31,6 +37,7 @@ type Controller interface {
 	RegisterForm(ctx context.Context, username, name, password, repeatPassword, gender, birthday, bank, salary, currency, payday string) (*template.Template, map[string]any, string, string, error)
 	UIKit(ctx context.Context) (*template.Template, map[string]any, error)
 	User(ctx context.Context, username string) (*template.Template, map[string]any, error)
+	UploadAvatar(ctx context.Context, userID int64, fileHeader *multipart.FileHeader, file []byte) error
 }
 
 type controller struct {

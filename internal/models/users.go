@@ -9,4 +9,5 @@ type User struct {
 	Name     string    `db:"name" json:"name"`
 	Gender   string    `db:"gender" json:"gender"`
 	Birthday time.Time `db:"birthday" json:"birthday"`
+	Avatar   string    `db:"avatar" json:"avatar"`
 }

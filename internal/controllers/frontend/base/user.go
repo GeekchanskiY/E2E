@@ -26,6 +26,7 @@ func (c *controller) User(ctx context.Context, username string) (*template.Templ
 	data["userID"] = userData.ID
 	data["userGender"] = userData.Gender
 	data["userBirthday"] = userData.Birthday
+	data["avatar"] = userData.Avatar
 
 	html, err := utils.GenerateTemplate(c.fs, templates.BaseTemplate, templates.UserTemplate)
 	if err != nil {

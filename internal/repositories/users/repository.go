@@ -13,6 +13,7 @@ type Repository interface {
 	Create(ctx context.Context, user *models.User) (*models.User, error)
 	Get(ctx context.Context, id int) (models.User, error)
 	GetByUsername(ctx context.Context, username string) (*models.User, error)
+	UpdateAvatar(ctx context.Context, userID int64, avatar string) (string, error)
 }
 
 type repository struct {

@@ -7,7 +7,12 @@
         <div class="container">
             <h2>Welcome, {{ .username }} !</h2>
             <span>id: {{ .userID }}</span>
+            <img src="{{ .avatar }}" alt="ava">
             <a href="/logout">Logout</a>
+            <form action="/avatar" method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input type="submit" value="Change avatar">
+            </form>
         </div>
     </main>
 {{ end }}

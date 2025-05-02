@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"html/template"
 	"math/big"
-	"time"
 
 	"go.uber.org/zap"
 
@@ -72,7 +71,6 @@ func (c *controller) Index(ctx context.Context, ip string) (*template.Template, 
 		Name:    "request",
 		Event:   models.RegistryLog,
 		Content: fmt.Sprintf("index; IP: [%s]", ip),
-		Time:    time.Time{},
 	})
 
 	return html, data, nil

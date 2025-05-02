@@ -17,6 +17,7 @@ type Handler interface {
 	PageNotFound(w http.ResponseWriter, r *http.Request)
 	Register(w http.ResponseWriter, r *http.Request)
 	UIKit(w http.ResponseWriter, r *http.Request)
+	UploadAvatar(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {

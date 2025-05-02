@@ -104,6 +104,7 @@ func addProtectedWorkRoutes(r *Router, m chi.Router) {
 
 func addProtectedUserRoutes(r *Router, m chi.Router) {
 	m.Get("/me", r.baseHandler.Me)
+	m.Post("/avatar", r.baseHandler.UploadAvatar)
 }
 
 func addProtectedPermissionRoutes(r *Router, m chi.Router) {
