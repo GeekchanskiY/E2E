@@ -12,8 +12,8 @@ import (
 
 	"finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
-	"finworker/internal/templates"
 	utils2 "finworker/internal/utils"
+	"finworker/templates"
 
 	"go.uber.org/zap"
 )

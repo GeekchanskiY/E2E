@@ -9,7 +9,7 @@ import (
 
 	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 func (c *controller) WorkTime(ctx context.Context) (*template.Template, map[string]any, error) {

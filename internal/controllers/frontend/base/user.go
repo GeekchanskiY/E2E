@@ -5,7 +5,7 @@ import (
 	"html/template"
 
 	"finworker/internal/controllers/frontend/utils"
-	"finworker/internal/templates"
+	"finworker/templates"
 
 	"go.uber.org/zap"
 )

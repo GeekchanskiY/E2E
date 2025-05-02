@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"finworker/internal/controllers/frontend/utils"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 func (c *controller) FAQ(ctx context.Context) (*template.Template, map[string]any, error) {

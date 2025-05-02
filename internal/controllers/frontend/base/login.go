@@ -11,8 +11,8 @@ import (
 	"golang.org/x/net/context"
 
 	templateUtils "finworker/internal/controllers/frontend/utils"
-	"finworker/internal/templates"
 	"finworker/internal/utils"
+	"finworker/templates"
 )
 
 func (c *controller) Login(ctx context.Context) (*template.Template, map[string]any, error) {

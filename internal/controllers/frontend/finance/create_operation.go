@@ -10,7 +10,7 @@ import (
 	"finworker/internal/config"
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
-	"finworker/internal/templates"
+	"finworker/templates"
 
 	"go.uber.org/zap"
 )

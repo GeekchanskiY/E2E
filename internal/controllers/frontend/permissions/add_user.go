@@ -9,7 +9,7 @@ import (
 
 	templateUtils "finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 func (c *controller) AddUser(ctx context.Context) (*template.Template, map[string]any, error) {

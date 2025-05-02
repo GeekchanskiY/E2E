@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	templateUtils "finworker/internal/controllers/frontend/utils"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 func (c *controller) PermissionGroup(ctx context.Context, permissionGroupID int64) (*template.Template, map[string]any, error) {

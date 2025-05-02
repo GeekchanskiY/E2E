@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"finworker/internal/controllers/frontend/utils"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 func (c *controller) Wallet(ctx context.Context, walletID int64) (*template.Template, map[string]any, error) {

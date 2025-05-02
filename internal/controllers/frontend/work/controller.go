@@ -11,7 +11,7 @@ import (
 	"finworker/internal/models"
 	"finworker/internal/repositories/users"
 	"finworker/internal/repositories/works"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 type Controller interface {

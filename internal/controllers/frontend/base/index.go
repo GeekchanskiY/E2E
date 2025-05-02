@@ -12,7 +12,7 @@ import (
 
 	"finworker/internal/controllers/frontend/utils"
 	"finworker/internal/models"
-	"finworker/internal/templates"
+	"finworker/templates"
 )
 
 func (c *controller) Index(ctx context.Context, ip string) (*template.Template, map[string]any, error) {
