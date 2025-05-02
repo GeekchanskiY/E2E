@@ -15,7 +15,7 @@
     margin-top: calc(-1 * var(--space-extra-small));
     padding-bottom: var(--space-min);
     border-radius: var(--border-radius);
-    background-color: var(--dark0-soft);
+    background-color: var(--faded-blue);
     color: var(--light0-soft);
     font-size: x-large;
     font-weight: 600;
@@ -97,6 +97,17 @@
 
 .gc-input-button:hover {
     background-color: var(--light0-hard);
+}
+
+.gc-input-submit {
+    border: none;
+    color: var(--light0-soft);
+    background-color: var(--faded-blue);
+}
+
+.gc-input-submit:hover {
+    background-color: var(--neutral-blue);
+    color: var(--light0-hard);
 }
 
 .gc-input-checkbox{
