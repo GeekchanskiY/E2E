@@ -3,7 +3,7 @@ package routers
 import (
 	"net/http"
 
-	"finworker/internal/static"
+	"finworker/static"
 )
 
 func (r *Router) setupFileServer() {
