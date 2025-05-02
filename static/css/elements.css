@@ -518,6 +518,7 @@ td, th {
     height: 100vh;
     top: 0;
     left: 0;
+    overflow: hidden;
 
     z-index: -1;
 }
@@ -528,18 +529,20 @@ td, th {
 
     position:absolute;
 
-    animation: orbit 5s forwards infinite, glitch 5s infinite;
+
     animation-timing-function: linear;
 }
 
 #index-anim-1{
     margin-top: 5vh;
     margin-left: 1vw;
+    animation: orbit 5s forwards infinite, glitch 5s infinite;
 }
 
 #index-anim-2 {
-    margin-top: 15vh;
-    margin-left: calc(100vw - var(--space-medium) - 1vw);
+    margin-top: 25vh;
+    margin-left: 90vw;
+    animation: move 5s reverse infinite;
 }
 
 @keyframes orbit {
@@ -547,18 +550,24 @@ td, th {
     to   {  transform: rotate(360deg) translateX(50px) rotate(-360deg); }
 }
 
+@keyframes move {
+    0% {  transform: translateX(0px); }
+    50%   {  transform: translateX(10vw); }
+    100% {  transform: translateX(0px); }
+}
+
 @keyframes glitch {
     0% {
         filter: blur(0px);
     }
     25% {
-        filter: blur(5px);
+        filter: blur(3px);
     }
     50% {
-        filter: blur(10px);
+        filter: blur(5px);
     }
     75% {
-        filter: blur(5px);
+        filter: blur(3px);
     }
     100% {
         filter: blur(0px);
