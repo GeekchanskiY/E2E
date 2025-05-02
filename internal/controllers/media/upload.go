@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (c *controller) Upload(ctx context.Context, fileHeader *multipart.FileHeader, file []byte) error {
+func (c *controller) Upload(_ context.Context, fileHeader *multipart.FileHeader, file []byte) error {
 	var (
 		dst *os.File
 		err error

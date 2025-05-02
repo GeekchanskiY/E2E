@@ -21,7 +21,7 @@ func (h *handler) Upload(w http.ResponseWriter, r *http.Request) {
 	)
 
 	// Limit uploads to 100MB
-	if err = r.ParseMultipartForm(10 << 20); err != nil {
+	if err = r.ParseMultipartForm(100 << 20); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 
 		return
