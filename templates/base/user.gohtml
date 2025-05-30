@@ -5,14 +5,23 @@
 {{ define "main" }}
     <main>
         <div class="container">
-            <h2>Welcome, {{ .username }} !</h2>
-            <span>id: {{ .userID }}</span>
-            <img src="{{ .avatar }}" alt="ava">
-            <a href="/logout">Logout</a>
-            <form action="/avatar" method="post" enctype="multipart/form-data">
-                <input type="file" name="file">
-                <input type="submit" value="Change avatar">
-            </form>
+            <div class="user-info">
+                <div class="user-info-header">
+                    Welcome, {{ .username }} !
+                </div>
+                <div class="user-info-avatar">
+                    <img src="{{ .avatar }}" alt="ava">
+                </div>
+                <span>id: {{ .userID }}</span>
+
+                <form action="/avatar" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file">
+                    <input type="submit" value="Change avatar">
+                </form>
+
+                <a class="user-info-logout" href="/logout">Logout</a>
+
+            </div>
         </div>
     </main>
 {{ end }}

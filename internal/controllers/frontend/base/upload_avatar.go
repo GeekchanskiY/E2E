@@ -21,7 +21,6 @@ func (c *controller) UploadAvatar(ctx context.Context, userID int64, fileHeader 
 		dst                        *os.File
 		newFileName                string
 		newFilePath                string
-		fileInfo                   os.FileInfo
 		previousFileName           string
 		fileNameGenerationAttempts uint
 
@@ -47,10 +46,10 @@ func (c *controller) UploadAvatar(ctx context.Context, userID int64, fileHeader 
 		newFilePath = filepath.Join(mediaPath, avatarPath, newFileName)
 
 		// Avoid overwriting an existing file
-		if fileInfo, err = os.Stat(newFilePath); os.IsNotExist(err) {
+		if _, err = os.Stat(newFilePath); os.IsNotExist(err) {
 			break
 		}
-		fmt.Println(fileInfo)
+
 		fileNameGenerationAttempts += 1
 		if fileNameGenerationAttempts > 100 {
 			c.logger.Error("media.upload.controller", zap.String("event", "failed to generate a new file name"), zap.Uint("attempts", fileNameGenerationAttempts))
